@@ -1,6 +1,7 @@
 import { body, ValidationChain } from "express-validator";
 
 export const createCarValidation: ValidationChain[] = [
+  body("user").trim().notEmpty().withMessage("User is required"),
   body("used")
     .trim()
     .isBoolean()

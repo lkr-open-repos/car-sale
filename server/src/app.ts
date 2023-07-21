@@ -2,7 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-import carsRoutes from "./routes/cars-routes";
+import carsRoutes from "./routes/car-routes";
+import userRoutes from "./routes/user-routes";
 
 import { errorHandler, notFound } from "./middleware";
 
@@ -16,6 +17,7 @@ dotenv.config();
 
 // Routes
 app.use("/api/v1/cars", carsRoutes);
+app.use("/api/v1/users", userRoutes);
 
 // Error handling middlewares
 app.use(notFound);

@@ -29,6 +29,7 @@ enum Currency {
 }
 
 export interface ICar {
+  user: string;
   used: boolean;
   brand: string;
   type: Type;

@@ -17,7 +17,8 @@ export const errorHandler = (
       message: err.message || "An unknown error occurred!",
     };
     if (err.validationMessages) {
-      errorResponse.validationMessages = err.validationMessages;
+      errorResponse.validationMessages =
+        err.validationMessages.validationMessages;
     }
     res.json(errorResponse);
   } else {
