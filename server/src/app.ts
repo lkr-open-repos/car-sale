@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
 
 import carsRoutes from "./routes/car-routes";
 import userRoutes from "./routes/user-routes";
@@ -8,6 +9,8 @@ import userRoutes from "./routes/user-routes";
 import { errorHandler, notFound } from "./middleware";
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 

@@ -3,7 +3,7 @@ import { CarDocument } from "../types";
 
 const carSchema = new Schema<CarDocument>(
   {
-    user: { type: String, required: true },
+    user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     used: { type: Boolean, default: false, required: true },
     brand: { type: String, required: true },
     type: { type: String, required: true, enum: ["NEW", "USED"] },

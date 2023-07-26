@@ -1,4 +1,4 @@
-import { Model, Document } from "mongoose";
+import { Model, Document, Schema } from "mongoose";
 
 enum TransmissionType {
   MANUAL = "MANUAL",
@@ -29,7 +29,7 @@ enum Currency {
 }
 
 export interface ICar {
-  user: string;
+  user: Schema.Types.ObjectId;
   used: boolean;
   brand: string;
   type: Type;

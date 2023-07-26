@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import { HttpError } from "../models";
 import { Car } from "../models";
 import { CarDocument } from "../types";
-import { log } from "console";
+import { User } from "../models";
 
 export const createCar = async (
   req: Request,
@@ -114,6 +114,14 @@ export const updateCar = async (
       const error = new HttpError("Could not find car for this id", 404);
       return next(error);
     }
+
+    if (car.user.toString() !== req.body.userData.userId) {
+      const error = new HttpError(
+        "You are not authorized to update this car",
+        401
+      );
+      return next(error);
+    }
     car.set(req.body);
     await car.save();
   } catch (err) {
@@ -136,6 +144,13 @@ export const deleteCar = async (
     car = (await Car.findById(carId)) as CarDocument;
     if (!car) {
       const error = new HttpError("Could not find car for this id", 404);
+      return next(error);
+    }
+    if (car.user.toString() !== req.body.userData.userId) {
+      const error = new HttpError(
+        "You are not authorized to delete this car",
+        401
+      );
       return next(error);
     }
     await Car.deleteOne({ _id: carId });

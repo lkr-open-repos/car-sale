@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { checkAuthToken } from "../middleware";
 
 import {
   createCar,
@@ -12,13 +13,15 @@ import { createCarValidation } from "../validators";
 
 const router = Router();
 
-router.post("/", createCarValidation, createCar);
-
 router.get("/", getAllCars);
 
 router.get("/:cid", getCarById);
 
 router.get("/user/:uid", getCarsByUser);
+
+router.use(checkAuthToken);
+
+router.post("/", createCarValidation, createCar);
 
 router.patch("/:cid", createCarValidation, updateCar);
 

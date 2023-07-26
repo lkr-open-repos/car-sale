@@ -1,5 +1,7 @@
 import { validationResult } from "express-validator";
 import { Request, Response, NextFunction } from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 import { User } from "../models";
 import { UserDocument } from "../types";
@@ -33,7 +35,19 @@ export const signUp = async (
     return next(error);
   }
 
-  const createdUser = new User(req.body) as UserDocument;
+  const { password } = req.body;
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    const error = new HttpError("Creating user failed, please try again.", 500);
+    return next(error);
+  }
+
+  const createdUser = new User({
+    ...req.body,
+    password: hashedPassword,
+  }) as UserDocument;
   try {
     await createdUser.save();
   } catch (err) {
@@ -42,7 +56,21 @@ export const signUp = async (
     return next(error);
   }
 
-  res.status(201).json({ user: createdUser.name });
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: createdUser.id, email: createdUser.email },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError("Signup failed, please try again.", 500);
+    return next(error);
+  }
+
+  res
+    .status(201)
+    .json({ userId: createdUser.id, email: createdUser.email, token });
 };
 
 export const signIn = async (
@@ -65,11 +93,20 @@ export const signIn = async (
     })) as UserDocument;
 
     if (!user) {
-      const error = new HttpError("Invalid credentials", 401);
+      const error = new HttpError("Invalid credentials", 403);
       return next(error);
     }
-    if (!(req.body.email === user.email)) {
-      const error = new HttpError("Invalid credentials", 401);
+
+    let isValidPassword = false;
+    try {
+      isValidPassword = await bcrypt.compare(req.body.password, user.password);
+    } catch (err) {
+      const error = new HttpError("Signin failed, please try again.", 500);
+      return next(error);
+    }
+
+    if (!isValidPassword) {
+      const error = new HttpError("Invalid credentials", 403);
       return next(error);
     }
   } catch (err) {
@@ -77,7 +114,19 @@ export const signIn = async (
     return next(error);
   }
 
-  res.json({ message: "logged in!", user: user.name });
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError("Signin failed, please try again.", 500);
+    return next(error);
+  }
+
+  res.json({ userId: user.id, email: user.email, token });
 };
 
 export const getAllUsers = async (
