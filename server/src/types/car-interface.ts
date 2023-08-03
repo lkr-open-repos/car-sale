@@ -50,6 +50,7 @@ export interface ICar {
   seller: Seller;
   price: string;
   currency: Currency;
+  image?: string;
 }
 
 export interface CarDocument extends ICar, Document {}

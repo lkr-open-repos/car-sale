@@ -1,76 +1,41 @@
 import { validationResult } from "express-validator";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "../types";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { User } from "../models";
 import { UserDocument } from "../types";
 import { HttpError } from "../models";
+import { throwErrorHelper, validationHelper } from "../utils";
+import {
+  signUpService,
+  signInService,
+  getAllUsersService,
+  getUserByIdService,
+  updateUserService,
+  deleteUserService,
+} from "../services";
 
 export const signUp = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new HttpError("Invalid input", 422, {
-      validationMessages: errors.array(),
-    });
-    return next(error);
-  }
+  validationHelper(validationResult(req), next);
 
-  let existingUser: UserDocument;
+  let signUpData: { user: UserDocument; token: string };
+
   try {
-    existingUser = (await User.findOne({
-      email: req.body.email,
-    })) as UserDocument;
+    signUpData = await signUpService(req.body);
   } catch (err) {
-    const error = new HttpError("Creating user failed, please try again.", 500);
-    return next(error);
+    return next(throwErrorHelper(err));
   }
 
-  if (existingUser) {
-    const error = new HttpError("User already exists", 422);
-    return next(error);
-  }
-
-  const { password } = req.body;
-  let hashedPassword;
-  try {
-    hashedPassword = await bcrypt.hash(password, 12);
-  } catch (err) {
-    const error = new HttpError("Creating user failed, please try again.", 500);
-    return next(error);
-  }
-
-  const createdUser = new User({
-    ...req.body,
-    password: hashedPassword,
-  }) as UserDocument;
-  try {
-    await createdUser.save();
-  } catch (err) {
-    console.log(err);
-    const error = new HttpError("Signup failed, please try again.", 500);
-    return next(error);
-  }
-
-  let token;
-  try {
-    token = jwt.sign(
-      { userId: createdUser.id, email: createdUser.email },
-      process.env.JWT_SECRET!,
-      { expiresIn: "1h" }
-    );
-  } catch (err) {
-    const error = new HttpError("Signup failed, please try again.", 500);
-    return next(error);
-  }
-
-  res
-    .status(201)
-    .json({ userId: createdUser.id, email: createdUser.email, token });
+  res.status(201).json({
+    userId: signUpData.user.id,
+    email: signUpData.user.email,
+    token: signUpData.token,
+  });
 };
 
 export const signIn = async (
@@ -78,55 +43,20 @@ export const signIn = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new HttpError("Invalid input", 422, {
-      validationMessages: errors.array(),
-    });
-    return next(error);
-  }
+  validationHelper(validationResult(req), next);
 
-  let user: UserDocument;
+  let signInData: { user: UserDocument; token: string };
   try {
-    user = (await User.findOne({
-      email: req.body.email,
-    })) as UserDocument;
-
-    if (!user) {
-      const error = new HttpError("Invalid credentials", 403);
-      return next(error);
-    }
-
-    let isValidPassword = false;
-    try {
-      isValidPassword = await bcrypt.compare(req.body.password, user.password);
-    } catch (err) {
-      const error = new HttpError("Signin failed, please try again.", 500);
-      return next(error);
-    }
-
-    if (!isValidPassword) {
-      const error = new HttpError("Invalid credentials", 403);
-      return next(error);
-    }
+    signInData = await signInService(req.body);
   } catch (err) {
-    const error = new HttpError("Signin failed, please try again.", 500);
-    return next(error);
+    return next(throwErrorHelper(err));
   }
 
-  let token;
-  try {
-    token = jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.JWT_SECRET!,
-      { expiresIn: "1h" }
-    );
-  } catch (err) {
-    const error = new HttpError("Signin failed, please try again.", 500);
-    return next(error);
-  }
-
-  res.json({ userId: user.id, email: user.email, token });
+  res.json({
+    userId: signInData.user.id,
+    email: signInData.user.email,
+    token: signInData.token,
+  });
 };
 
 export const getAllUsers = async (
@@ -136,17 +66,9 @@ export const getAllUsers = async (
 ) => {
   let users: UserDocument[];
   try {
-    users = await User.find({}, "-password");
-    if (!users || users.length < 1) {
-      const error = new HttpError("Could not find users", 401);
-      return next(error);
-    }
+    users = await getAllUsersService();
   } catch (err) {
-    const error = new HttpError(
-      "Fatching users failed, please try again.",
-      500
-    );
-    return next(error);
+    return next(throwErrorHelper(err));
   }
   res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
@@ -159,14 +81,9 @@ export const getUserById = async (
   const userId = req.params.uid;
   let user: UserDocument;
   try {
-    user = (await User.findById(userId, "-password")) as UserDocument;
-    if (!user) {
-      const error = new HttpError("Could not find user for this id", 401);
-      return next(error);
-    }
+    user = await getUserByIdService(userId);
   } catch (err) {
-    const error = new HttpError("Something went wrong", 500);
-    return next(error);
+    return next(throwErrorHelper(err));
   }
 
   res.json({ user: user.toObject({ getters: true }) });
@@ -177,28 +94,14 @@ export const updateUser = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new HttpError("Invalid input", 422, {
-      validationMessages: errors.array(),
-    });
-    return next(error);
-  }
+  validationHelper(validationResult(req), next);
   const userId = req.params.uid;
   let user: UserDocument;
   try {
-    user = (await User.findById(userId)) as UserDocument;
-    if (!user) {
-      const error = new HttpError("Could not find user for this id", 401);
-      return next(error);
-    }
-    user.set(req.body);
-    await user.save();
-  } catch {
-    const error = new HttpError("Something went wrong", 500);
-    return next(error);
+    user = await updateUserService(userId, req.body);
+  } catch (err) {
+    return next(throwErrorHelper(err, "Something went wrong"));
   }
-
   res.status(201).json({ message: "Updated!", user: user.name });
 };
 
@@ -210,16 +113,8 @@ export const deleteUser = async (
   const userId = req.params.uid;
   let user: UserDocument;
   try {
-    user = (await User.findById(userId)) as UserDocument;
-    if (!user) {
-      const error = new HttpError("Could not find user for this id", 404);
-      return next(error);
-    }
-    await user.deleteOne({ _id: userId });
+    await deleteUserService(userId);
   } catch (err) {
-    const error = new HttpError("Something went wrong", 500);
-    return next(error);
+    return next(throwErrorHelper(err));
   }
-
-  res.status(200).json({ message: "Deleted user." });
 };

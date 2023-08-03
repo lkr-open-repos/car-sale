@@ -1,7 +1,9 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
+import { Request, Response, NextFunction } from "./types";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
 
 import carsRoutes from "./routes/car-routes";
 import userRoutes from "./routes/user-routes";
@@ -13,6 +15,8 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 // morgan
 

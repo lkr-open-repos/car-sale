@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from "express";
+import fs from "fs";
+import { Request, Response, NextFunction } from "../types";
 import { HttpError } from "../models";
 
 export const errorHandler = (
@@ -7,6 +8,11 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ): void => {
+  if (req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
   if (res.headersSent) {
     return next(err);
   }

@@ -10,6 +10,7 @@ import {
   updateCar,
 } from "../controllers";
 import { createCarValidation } from "../validators";
+import { fileUpload } from "../middleware";
 
 const router = Router();
 
@@ -21,9 +22,14 @@ router.get("/user/:uid", getCarsByUser);
 
 router.use(checkAuthToken);
 
-router.post("/", createCarValidation, createCar);
+router.post("/", fileUpload.single("image"), createCarValidation, createCar);
 
-router.patch("/:cid", createCarValidation, updateCar);
+router.patch(
+  "/:cid",
+  fileUpload.single("image"),
+  createCarValidation,
+  updateCar
+);
 
 router.delete("/:cid", deleteCar);
 

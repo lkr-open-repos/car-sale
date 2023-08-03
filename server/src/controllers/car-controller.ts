@@ -1,32 +1,33 @@
+import fs from "fs";
 import { validationResult } from "express-validator";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, ICar } from "../types";
 
 import { HttpError } from "../models";
 import { Car } from "../models";
 import { CarDocument } from "../types";
-import { User } from "../models";
+import { throwErrorHelper, validationHelper } from "../utils/";
+import {
+  createCarService,
+  getAllCarsService,
+  getCarByIdService,
+  getCarsByUserService,
+} from "../services";
+import { deleteCarService, updateCarService } from "../services/car-services";
 
 export const createCar = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new HttpError("Invalid input", 422, {
-      validationMessages: errors.array(),
-    });
-    return next(error);
-  }
-  const createdCar = new Car(req.body as CarDocument);
+  validationHelper(validationResult(req), next);
+  let createdCar: CarDocument;
   try {
-    await createdCar.save();
+    createdCar = await createCarService(req.body);
   } catch (err) {
-    console.log(err);
-    const error = new HttpError("Creating car failed, please try again.", 500);
-    return next(error);
+    return next(
+      throwErrorHelper(err, "Creating car failed, please try again.")
+    );
   }
-
   res.status(201).json({ car: createdCar });
 };
 
@@ -35,17 +36,11 @@ export const getAllCars = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  let cars: CarDocument[] = [];
+  let cars: CarDocument[];
   try {
-    cars = await Car.find({});
+    cars = await getAllCarsService();
   } catch (err) {
-    const error = new HttpError("Something went wrong", 500);
-    return next(error);
-  }
-
-  if (!cars || cars.length === 0) {
-    const error = new HttpError("Could not find cars", 404);
-    return next(error);
+    return next(throwErrorHelper(err));
   }
   res.json({ cars: cars.map((car) => car.toObject({ getters: true })) });
 };
@@ -58,15 +53,9 @@ export const getCarById = async (
   const carId = req.params.cid;
   let car: CarDocument;
   try {
-    car = (await Car.findById(carId)) as CarDocument;
+    car = await getCarByIdService(carId);
   } catch (err) {
-    const error = new HttpError("Something went wrong", 500);
-    return next(error);
-  }
-
-  if (!car) {
-    const error = new HttpError("Could not find car for this id", 404);
-    return next(error);
+    return next(throwErrorHelper(err));
   }
 
   res.json({ car: car.toObject({ getters: true }) });
@@ -80,15 +69,9 @@ export const getCarsByUser = async (
   const userId = req.params.uid;
   let cars: CarDocument[];
   try {
-    cars = (await Car.find({ user: userId })) as CarDocument[];
+    cars = await getCarsByUserService(userId);
   } catch (err) {
-    const error = new HttpError("Something went wrong", 500);
-    return next(error);
-  }
-
-  if (!cars || cars.length === 0) {
-    const error = new HttpError("Could not find car for this id", 404);
-    return next(error);
+    return next(throwErrorHelper(err));
   }
 
   res.json({ cars: cars.map((car) => car.toObject({ getters: true })) });
@@ -99,31 +82,11 @@ export const updateCar = async (
   res: Response,
   next: NextFunction
 ) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new HttpError("Invalid input", 422, {
-      validationMessages: errors.array(),
-    });
-    return next(error);
-  }
+  validationHelper(validationResult(req), next);
   const carId = req.params.cid;
   let car: CarDocument;
   try {
-    car = (await Car.findById(carId)) as CarDocument;
-    if (!car) {
-      const error = new HttpError("Could not find car for this id", 404);
-      return next(error);
-    }
-
-    if (car.user.toString() !== req.body.userData.userId) {
-      const error = new HttpError(
-        "You are not authorized to update this car",
-        401
-      );
-      return next(error);
-    }
-    car.set(req.body);
-    await car.save();
+    car = await updateCarService(carId, req.user!.Id, req.body);
   } catch (err) {
     const error = new HttpError("Something went wrong", 500);
     return next(error);
@@ -141,22 +104,9 @@ export const deleteCar = async (
 
   let car: CarDocument;
   try {
-    car = (await Car.findById(carId)) as CarDocument;
-    if (!car) {
-      const error = new HttpError("Could not find car for this id", 404);
-      return next(error);
-    }
-    if (car.user.toString() !== req.body.userData.userId) {
-      const error = new HttpError(
-        "You are not authorized to delete this car",
-        401
-      );
-      return next(error);
-    }
-    await Car.deleteOne({ _id: carId });
+    deleteCarService(carId, req.user!.Id);
   } catch (err) {
-    const error = new HttpError("Something went wrong", 500);
-    return next(error);
+    return next(throwErrorHelper(err));
   }
 
   res.status(200).json({ message: "Deleted car." });

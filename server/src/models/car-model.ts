@@ -40,6 +40,7 @@ const carSchema = new Schema<CarDocument>(
       required: true,
       enum: ["USD", "EUR", "TRY"],
     },
+    image: { type: String, required: false },
   },
   { timestamps: true }
 );
