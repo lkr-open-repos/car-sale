@@ -1,0 +1,8 @@
+.button {
+  background-color: var(--background-color);
+  height: 3rem;
+  border: none;
+  box-shadow: 6px 8px 6px -4px var(--overlay-color);
+  font-size: var(--h2-font-size);
+  font-weight: 500;
+}

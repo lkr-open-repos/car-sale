@@ -1,0 +1,15 @@
+.logo-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-text h2 {
+  font-family: cursive;
+}
+
+.logo img {
+  min-height: 3rem;
+  min-width: 3rem;
+}

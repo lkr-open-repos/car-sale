@@ -1,5 +1,6 @@
 import express from "express";
 import { Request, Response, NextFunction } from "./types";
+import Helmet from "helmet";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -11,6 +12,8 @@ import userRoutes from "./routes/user-routes";
 import { errorHandler, notFound } from "./middleware";
 
 const app = express();
+
+app.use(Helmet());
 
 app.use(cors());
 

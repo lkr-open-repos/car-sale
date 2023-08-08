@@ -1,0 +1,15 @@
+.quick-search {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+@media screen and (min-width: 767px) {
+  .quick-search {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.quick-search button {
+  grid-column: span 2;
+}

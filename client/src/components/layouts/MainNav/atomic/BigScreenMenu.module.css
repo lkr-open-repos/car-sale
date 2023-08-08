@@ -1,0 +1,11 @@
+.big-screen-menu ul {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.big-screen-menu ul a {
+  color: var(--text-color-dark);
+  font-family: cursive;
+  font-size: var(--h2-font-size);
+}

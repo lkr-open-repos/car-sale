@@ -1,0 +1,49 @@
+.backdrop {
+  position: absolute;
+  width: 99vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 33;
+  background-color: transparent;
+}
+
+.modal-menu_nav {
+  position: fixed;
+  width: 80%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  box-shadow: -2px 0 4px var(--overlay-color);
+  padding: 4rem 0 0 1rem;
+  border-radius: 1rem 0 0 1rem;
+  z-index: 99;
+  background-color: lightgray;
+}
+
+.close-modal-menu {
+  height: 3rem;
+  width: 3rem;
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+  cursor: pointer;
+}
+
+.modal-menu_navigation_links ul {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  align-items: center;
+  /* background-color: aqua; */
+  margin-top: 4rem;
+  margin-left: auto;
+  margin-right: auto;
+  transition: 0.3s;
+}
+
+.modal-menu_navigation_links ul a {
+  color: var(--text-color-dark);
+  font-family: cursive;
+  font-size: var(--h2-font-size);
+}
