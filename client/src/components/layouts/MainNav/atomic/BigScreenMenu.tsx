@@ -1,4 +1,4 @@
-import NavLinks from "./NavLinks";
+import NavLinks from "../../../shared/NavLinks/NavLinks";
 import classes from "./BigScreenMenu.module.css";
 
 const BigScreenMenu = () => {

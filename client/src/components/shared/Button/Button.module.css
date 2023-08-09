@@ -2,7 +2,8 @@
   background-color: var(--background-color);
   height: 3rem;
   border: none;
-  box-shadow: 6px 8px 6px -4px var(--overlay-color);
+  box-shadow: var(--box-shadow);
   font-size: var(--h2-font-size);
   font-weight: 500;
+  cursor: pointer;
 }

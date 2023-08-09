@@ -1,0 +1,54 @@
+.car-card {
+  position: relative;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  box-shadow: var(--box-shadow);
+  border-radius: 0.5rem 0.5rem 0 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.fav-icon {
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+  height: 2rem;
+  width: 2rem;
+  z-index: 66;
+  background-color: #ffd700aa;
+  border-radius: 50%;
+}
+
+.fav-icon_img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.car-image_img {
+  aspect-ratio: 5/4;
+  object-fit: cover;
+  width: 100%;
+}
+
+.car-info {
+  padding: 0.5rem;
+}
+
+.car-info > * {
+  margin-top: 0.5rem;
+}
+
+@media screen and (min-width: 480) {
+  .car-card {
+    border-radius: 1rem 1rem 0 0;
+  }
+
+  .car-info {
+    padding: 1rem;
+  }
+
+  .car-info > * {
+    margin-top: 1rem;
+  }
+}

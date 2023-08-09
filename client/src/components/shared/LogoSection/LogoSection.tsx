@@ -1,4 +1,4 @@
-import carIcon from "../../../../assets/icons/carIcon.svg";
+import carIcon from "../../../assets/icons/carIcon.svg";
 import classes from "./LogoSection.module.css";
 
 const LogoSection = () => {

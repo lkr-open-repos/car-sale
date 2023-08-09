@@ -1,3 +1,4 @@
+import Cars from "../../components/shared/Cars/Cars";
 import QuickSearch from "../atomic/QuickSearch";
 import classes from "./Home.module.css";
 
@@ -7,7 +8,9 @@ const Home = () => {
       <section className={classes["search"]}>
         <QuickSearch />
       </section>
-      <section className={classes["cars"]}></section>
+      <section className={classes["cars"]}>
+        <Cars />
+      </section>
     </>
   );
 };

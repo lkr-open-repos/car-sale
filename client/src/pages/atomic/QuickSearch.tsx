@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./QuickSearch.module.css";
 import DropDown from "./DropDown";
-import Button from "../../components/common/Button/Button";
+import Button from "../../components/shared/Button/Button";
 
 const QuickSearch = () => {
   return (

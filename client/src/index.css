@@ -18,6 +18,8 @@
   --header-height: 4rem;
   --overlay-color: #00000088;
   --background-color: #9f9f9f;
+  --footer-background-color: #222222;
+  --box-shadow: 6px 8px 6px -4px var(--overlay-color);
 }
 
 /*==================== NORMALIZE ====================*/
@@ -35,7 +37,7 @@ body {
   margin: 0;
   font-size: var(--normal-font-size);
   /* background-color: var(--background-color); */
-  color: var(--text-color);
+  color: var(--text-color-dark);
 }
 
 h1,
@@ -58,4 +60,18 @@ a {
 img {
   max-width: 100%;
   height: auto;
+}
+
+/*==================== UTILITIES ====================*/
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.wrapper {
+  padding: 2rem 1rem;
 }

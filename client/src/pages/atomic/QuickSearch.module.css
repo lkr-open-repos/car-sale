@@ -4,12 +4,17 @@
   gap: 0.5rem;
 }
 
-@media screen and (min-width: 767px) {
-  .quick-search {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+.quick-search button {
+  margin: 1rem 0;
+  grid-column: span 2;
 }
 
-.quick-search button {
-  grid-column: span 2;
+@media screen and (min-width: 767px) {
+  .quick-search {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .quick-search button {
+    grid-column: span 4;
+  }
 }

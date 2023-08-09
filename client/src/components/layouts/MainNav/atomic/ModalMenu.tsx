@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./ModalMenu.module.css";
 import closeIcon from "../../../../assets/icons/closeMenuIcon.svg";
-import NavLinks from "./NavLinks";
+import NavLinks from "../../../shared/NavLinks/NavLinks";
 import UserLink from "./UserLink";
 
 interface IProps {
