@@ -17,7 +17,7 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
     bodyType,
     engineDisplacement,
     enginePower,
-    Traction,
+    traction,
     fuelTankCapacity,
     paintChanged,
     eligibleForTrade,
@@ -43,7 +43,7 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
     bodyType,
     engineDisplacement,
     enginePower,
-    Traction,
+    traction,
     fuelTankCapacity,
     paintChanged,
     eligibleForTrade,
@@ -109,7 +109,7 @@ export const updateCarService = async (
     bodyType,
     engineDisplacement,
     enginePower,
-    Traction,
+    traction,
     fuelTankCapacity,
     paintChanged,
     eligibleForTrade,
@@ -146,7 +146,7 @@ export const updateCarService = async (
   car.bodyType = bodyType;
   car.engineDisplacement = engineDisplacement;
   car.enginePower = enginePower;
-  car.Traction = Traction;
+  car.traction = traction;
   car.fuelTankCapacity = fuelTankCapacity;
   car.paintChanged = paintChanged;
   car.eligibleForTrade = eligibleForTrade;

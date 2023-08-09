@@ -24,7 +24,7 @@ const carSchema = new Schema<CarDocument>(
     bodyType: { type: String, required: true },
     engineDisplacement: { type: Number, required: true },
     enginePower: { type: Number, required: true },
-    Traction: { type: String, required: true, enum: ["AUTOMATIC", "MANUAL"] },
+    traction: { type: String, required: true, enum: ["AUTOMATIC", "MANUAL"] },
     fuelTankCapacity: { type: Number, required: true },
     paintChanged: { type: Boolean, required: true, default: false },
     eligibleForTrade: { type: Boolean, required: true, default: false },
