@@ -16,13 +16,16 @@
   height: 2rem;
   width: 2rem;
   z-index: 66;
-  background-color: #ffd700aa;
+  background-color: var(--overlay-color);
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.fav-icon_img {
-  margin-left: auto;
-  margin-right: auto;
+.fav-icon img {
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 .car-image_img {

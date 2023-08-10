@@ -1,5 +1,6 @@
 .button {
-  background-color: var(--background-color);
+  color: var(--text-color);
+  background-color: var(--foreground-color);
   height: 3rem;
   border: none;
   box-shadow: var(--box-shadow);

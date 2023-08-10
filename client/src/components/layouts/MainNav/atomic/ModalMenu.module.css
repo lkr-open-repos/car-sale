@@ -18,7 +18,7 @@
   padding: 4rem 0 0 1rem;
   border-radius: 1rem 0 0 1rem;
   z-index: 99;
-  background-color: lightgray;
+  background-color: var(--foreground-color);
 }
 
 .close-modal-menu {
@@ -43,7 +43,7 @@
 }
 
 .modal-menu_navigation_links ul a {
-  color: var(--text-color-dark);
+  color: var(--text-color);
   font-family: cursive;
   font-size: var(--h2-font-size);
 }

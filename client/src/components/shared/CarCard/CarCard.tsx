@@ -3,6 +3,7 @@ import { ICar } from "../../../types/car-interface";
 import classes from "./CarCard.module.css";
 import { currencyIconHelper } from "../../../utils/currencyIconHelper";
 import favHeartIcon from "../../../assets/icons/favHeartIcon.svg";
+import favStarIcon from "../../../assets/icons/favStarIcon.svg";
 
 interface IProps {
   car: ICar;
@@ -15,7 +16,7 @@ const CarCard: React.FC<IProps> = ({ car }) => {
   return (
     <div className={`${classes["car-card"]} flex`}>
       <div className={classes["fav-icon"]}>
-        <img src={favHeartIcon} alt="" />
+        <img src={favStarIcon} alt="" />
       </div>
       <div className={classes["car-image"]}>
         <img
