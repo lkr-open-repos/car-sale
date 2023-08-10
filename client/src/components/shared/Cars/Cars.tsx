@@ -1,34 +1,21 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 import classes from "./Cars.module.css";
 import CarCard from "../CarCard/CarCard";
 import { ICar } from "../../../types/car-interface";
-import axios from "axios";
+import { useGetAllCarsQuery } from "../../../api/carsApiSlice";
 
-const Cars = () => {
+const Cars: React.FC = () => {
   //Reafactor to use rtkquery
 
-  const [cars, setCars] = useState<ICar[]>([]);
+  const { data, isSuccess } = useGetAllCarsQuery();
 
-  useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL!}/cars`
-        );
-        setCars(response.data.cars);
-      } catch (error) {
-        console.log("fetching cars failed", error);
-      }
-    };
-
-    fetchCars();
-  }, []);
+  const cars = data?.cars || [];
 
   return (
     <div className={`${classes["cars"]} grid`}>
-      {cars.map((car) => (
-        <CarCard key={car.id} car={car} />
-      ))}
+      {isSuccess ? cars.map((car) => <CarCard key={car.id} car={car} />) : ""}
     </div>
   );
 };
