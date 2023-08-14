@@ -11,7 +11,7 @@ const Cars: React.FC = () => {
 
   //error logic
 
-  const cars = data?.cars || [];
+  const cars = data || [];
 
   return (
     <div className={`${classes["cars"]} grid`}>

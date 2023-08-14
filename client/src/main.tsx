@@ -5,11 +5,11 @@ import App from "./App.tsx";
 import "./index.css";
 
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
-import { carsApiSlice } from "./api/carsApiSlice";
+import { ApiSlice } from "./api/ApiSlice.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ApiProvider api={carsApiSlice}>
+    <ApiProvider api={ApiSlice}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

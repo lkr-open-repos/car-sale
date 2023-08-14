@@ -5,7 +5,7 @@ import Layout from "./components/layouts/Layout/Layout";
 import Home from "./pages/Home/Home";
 import CarSearch from "./pages/CarSearch";
 import Car from "./pages/Car";
-import User from "./pages/User/User";
+import Auth from "./pages/Auth/Auth";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/user/" element={<User />} />
+          <Route path="/auth/" element={<Auth />} />
           <Route path="/cars/:cid" element={<Car />} />
           <Route path="/search" element={<CarSearch />} />
         </Routes>
