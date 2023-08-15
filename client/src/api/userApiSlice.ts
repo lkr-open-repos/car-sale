@@ -1,17 +1,24 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ApiSlice } from "./ApiSlice";
 import { IUser } from "../types/user-interface";
 
-export const usersApiSlice = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_BACKEND_URL}` }),
-  tagTypes: ["Users"],
+export const usersApiSlice = ApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllCars: builder.query<IUser[], void>({
+    getAllUsers: builder.query<IUser[], void>({
       query: () => "/users",
-      transformResponse: (response: { cars: IUser[] }): IUser[] =>
-        response.cars,
+      transformResponse: (response: { users: IUser[] }): IUser[] =>
+        response.users,
       providesTags: ["Users"],
     }),
+    signUp: builder.mutation({
+      query: (user: IUser) => ({
+        url: "/users/signup",
+        method: "POST",
+        body: user,
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
+  overrideExisting: false,
 });
 
-export const { useGetAllCarsQuery } = usersApiSlice;
+export const { useGetAllUsersQuery, useSignUpMutation } = usersApiSlice;

@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+
 import classes from "./Auth.module.css";
+import { useGetAllUsersQuery, useSignUpMutation } from "../../api/userApiSlice";
+import { IUser } from "../../types/user-interface";
 
 interface IFormInput {
-  Email: string;
-  Name?: string;
-  Password: string;
+  email: string;
+  name?: string;
+  password: string;
 }
 
 const Auth = () => {
+  const [signUp] = useSignUpMutation();
+  const { data } = useGetAllUsersQuery();
+
   const [isSignUpMode, setSignUpMode] = useState(true);
 
   const {
@@ -21,7 +27,11 @@ const Auth = () => {
     setSignUpMode((prevMode) => !prevMode);
   };
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = async (formData: IUser) => {
+    console.log(formData);
+    const signUpResponse = await signUp(formData);
+    console.log(signUpResponse);
+  };
 
   return (
     <div className={`${classes["auth-wrapper"]} flex`}>
@@ -34,13 +44,17 @@ const Auth = () => {
         <input
           type="text"
           placeholder="email"
-          {...register("Email", {
+          {...register("email", {
             required: "Email is required",
-            pattern: /^\S+@\S+$/i,
+            pattern: {
+              value:
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: "Invalid mail address",
+            },
           })}
         />
-        {errors.Email && (
-          <p className={classes["error-text"]}>{errors.Email.message}</p>
+        {errors.email && (
+          <p className={classes["error-text"]}>{errors.email.message}</p>
         )}
         {isSignUpMode ? (
           <>
@@ -48,7 +62,7 @@ const Auth = () => {
             <input
               type="text"
               placeholder="Name"
-              {...register("Name", {
+              {...register("name", {
                 required: "Name is required",
                 minLength: {
                   value: 2,
@@ -62,7 +76,7 @@ const Auth = () => {
         <input
           type="password"
           placeholder="password"
-          {...register("Password", {
+          {...register("password", {
             required: "Password is required",
             minLength: {
               value: 6,
@@ -70,8 +84,8 @@ const Auth = () => {
             },
           })}
         />
-        {errors.Password && (
-          <p className={classes["error-text"]}>{errors.Password.message}</p>
+        {errors.password && (
+          <p className={classes["error-text"]}>{errors.password.message}</p>
         )}
         <input type="submit" value={isSignUpMode ? "Sign Up" : "Sign In"} />
       </form>

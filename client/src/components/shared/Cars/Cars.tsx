@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import classes from "./Cars.module.css";
 import CarCard from "../CarCard/CarCard";
 import { useGetAllCarsQuery } from "../../../api/carsApiSlice";
 
 const Cars: React.FC = () => {
-  //Reafactor to use rtkquery
-
   const { data, isSuccess } = useGetAllCarsQuery();
 
   //error logic
