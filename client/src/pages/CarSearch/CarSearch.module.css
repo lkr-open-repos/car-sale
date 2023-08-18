@@ -1,0 +1,26 @@
+.car-search-wrapper {
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.car-search_form {
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.car-search_form > * {
+  height: 4rem;
+}
+
+.used-radio-wrapper {
+  align-items: center;
+  justify-items: center;
+  gap: 1rem;
+}
+
+.car-search_form input[type="submit"] {
+  grid-column: span 3;
+}

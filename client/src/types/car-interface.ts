@@ -10,11 +10,6 @@ enum FuelType {
   HYBRID = "HYBRID",
 }
 
-enum Type {
-  NEW = "NEW",
-  USED = "USED",
-}
-
 enum Seller {
   OWNER = "OWNER",
   GALLERY = "GALLERY",
@@ -26,14 +21,27 @@ enum Currency {
   TRY = "TRY",
 }
 
+enum Colors {
+  BLACK = "BLACK",
+  WHITE = "WHITE",
+  SILVER = "SILVER",
+  RED = "RED",
+  BLUE = "BLUE",
+  GREEN = "GREEN",
+  YELLOW = "YELLOW",
+  BROWN = "BROWN",
+  PURPLE = "PURPLE",
+}
+
 export interface ICar {
   user: string;
   used: boolean;
   brand: string;
-  type: Type;
   series: string;
   model: string;
   year: number;
+  color: Colors;
+  metallicColor: boolean;
   mileage: string;
   transmissionType: TransmissionType;
   fuelType: FuelType;

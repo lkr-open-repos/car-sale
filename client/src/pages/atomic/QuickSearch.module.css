@@ -1,20 +1,22 @@
 .quick-search {
-  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
 }
 
-.quick-search button {
-  margin: 1rem 0;
-  grid-column: span 2;
+.search-buttons {
+  grid-column: span 4;
+  gap: 1rem;
+}
+
+.search-buttons a {
+  color: var(--foreground-color);
+  cursor: pointer;
+  align-self: center;
+  justify-self: start;
 }
 
 @media screen and (min-width: 767px) {
   .quick-search {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  .quick-search button {
-    grid-column: span 4;
   }
 }

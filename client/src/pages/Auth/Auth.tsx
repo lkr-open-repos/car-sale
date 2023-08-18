@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import classes from "./Auth.module.css";
-import { useGetAllUsersQuery, useSignUpMutation } from "../../api/userApiSlice";
+import { useSignUpMutation, useSignInMutation } from "../../api/userApiSlice";
 import { IUser } from "../../types/user-interface";
 
 interface IFormInput {
@@ -13,25 +13,37 @@ interface IFormInput {
 
 const Auth = () => {
   const [signUp] = useSignUpMutation();
-  const { data } = useGetAllUsersQuery();
+  const [signIn] = useSignInMutation();
 
   const [isSignUpMode, setSignUpMode] = useState(true);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IFormInput>();
 
   const switchSignUpMode = () => {
     setSignUpMode((prevMode) => !prevMode);
+    reset();
   };
 
   const onSubmit: SubmitHandler<IFormInput> = async (formData: IUser) => {
     console.log(formData);
-    const signUpResponse = await signUp(formData);
-    console.log(signUpResponse);
+
+    const response = isSignUpMode
+      ? await signUp(formData)
+      : await signIn(formData);
+    console.log(response);
+    reset();
   };
+
+  /*Test User
+   * test@test.com
+   * testtest
+   * test
+   */
 
   return (
     <div className={`${classes["auth-wrapper"]} flex`}>
@@ -87,6 +99,7 @@ const Auth = () => {
         {errors.password && (
           <p className={classes["error-text"]}>{errors.password.message}</p>
         )}
+        {/* change to custom component */}
         <input type="submit" value={isSignUpMode ? "Sign Up" : "Sign In"} />
       </form>
       {isSignUpMode ? (

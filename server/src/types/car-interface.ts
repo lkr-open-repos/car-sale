@@ -28,6 +28,18 @@ enum Currency {
   TRY = "TRY",
 }
 
+enum Colors {
+  BLACK = "BLACK",
+  WHITE = "WHITE",
+  SILVER = "SILVER",
+  RED = "RED",
+  BLUE = "BLUE",
+  GREEN = "GREEN",
+  YELLOW = "YELLOW",
+  BROWN = "BROWN",
+  PURPLE = "PURPLE",
+}
+
 export interface ICar {
   user: Schema.Types.ObjectId;
   used: boolean;
@@ -36,6 +48,8 @@ export interface ICar {
   series: string;
   model: string;
   year: number;
+  color: Colors;
+  metallicColor: boolean;
   mileage: string;
   transmissionType: TransmissionType;
   fuelType: FuelType;

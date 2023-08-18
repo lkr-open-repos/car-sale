@@ -1,9 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 
-import "./App.css";
 import Layout from "./components/layouts/Layout/Layout";
 import Home from "./pages/Home/Home";
-import CarSearch from "./pages/CarSearch";
+import CarSearch from "./pages/CarSearch/CarSearch";
 import Car from "./pages/Car";
 import Auth from "./pages/Auth/Auth";
 

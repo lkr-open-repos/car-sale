@@ -17,8 +17,16 @@ export const usersApiSlice = ApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
+    signIn: builder.mutation({
+      query: ({ email, password }) => ({
+        url: "users/signIn",
+        method: "POST",
+        body: { email, password },
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetAllUsersQuery, useSignUpMutation } = usersApiSlice;
+export const { useGetAllUsersQuery, useSignUpMutation, useSignInMutation } =
+  usersApiSlice;

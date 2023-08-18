@@ -5,7 +5,7 @@ import Button from "../../components/shared/Button/Button";
 
 const QuickSearch = () => {
   return (
-    <form className={classes["quick-search"]}>
+    <form className={`${classes["quick-search"]} grid`}>
       <DropDown
         valuePairs={[
           { value: "Brand", text: "Brand" },
@@ -32,7 +32,10 @@ const QuickSearch = () => {
           { value: "2021", text: "2021" },
         ]}
       />
-      <Button>SEARCH</Button>
+      <div className={`${classes["search-buttons"]} grid`}>
+        <Button>SEARCH</Button>
+        <a href="/search">Detailed Search</a>
+      </div>
     </form>
   );
 };
