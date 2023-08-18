@@ -53,8 +53,7 @@ export const signIn = async (
   }
 
   res.json({
-    userId: signInData.user.id,
-    email: signInData.user.email,
+    user: { id: signInData.user.id, email: signInData.user.email },
     token: signInData.token,
   });
 };

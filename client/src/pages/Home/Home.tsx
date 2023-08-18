@@ -8,9 +8,7 @@ const Home = () => {
       <section className={classes["search"]}>
         <QuickSearch />
       </section>
-      <section className={classes["cars"]}>
-        <Cars />
-      </section>
+      <section className={classes["cars"]}>{/* <Cars /> */}</section>
     </>
   );
 };

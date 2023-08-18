@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 import classes from "./Auth.module.css";
-import { useSignUpMutation, useSignInMutation } from "../../api/userApiSlice";
+import {
+  useSignUpMutation,
+  useSignInMutation,
+} from "../../app/api/authApiSlice";
 import { IUser } from "../../types/user-interface";
+import { useSelector } from "react-redux";
+import { selectCurrentUser, setAuth } from "../../app/authSlice";
 
 interface IFormInput {
   email: string;
@@ -14,6 +20,9 @@ interface IFormInput {
 const Auth = () => {
   const [signUp] = useSignUpMutation();
   const [signIn] = useSignInMutation();
+  const dispatch = useDispatch();
+
+  const user = useSelector(selectCurrentUser);
 
   const [isSignUpMode, setSignUpMode] = useState(true);
 
@@ -29,13 +38,17 @@ const Auth = () => {
     reset();
   };
 
-  const onSubmit: SubmitHandler<IFormInput> = async (formData: IUser) => {
-    console.log(formData);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
+  const onSubmit: SubmitHandler<IFormInput> = async (formData: IUser) => {
     const response = isSignUpMode
       ? await signUp(formData)
       : await signIn(formData);
+    dispatch(setAuth(response));
     console.log(response);
+
     reset();
   };
 

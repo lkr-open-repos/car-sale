@@ -1,6 +1,6 @@
 import React from "react";
 
-const brandSelectOptions = () => {
+const BrandSelectOptions = () => {
   return (
     <>
       <option value="">Any</option>
@@ -46,4 +46,4 @@ const brandSelectOptions = () => {
   );
 };
 
-export default brandSelectOptions;
+export default BrandSelectOptions;

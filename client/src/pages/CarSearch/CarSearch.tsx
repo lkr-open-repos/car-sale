@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import classes from "./CarSearch.module.css";
 import { ICar } from "../../types/car-interface";
-import BrandSelectOptions from "../atomic/brandSelectOptions";
+import BrandSelectOptions from "../atomic/BrandSelectOptions";
 import ColorSelectOptions from "../atomic/ColorSelectOptions";
 
 interface IFormInput extends ICar {

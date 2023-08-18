@@ -4,15 +4,15 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
-import { ApiProvider } from "@reduxjs/toolkit/query/react";
-import { ApiSlice } from "./api/ApiSlice.ts";
+import { store } from "./app/store.ts";
+import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ApiProvider api={ApiSlice}>
+    <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ApiProvider>
+    </Provider>
   </React.StrictMode>
 );
