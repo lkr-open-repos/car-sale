@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useDispatch } from "react-redux";
 
 import classes from "./Auth.module.css";
-import {
-  useSignUpMutation,
-  useSignInMutation,
-} from "../../app/api/authApiSlice";
+
 import { IUser } from "../../types/user-interface";
-import { useSelector } from "react-redux";
-import { selectCurrentUser, setAuth } from "../../app/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectCurrentToken,
+  selectCurrentUser,
+  setAuth,
+} from "../../app/authSlice";
+import {
+  useSignInMutation,
+  useSignUpMutation,
+} from "../../app/api/authApiSlice";
 
 interface IFormInput {
   email: string;
@@ -21,10 +25,11 @@ const Auth = () => {
   const [signUp] = useSignUpMutation();
   const [signIn] = useSignInMutation();
   const dispatch = useDispatch();
-
   const user = useSelector(selectCurrentUser);
+  const token = useSelector(selectCurrentToken);
 
   const [isSignUpMode, setSignUpMode] = useState(true);
+  const [signError, setSignError] = useState(null);
 
   const {
     register,
@@ -33,23 +38,42 @@ const Auth = () => {
     formState: { errors },
   } = useForm<IFormInput>();
 
+  const signHelper = async (formData: IUser) => {
+    if (formData.name) {
+      let response;
+      try {
+        response = await signUp(formData).unwrap();
+        dispatch(setAuth(response));
+        localStorage.setItem("userData", JSON.stringify({ user, token }));
+      } catch (err: any) {
+        throw err.data.message;
+      }
+    }
+    let response;
+    try {
+      response = await signIn(formData).unwrap();
+      dispatch(setAuth(response));
+      localStorage.setItem("userData", JSON.stringify({ user, token }));
+    } catch (err: any) {
+      throw err.data.message;
+    }
+  };
+
   const switchSignUpMode = () => {
     setSignUpMode((prevMode) => !prevMode);
     reset();
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
 
   const onSubmit: SubmitHandler<IFormInput> = async (formData: IUser) => {
-    const response = isSignUpMode
-      ? await signUp(formData)
-      : await signIn(formData);
-    dispatch(setAuth(response));
-    console.log(response);
-
-    reset();
+    try {
+      await signHelper(formData);
+    } catch (err: any) {
+      setSignError(err);
+    }
   };
 
   /*Test User
@@ -61,16 +85,21 @@ const Auth = () => {
   return (
     <div className={`${classes["auth-wrapper"]} flex`}>
       <h1>{isSignUpMode ? "Sign Up" : "Sign In"}</h1>
+
       <form
         className={`${classes["auth-form"]} flex`}
         onSubmit={handleSubmit(onSubmit)}
       >
+        {signError ? (
+          <p className={classes["error-text"]}>{signError}!</p>
+        ) : null}
         <label>E-mail</label>
         <input
           type="text"
           placeholder="email"
           {...register("email", {
             required: "Email is required",
+            onChange: () => setSignError(null),
             pattern: {
               value:
                 /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -95,6 +124,9 @@ const Auth = () => {
                 },
               })}
             />
+            {errors.name && (
+              <p className={classes["error-text"]}>{errors.name.message}</p>
+            )}
           </>
         ) : null}
         <label>Password</label>
@@ -103,6 +135,7 @@ const Auth = () => {
           placeholder="password"
           {...register("password", {
             required: "Password is required",
+            onChange: () => setSignError(null),
             minLength: {
               value: 6,
               message: "Password must be at least 6 characters long",
@@ -112,7 +145,8 @@ const Auth = () => {
         {errors.password && (
           <p className={classes["error-text"]}>{errors.password.message}</p>
         )}
-        {/* change to custom component */}
+
+        {/* change input to custom button component */}
         <input type="submit" value={isSignUpMode ? "Sign Up" : "Sign In"} />
       </form>
       {isSignUpMode ? (

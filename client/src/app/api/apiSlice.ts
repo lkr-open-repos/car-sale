@@ -15,10 +15,12 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithSignOut = async (args: any, api: any, extraOptions: any) => {
   let result = await baseQuery(args, api, extraOptions);
-  if (result.error) {
-    api.dispatch(signOut());
-  }
+  console.log(result);
 
+  if (result.error?.status === 401) {
+    api.dispatch(signOut());
+    localStorage.removeItem("userData");
+  }
   return result;
 };
 

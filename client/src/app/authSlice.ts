@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface IRootState {
   auth: {
-    user: {} | null;
+    user: { id: string; email: string } | null;
     token: string | null;
   };
 }

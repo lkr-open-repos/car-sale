@@ -34,7 +34,7 @@ export const signUpService = async (
     token = jwt.sign(
       { userId: createdUser.id, email: createdUser.email },
       process.env.JWT_SECRET!,
-      { expiresIn: "1h" }
+      { expiresIn: "15s" }
     );
   } catch (err) {
     throw throwErrorHelper(

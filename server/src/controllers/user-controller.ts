@@ -32,8 +32,7 @@ export const signUp = async (
   }
 
   res.status(201).json({
-    userId: signUpData.user.id,
-    email: signUpData.user.email,
+    user: { id: signUpData.user.id, email: signUpData.user.email },
     token: signUpData.token,
   });
 };
