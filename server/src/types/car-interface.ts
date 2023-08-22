@@ -57,7 +57,6 @@ export interface ICar {
   engineDisplacement: number;
   enginePower: number;
   traction: string;
-  fuelTankCapacity: number;
   paintChanged: boolean;
   eligibleForTrade: boolean;
   adDate: string;

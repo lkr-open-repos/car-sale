@@ -10,6 +10,15 @@ enum FuelType {
   HYBRID = "HYBRID",
 }
 
+enum BodyType {
+  HATCHBACK = "HATCHBACK",
+  SEDAN = "SEDAN",
+  SUV = "SUV",
+  COUPE = "COUPE",
+  CONVERTIBLE = "CONVERTIBLE",
+  PICKUP = "PICKUP",
+}
+
 enum Seller {
   OWNER = "OWNER",
   GALLERY = "GALLERY",
@@ -45,11 +54,10 @@ export interface ICar {
   mileage: string;
   transmissionType: TransmissionType;
   fuelType: FuelType;
-  bodyType: string;
+  bodyType: BodyType;
   engineDisplacement: number;
   enginePower: number;
   traction: string;
-  fuelTankCapacity: number;
   paintChanged: boolean;
   eligibleForTrade: boolean;
   adDate: string;

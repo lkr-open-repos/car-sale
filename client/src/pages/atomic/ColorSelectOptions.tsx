@@ -1,18 +1,16 @@
-import React from "react";
-
 const ColorSelectOptions = () => {
   return (
     <>
-      <option value="">Any</option>
-      <option value="black">Black</option>
-      <option value="white">White</option>
-      <option value="silver">Silver</option>
-      <option value="red">Red</option>
-      <option value="blue">Blue</option>
-      <option value="green">Green</option>
-      <option value="yellow">Yellow</option>
-      <option value="brown">Brown</option>
-      <option value="purple">Purple</option>
+      <option value="">Color (Any)</option>
+      <option value="BLACK">Black</option>
+      <option value="WHITE">White</option>
+      <option value="SILVER">Silver</option>
+      <option value="RED">Red</option>
+      <option value="BLUE">Blue</option>
+      <option value="GREEN">Green</option>
+      <option value="YELLOW">Yellow</option>
+      <option value="BROWN">Brown</option>
+      <option value="PURPLE">Purple</option>
     </>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 const BrandSelectOptions = () => {
   return (
     <>
-      <option value="">Any</option>
+      <option value="">Brand (Any)</option>
       <option value="audi">Audi</option>
       <option value="bmw">BMW</option>
       <option value="ford">Ford</option>
