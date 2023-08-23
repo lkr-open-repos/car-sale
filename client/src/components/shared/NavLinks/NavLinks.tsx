@@ -14,7 +14,7 @@ const NavLinks = () => {
         <NavLink to="/search">Search</NavLink>
       </li>
       <li>
-        <NavLink to="/sell">Sell Car</NavLink>
+        <NavLink to="/createcar">Sell Car</NavLink>
       </li>
       <li>
         <NavLink to="/about">About Us</NavLink>

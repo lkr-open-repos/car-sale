@@ -6,7 +6,7 @@ import TopBrands from "./atomic/TopBrands/TopBrands";
 const Footer = () => {
   return (
     <footer className={`${classes["footer"]} grid wrapper`}>
-      <LogoSection />
+      <LogoSection isFooter={true} />
       <TopBrands />
       <NavLinks />
     </footer>

@@ -3,7 +3,7 @@ import { IRootState, signOut } from "../authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${import.meta.env.VITE_BACKEND_URL}`,
-  //   credentials: "include",
+  // credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as IRootState).auth.token;
     if (token) {
@@ -15,8 +15,6 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithSignOut = async (args: any, api: any, extraOptions: any) => {
   let result = await baseQuery(args, api, extraOptions);
-  console.log(result);
-
   if (result.error?.status === 401) {
     api.dispatch(signOut());
     localStorage.removeItem("userData");
@@ -26,5 +24,6 @@ const baseQueryWithSignOut = async (args: any, api: any, extraOptions: any) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithSignOut,
+  tagTypes: ["Cars"],
   endpoints: (builder) => ({}),
 });

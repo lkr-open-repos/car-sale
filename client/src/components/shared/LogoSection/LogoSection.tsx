@@ -1,16 +1,24 @@
+import { Link } from "react-router-dom";
 import carIcon from "../../../assets/icons/carIcon.svg";
+import carIconFooter from "../../../assets/icons/carIconFooter.svg";
 import classes from "./LogoSection.module.css";
 
-const LogoSection = () => {
+interface IProps {
+  isFooter?: boolean;
+}
+
+const LogoSection = ({ isFooter }: IProps) => {
   return (
-    <div className={classes["logo-section"]}>
-      <div className={classes["logo"]}>
-        <img src={carIcon} alt="" />
+    <Link to="/">
+      <div className={classes["logo-section"]}>
+        <div className={classes["logo"]}>
+          <img src={isFooter ? carIconFooter : carIcon} alt="logo icon" />
+        </div>
+        <div className={classes["logo-text"]}>
+          <h2>CAR SALE</h2>
+        </div>
       </div>
-      <div className={classes["logo-text"]}>
-        <h2>CAR SALE</h2>
-      </div>
-    </div>
+    </Link>
   );
 };
 

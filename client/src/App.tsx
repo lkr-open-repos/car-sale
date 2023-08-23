@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "./components/layouts/Layout/Layout";
 import Home from "./pages/Home/Home";
 import CarSearch from "./pages/CarSearch/CarSearch";
-import Car from "./pages/Car";
+import Car from "./pages/Car/Car";
 import Auth from "./pages/Auth/Auth";
+import CreateCar from "./pages/CreateCar/CreateCar";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function App() {
           <Route path="/auth/" element={<Auth />} />
           <Route path="/cars/:cid" element={<Car />} />
           <Route path="/search" element={<CarSearch />} />
+          <Route path="/createcar" element={<CreateCar />} />
         </Routes>
       </Layout>
     </>

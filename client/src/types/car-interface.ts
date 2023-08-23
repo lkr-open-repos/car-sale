@@ -44,26 +44,26 @@ enum Colors {
 
 export interface ICar {
   user: string;
-  used: boolean;
-  brand: string;
-  series: string;
-  model: string;
-  year: number;
-  color: Colors;
-  metallicColor: boolean;
-  mileage: string;
-  transmissionType: TransmissionType;
-  fuelType: FuelType;
-  bodyType: BodyType;
-  engineDisplacement: number;
-  enginePower: number;
-  traction: string;
-  paintChanged: boolean;
-  eligibleForTrade: boolean;
+  used: boolean; //
+  brand: string; //
+  series: string; //
+  year: number; //
+  color: Colors; //
+  metallicColor: boolean; //
+  mileage: string; //
+  transmissionType: TransmissionType; //
+  fuelType: FuelType; //
+  bodyType: BodyType; //
+  engineDisplacement: number; //
+  enginePower: number; //
+  traction: string; //
+  paintChanged: boolean; //
+  eligibleForTrade: boolean; //
   adDate: string;
-  seller: Seller;
-  price: string;
-  currency: Currency;
-  image?: string;
+  seller: Seller; //
+  price: string; //
+  currency: Currency; //
+  image?: string; //
+  details?: string;
   id: string;
 }
