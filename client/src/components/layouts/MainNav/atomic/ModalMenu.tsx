@@ -26,7 +26,7 @@ const ModalMenu: React.FC<IProps> = ({ closeToggle }) => {
             />
           </div>
           <nav className={classes["modal-menu_navigation_links"]}>
-            <NavLinks />
+            <NavLinks closeToggle={closeToggleHandler} />
           </nav>
           <UserLink modal={true} />
         </div>

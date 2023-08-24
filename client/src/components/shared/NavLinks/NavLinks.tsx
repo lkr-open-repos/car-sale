@@ -4,23 +4,37 @@
 
 import { NavLink } from "react-router-dom";
 
-const NavLinks = () => {
+interface IProps {
+  closeToggle?: () => void;
+}
+
+const NavLinks: React.FC<IProps> = ({ closeToggle }) => {
   return (
     <ul>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/" onClick={closeToggle}>
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/search">Search</NavLink>
+        <NavLink to="/search" onClick={closeToggle}>
+          Search
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/createcar">Sell Car</NavLink>
+        <NavLink to="/createcar" onClick={closeToggle}>
+          Sell Car
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/about">About Us</NavLink>
+        <NavLink to="/about" onClick={closeToggle}>
+          About Us
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/contact">Contact</NavLink>
+        <NavLink to="/contact" onClick={closeToggle}>
+          Contact
+        </NavLink>
       </li>
     </ul>
   );
