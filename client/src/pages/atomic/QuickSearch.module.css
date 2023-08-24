@@ -1,3 +1,9 @@
+.quick-search-wrapper {
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
 .quick-search {
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
