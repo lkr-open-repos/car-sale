@@ -46,7 +46,6 @@ export interface ICar {
   brand: string;
   type: Type;
   series: string;
-  model: string;
   year: number;
   color: Colors;
   metallicColor: boolean;
@@ -64,6 +63,7 @@ export interface ICar {
   price: string;
   currency: Currency;
   image?: string;
+  details?: string;
 }
 
 export interface CarDocument extends ICar, Document {}

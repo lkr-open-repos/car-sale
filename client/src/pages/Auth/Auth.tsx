@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import classes from "./Auth.module.css";
 
-import { IUser } from "../../types/user-interface";
+import { IUser } from "@/types/user-interface";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectCurrentToken,
   selectCurrentUser,
   setAuth,
-} from "../../app/authSlice";
-import {
-  useSignInMutation,
-  useSignUpMutation,
-} from "../../app/api/authApiSlice";
+} from "@/app/authSlice";
+import { useSignInMutation, useSignUpMutation } from "@/app/api/authApiSlice";
 
 interface IFormInput {
   email: string;

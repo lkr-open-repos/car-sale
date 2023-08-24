@@ -1,6 +1,6 @@
 import React from "react";
-import userIcon from "../../../../assets/icons/userIcon.svg";
-import classes from "./UserLink.module.css";
+import userIcon from "@/assets/icons/userIcon.svg";
+import classes from "@/components/layouts/MainNav/atomic/UserLink.module.css";
 
 interface IProps {
   modal?: boolean;

@@ -1,4 +1,4 @@
-import CarForm from "../atomic/CarForm";
+import CarForm from "@/pages/atomic/CarForm";
 import classes from "./CarSearch.module.css";
 
 const CarSearch = () => {

@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 
 import classes from "./Cars.module.css";
-import CarCard from "../CarCard/CarCard";
-import { useGetAllCarsQuery } from "../../../app/api/carsApiSplice";
-import { ICar } from "../../../types/car-interface";
+import CarCard from "@/components/shared/CarCard/CarCard";
+import { useGetAllCarsQuery } from "@/app/api/carsApiSplice";
 
 const Cars: React.FC = () => {
   const { data, isSuccess } = useGetAllCarsQuery();

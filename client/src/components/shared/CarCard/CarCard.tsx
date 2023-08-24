@@ -1,9 +1,8 @@
 import React from "react";
-import { ICar } from "../../../types/car-interface";
+import { ICar } from "@/types/car-interface";
 import classes from "./CarCard.module.css";
-import { currencyIconHelper } from "../../../utils/currencyIconHelper";
-import favHeartIcon from "../../../assets/icons/favHeartIcon.svg";
-import favStarIcon from "../../../assets/icons/favStarIcon.svg";
+import { currencyIconHelper } from "@/utils/currencyIconHelper";
+import favStarIcon from "@/assets/icons/favStarIcon.svg";
 import { Link } from "react-router-dom";
 
 interface IProps {

@@ -1,5 +1,5 @@
-import Cars from "../../components/shared/Cars/Cars";
-import QuickSearch from "../atomic/QuickSearch";
+import Cars from "@/components/shared/Cars/Cars";
+import QuickSearch from "@/pages/atomic/QuickSearch";
 import classes from "./Home.module.css";
 
 const Home = () => {

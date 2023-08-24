@@ -2,13 +2,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { ReactNode } from "react";
 
 import classes from "./CarForm.module.css";
-import { ICar } from "../../types/car-interface";
-import BrandSelectOptions from "../atomic/BrandSelectOptions";
-import ColorSelectOptions from "../atomic/ColorSelectOptions";
-import FuelTypeOptions from "../atomic/FuelTypeOptions";
-import BodyTypeOptions from "../atomic/BodyTypeOptions";
-import CurrencyOptions from "../atomic/CurrencyOptions";
-import Button from "../../components/shared/Button/Button";
+import { ICar } from "@/types/car-interface";
+import BrandSelectOptions from "@/pages/atomic/BrandSelectOptions";
+import ColorSelectOptions from "@/pages/atomic/ColorSelectOptions";
+import FuelTypeOptions from "@/pages/atomic/FuelTypeOptions";
+import BodyTypeOptions from "@/pages/atomic/BodyTypeOptions";
+import CurrencyOptions from "@/pages/atomic/CurrencyOptions";
+import Button from "@/components/shared/Button/Button";
 
 interface IFormInput extends ICar {
   minYear: string;

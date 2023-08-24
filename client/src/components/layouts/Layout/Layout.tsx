@@ -1,7 +1,7 @@
 import React from "react";
-import MainNav from "../MainNav/MainNav";
-import Footer from "../Footer/Footer";
-import classes from "./Layout.module.css";
+import MainNav from "@/components/layouts/MainNav/MainNav";
+import Footer from "@/components/layouts/Footer/Footer";
+import classes from "@/components/layouts/Layout/Layout.module.css";
 
 interface Props {
   children: React.ReactNode;

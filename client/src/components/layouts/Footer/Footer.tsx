@@ -1,7 +1,7 @@
-import classes from "./Footer.module.css";
-import LogoSection from "../../shared/LogoSection/LogoSection";
-import NavLinks from "../../shared/NavLinks/NavLinks";
-import TopBrands from "./atomic/TopBrands/TopBrands";
+import classes from "@/components/layouts/Footer/Footer.module.css";
+import LogoSection from "@/components/shared/LogoSection/LogoSection";
+import NavLinks from "@/components/shared/NavLinks/NavLinks";
+import TopBrands from "@/components/layouts/Footer/atomic/TopBrands/TopBrands";
 
 const Footer = () => {
   return (

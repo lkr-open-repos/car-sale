@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { useGetCarByIdQuery } from "../../app/api/carsApiSplice";
+import { useGetCarByIdQuery } from "@/app/api/carsApiSplice";
 import classes from "./car.module.css";
 
 const Car = () => {

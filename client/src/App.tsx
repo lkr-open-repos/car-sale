@@ -1,14 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 
-import { setAuth } from "./app/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import Layout from "./components/layouts/Layout/Layout";
-import Home from "./pages/Home/Home";
-import CarSearch from "./pages/CarSearch/CarSearch";
-import Car from "./pages/Car/Car";
-import Auth from "./pages/Auth/Auth";
-import CreateCar from "./pages/CreateCar/CreateCar";
+import { setAuth } from "@/app/authSlice";
+import { useDispatch } from "react-redux";
+import Layout from "@/components/layouts/Layout/Layout";
+import Home from "@/pages/Home/Home";
+import CarSearch from "@/pages/CarSearch/CarSearch";
+import Car from "@/pages/Car/Car";
+import Auth from "@/pages/Auth/Auth";
+import CreateCar from "@/pages/CreateCar/CreateCar";
 
 function App() {
   const dispatch = useDispatch();

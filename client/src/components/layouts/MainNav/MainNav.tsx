@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import classes from "./MainNav.module.css";
-import { useMediaQuery } from "../../../hooks/useMediaQuery";
-import ModalMenu from "./atomic/ModalMenu";
-import SmallScreenMenu from "./atomic/SmallScreenMenu";
-import BigScreenMenu from "./atomic/BigScreenMenu";
-import LogoSection from "../../shared/LogoSection/LogoSection";
-import UserLink from "./atomic/UserLink";
+import { useState } from "react";
+import classes from "@/components/layouts/MainNav/MainNav.module.css";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import ModalMenu from "@/components/layouts/MainNav/atomic/ModalMenu";
+import SmallScreenMenu from "@/components/layouts/MainNav/atomic/SmallScreenMenu";
+import BigScreenMenu from "@/components/layouts/MainNav/atomic/BigScreenMenu";
+import LogoSection from "@/components/shared/LogoSection/LogoSection";
+import UserLink from "@/components/layouts/MainNav/atomic/UserLink";
 
 const MainNav = () => {
   const isBigScreen: boolean = useMediaQuery("(min-width: 1060px)");

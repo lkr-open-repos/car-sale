@@ -8,7 +8,6 @@ const carSchema = new Schema<CarDocument>(
     brand: { type: String, required: true },
     type: { type: String, required: true, enum: ["NEW", "USED"] },
     series: { type: String, required: true },
-    model: { type: String, required: true },
     year: { type: Number, required: true },
     mileage: { type: String, required: true },
     transmissionType: {
@@ -25,7 +24,6 @@ const carSchema = new Schema<CarDocument>(
     engineDisplacement: { type: Number, required: true },
     enginePower: { type: Number, required: true },
     traction: { type: String, required: true, enum: ["AUTOMATIC", "MANUAL"] },
-    fuelTankCapacity: { type: Number, required: true },
     paintChanged: { type: Boolean, required: true, default: false },
     eligibleForTrade: { type: Boolean, required: true, default: false },
     adDate: { type: String, required: true },

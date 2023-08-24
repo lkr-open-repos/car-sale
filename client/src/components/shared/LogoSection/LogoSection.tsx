@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import carIcon from "../../../assets/icons/carIcon.svg";
-import carIconFooter from "../../../assets/icons/carIconFooter.svg";
+import carIcon from "@/assets/icons/carIcon.svg";
+import carIconFooter from "@/assets/icons/carIconFooter.svg";
 import classes from "./LogoSection.module.css";
 
 interface IProps {

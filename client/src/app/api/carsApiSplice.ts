@@ -1,4 +1,4 @@
-import { ICar } from "../../types/car-interface";
+import { ICar } from "@/types/car-interface";
 import { apiSlice } from "./apiSlice";
 
 export const carsApiSlice = apiSlice.injectEndpoints({

@@ -1,8 +1,8 @@
 import React from "react";
-import classes from "./ModalMenu.module.css";
-import closeIcon from "../../../../assets/icons/closeMenuIcon.svg";
-import NavLinks from "../../../shared/NavLinks/NavLinks";
-import UserLink from "./UserLink";
+import classes from "@/components/layouts/MainNav/atomic/ModalMenu.module.css";
+import closeIcon from "@/assets/icons/closeMenuIcon.svg";
+import NavLinks from "@/components/shared/NavLinks/NavLinks";
+import UserLink from "@/components/layouts/MainNav/atomic/UserLink";
 
 interface IProps {
   closeToggle: (isOpen: boolean) => void;
