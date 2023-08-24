@@ -1,7 +1,7 @@
 const BrandSelectOptions = () => {
   return (
     <>
-      <option value="">Brand (Any)</option>
+      <option value="">Brand</option>
       <option value="audi">Audi</option>
       <option value="bmw">BMW</option>
       <option value="ford">Ford</option>

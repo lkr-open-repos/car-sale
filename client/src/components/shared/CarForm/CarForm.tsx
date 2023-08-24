@@ -9,6 +9,7 @@ import FuelTypeOptions from "./FuelTypeOptions";
 import BodyTypeOptions from "@/components/shared/CarForm/BodyTypeOptions";
 import CurrencyOptions from "./CurrencyOptions";
 import Button from "@/components/shared/Button/Button";
+import uploadIcon from "@/assets/icons/uploadIcon.svg";
 
 interface IFormInput extends ICar {
   minYear: string;
@@ -44,6 +45,131 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
       : console.log("search", formData);
   };
 
+  let imageField;
+  let yearField;
+  let mileageField;
+  let engineDispleacementField;
+  let enginePowerField;
+  let priceField;
+  let detailsField;
+
+  if (isCreate) {
+    detailsField = (
+      <textarea cols={30} rows={8} {...register("details")}></textarea>
+    );
+    imageField = (
+      <div className={`${classes["image-wrapper"]}`}>
+        <label
+          className={`${classes["upload-image-label"]} flex`}
+          htmlFor="upload"
+        >
+          <img src={uploadIcon} alt="" />
+          Upload Car Image
+          <input
+            type="file"
+            id="upload"
+            className={classes["upload-image"]}
+            accept="image/*"
+            {...register("image")}
+          />
+        </label>
+      </div>
+    );
+    yearField = <input type="text" placeholder="Year" {...register("year")} />;
+    mileageField = (
+      <input type="text" placeholder="Mileage" {...register("mileage")} />
+    );
+    engineDispleacementField = (
+      <input
+        {...register("engineDisplacement")}
+        type="text"
+        placeholder="Engine Displacement"
+      />
+    );
+    enginePowerField = (
+      <input
+        {...register("enginePower")}
+        type="text"
+        placeholder="Engine Power"
+      />
+    );
+    priceField = (
+      <input type="text" placeholder="Price" {...register("price")} />
+    );
+  } else {
+    imageField = "";
+    priceField = (
+      <>
+        <input
+          type="text"
+          placeholder="Minimum Price"
+          {...register("minPrice")}
+        />
+        <input
+          type="text"
+          placeholder="Maximum Price"
+          {...register("maxPrice")}
+        />
+      </>
+    );
+    enginePowerField = (
+      <div className={`${classes["min-max-wrapper"]} flex`}>
+        <input
+          {...register("minEnginePower")}
+          type="text"
+          placeholder="Minimum Engine Power"
+        />
+        <input
+          {...register("maxEnginePower")}
+          type="text"
+          placeholder="Maximum Engine Power"
+        />
+      </div>
+    );
+    engineDispleacementField = (
+      <div className={`${classes["min-max-wrapper"]} flex`}>
+        <input
+          {...register("minEngineDisplacement")}
+          type="text"
+          placeholder="Minimum Engine Displacement"
+        />
+        <input
+          {...register("maxEngineDisplacement")}
+          type="text"
+          placeholder="Maximum Engine Displacement"
+        />
+      </div>
+    );
+    mileageField = (
+      <div className={`${classes["min-max-wrapper"]} flex`}>
+        <input
+          type="text"
+          placeholder="Minimum mileage"
+          {...register("minMileage")}
+        />
+        <input
+          type="text"
+          placeholder="Maximum mileage"
+          {...register("maxMileage")}
+        />
+      </div>
+    );
+    yearField = (
+      <div className={`${classes["min-max-wrapper"]} flex`}>
+        <input
+          type="text"
+          placeholder="Minimum Year"
+          {...register("minYear")}
+        />
+        <input
+          type="text"
+          placeholder="Maximum Year"
+          {...register("maxYear")}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={`${classes["car-form-wrapper"]} flex`}>
       {children || ""}
@@ -51,6 +177,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
         className={`${classes["car-form_form"]} grid`}
         onSubmit={handleSubmit(onSubmit)}
       >
+        {imageField}
         <select {...register("brand")}>
           <BrandSelectOptions />
         </select>
@@ -65,18 +192,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
             Used
           </label>
         </div>
-        <div className={`${classes["min-max-wrapper"]} flex`}>
-          <input
-            type="text"
-            placeholder="Minimum Year"
-            {...register("minYear")}
-          />
-          <input
-            type="text"
-            placeholder="Maximum Year"
-            {...register("maxYear")}
-          />
-        </div>
+        {yearField}
         <select {...register("color")}>
           <ColorSelectOptions />
         </select>
@@ -90,18 +206,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
             matte
           </label>
         </div>
-        <div className={`${classes["min-max-wrapper"]} flex`}>
-          <input
-            type="text"
-            placeholder="Minimum mileage"
-            {...register("minMileage")}
-          />
-          <input
-            type="text"
-            placeholder="Maximum mileage"
-            {...register("maxMileage")}
-          />
-        </div>
+        {mileageField}
         <div className={`${classes["radio-wrapper"]} flex`}>
           <label>
             <input
@@ -126,30 +231,8 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
         <select {...register("bodyType")}>
           <BodyTypeOptions />
         </select>
-        <div className={`${classes["min-max-wrapper"]} flex`}>
-          <input
-            {...register("minEngineDisplacement")}
-            type="text"
-            placeholder="Minimum Engine Displacement"
-          />
-          <input
-            {...register("maxEngineDisplacement")}
-            type="text"
-            placeholder="Maximum Engine Displacement"
-          />
-        </div>
-        <div className={`${classes["min-max-wrapper"]} flex`}>
-          <input
-            {...register("minEnginePower")}
-            type="text"
-            placeholder="Minimum Engine Power"
-          />
-          <input
-            {...register("maxEnginePower")}
-            type="text"
-            placeholder="Maximum Engine Power"
-          />
-        </div>
+        {engineDispleacementField}
+        {enginePowerField}
         <div className={`${classes["radio-wrapper"]} flex`}>
           <label>
             <input {...register("traction")} type="radio" value="4x2" />
@@ -162,7 +245,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
         </div>
         <label className={`${classes["checkbox_label"]} flex`}>
           <input {...register("paintChanged")} type="checkbox" />
-          No Paint Change
+          Paint Change
         </label>
         <label className={`${classes["checkbox_label"]} flex`}>
           <input {...register("eligibleForTrade")} type="checkbox" />
@@ -179,20 +262,12 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
           </label>
         </div>
         <div className={`${classes["min-max-wrapper"]} flex`}>
-          <input
-            type="text"
-            placeholder="Minimum Price"
-            {...register("minPrice")}
-          />
-          <input
-            type="text"
-            placeholder="Maximum Price"
-            {...register("maxPrice")}
-          />
+          {priceField}
+          <select {...register("currency")}>
+            <CurrencyOptions />
+          </select>
         </div>
-        <select {...register("currency")}>
-          <CurrencyOptions />
-        </select>
+        {detailsField}
         <Button isSubmit={true}>Search</Button>
       </form>
     </div>

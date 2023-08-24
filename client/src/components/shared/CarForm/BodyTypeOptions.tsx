@@ -1,7 +1,7 @@
 const BodyTypeOptions = () => {
   return (
     <>
-      <option value="">Body Type (Any)</option>
+      <option value="">Body Type</option>
       <option value="HATCHBACK">Hatchback</option>
       <option value="SEDAN">Sedan</option>
       <option value="SUV">SUV</option>

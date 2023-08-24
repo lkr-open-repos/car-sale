@@ -1,7 +1,7 @@
 const FuelTypeOptions = () => {
   return (
     <>
-      <option value="">Fuel Type (Any)</option>
+      <option value="">Fuel Type</option>
       <option value="PETROL">Petrol</option>
       <option value="DIESEL">Diesel</option>
       <option value="ELECTRIC">Electric</option>

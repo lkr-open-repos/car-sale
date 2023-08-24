@@ -1,7 +1,7 @@
 const ColorSelectOptions = () => {
   return (
     <>
-      <option value="">Color (Any)</option>
+      <option value="">Color</option>
       <option value="BLACK">Black</option>
       <option value="WHITE">White</option>
       <option value="SILVER">Silver</option>

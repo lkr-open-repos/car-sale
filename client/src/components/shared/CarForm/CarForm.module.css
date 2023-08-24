@@ -10,7 +10,6 @@
 }
 
 .car-form_form {
-  grid-template-columns: 1fr;
   justify-content: center;
   align-items: center;
   gap: 1rem;
@@ -20,15 +19,46 @@
   height: 4rem;
 }
 
+.upload-image-label {
+  color: var(--text-color);
+  background-color: var(--foreground-color);
+  height: 3rem;
+  width: 70%;
+  border: none;
+  padding: 0.5rem;
+  box-shadow: var(--box-shadow);
+  font-size: var(--h2-font-size);
+  font-weight: 500;
+  cursor: pointer;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-image-label img {
+  height: 2rem;
+}
+
+.upload-image {
+  display: none;
+}
+
 .min-max-wrapper {
   flex-direction: row;
-  gap: 0.2rem;
+  justify-content: space-between;
+}
+
+.min-max-wrapper * {
+  flex-direction: row;
+  justify-content: space-between;
+  width: 48%;
 }
 
 .radio-wrapper {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  min-width: 350px;
 }
 
 .radio-wrapper * {
@@ -44,6 +74,11 @@
   margin: 0.5rem;
 }
 
-.car-form_form input[type="submit"] {
-  grid-column: span 1;
+.min-max-wrapper select {
+  width: 20%;
+}
+
+.car-form-wrapper textarea {
+  height: fit-content;
+  resize: vertical;
 }
