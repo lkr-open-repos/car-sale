@@ -1,5 +1,5 @@
 import classes from "./CreateCar.module.css";
-import CarForm from "@/pages/atomic/CarForm";
+import CarForm from "@/components/shared/CarForm/CarForm";
 
 const CreateCar = () => {
   return (

@@ -3,11 +3,11 @@ import { ReactNode } from "react";
 
 import classes from "./CarForm.module.css";
 import { ICar } from "@/types/car-interface";
-import BrandSelectOptions from "@/pages/atomic/BrandSelectOptions";
-import ColorSelectOptions from "@/pages/atomic/ColorSelectOptions";
-import FuelTypeOptions from "@/pages/atomic/FuelTypeOptions";
-import BodyTypeOptions from "@/pages/atomic/BodyTypeOptions";
-import CurrencyOptions from "@/pages/atomic/CurrencyOptions";
+import BrandSelectOptions from "./BrandSelectOptions";
+import ColorSelectOptions from "./ColorSelectOptions";
+import FuelTypeOptions from "./FuelTypeOptions";
+import BodyTypeOptions from "@/components/shared/CarForm/BodyTypeOptions";
+import CurrencyOptions from "./CurrencyOptions";
 import Button from "@/components/shared/Button/Button";
 
 interface IFormInput extends ICar {
@@ -24,7 +24,7 @@ interface IFormInput extends ICar {
 }
 
 interface IProps {
-  children: ReactNode;
+  children?: ReactNode;
   isCreate?: boolean;
 }
 
@@ -46,7 +46,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
 
   return (
     <div className={`${classes["car-form-wrapper"]} flex`}>
-      {children}
+      {children || ""}
       <form
         className={`${classes["car-form_form"]} grid`}
         onSubmit={handleSubmit(onSubmit)}
@@ -54,8 +54,8 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
         <select {...register("brand")}>
           <BrandSelectOptions />
         </select>
+        <input {...register("series")} type="text" placeholder="Series" />
         <div className={`${classes["radio-wrapper"]} flex`}>
-          <span></span>
           <label>
             <input {...register("used")} type="radio" value="new" />
             New
@@ -66,8 +66,16 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
           </label>
         </div>
         <div className={`${classes["min-max-wrapper"]} flex`}>
-          <input type="text" placeholder="Min Year" {...register("minYear")} />
-          <input type="text" placeholder="Max Year" {...register("maxYear")} />
+          <input
+            type="text"
+            placeholder="Minimum Year"
+            {...register("minYear")}
+          />
+          <input
+            type="text"
+            placeholder="Maximum Year"
+            {...register("maxYear")}
+          />
         </div>
         <select {...register("color")}>
           <ColorSelectOptions />
