@@ -37,20 +37,25 @@ const Auth = () => {
 
   const signHelper = async (formData: IUser) => {
     if (formData.name) {
-      let response;
       try {
-        response = await signUp(formData).unwrap();
+        const response = await signUp(formData).unwrap();
         dispatch(setAuth(response));
-        localStorage.setItem("userData", JSON.stringify({ user, token }));
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({ user: response.user, token: response.token })
+        );
       } catch (err: any) {
         throw err.data.message;
       }
     }
-    let response;
+
     try {
-      response = await signIn(formData).unwrap();
+      const response = await signIn(formData).unwrap();
       dispatch(setAuth(response));
-      localStorage.setItem("userData", JSON.stringify({ user, token }));
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({ user: response.user, token: response.user })
+      );
     } catch (err: any) {
       throw err.data.message;
     }

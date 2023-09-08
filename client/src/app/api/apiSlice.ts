@@ -3,7 +3,7 @@ import { IRootState, signOut } from "@/app/authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${import.meta.env.VITE_BACKEND_URL}`,
-  // credentials: "include",
+  credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as IRootState).auth.token;
     if (token) {

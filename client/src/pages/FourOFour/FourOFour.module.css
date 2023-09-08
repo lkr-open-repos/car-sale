@@ -1,0 +1,22 @@
+.four-o-four-wrapper {
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.four-o-four-text {
+  flex-direction: column;
+  max-width: 30rem;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  color: var(--foreground-color);
+}
+
+.four-o-four-text h1 {
+  font-size: 6rem;
+}
+
+.four-o-four-text h2 {
+  text-align: center;
+}

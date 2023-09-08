@@ -12,7 +12,20 @@ export const carsApiSlice = apiSlice.injectEndpoints({
       query: (cid) => `cars/${cid}`,
       transformResponse: (res: { car: ICar }) => res.car,
     }),
+    createCar: builder.mutation<ICar, any>({
+      query: (newCar) => ({
+        url: "/cars",
+        method: "POST",
+        body: newCar,
+        formData: true,
+        user: {
+          id: newCar.user,
+        },
+      }),
+      invalidatesTags: ["Cars"],
+    }),
   }),
 });
 
-export const { useGetAllCarsQuery, useGetCarByIdQuery } = carsApiSlice;
+export const { useGetAllCarsQuery, useGetCarByIdQuery, useCreateCarMutation } =
+  carsApiSlice;

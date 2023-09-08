@@ -9,6 +9,8 @@ import CarSearch from "@/pages/CarSearch/CarSearch";
 import Car from "@/pages/Car/Car";
 import Auth from "@/pages/Auth/Auth";
 import CreateCar from "@/pages/CreateCar/CreateCar";
+import FourOFour from "@/pages/FourOFour/FourOFour";
+import CheckAuth from "./components/layouts/ChechAuth/CheckAuth";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +31,10 @@ function App() {
           <Route path="/auth/" element={<Auth />} />
           <Route path="/cars/:cid" element={<Car />} />
           <Route path="/search" element={<CarSearch />} />
-          <Route path="/createcar" element={<CreateCar />} />
+          <Route element={<CheckAuth />}>
+            <Route path="/createcar" element={<CreateCar />} />
+          </Route>
+          <Route path="*" element={<FourOFour />} />
         </Routes>
       </Layout>
     </>

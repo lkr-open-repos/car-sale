@@ -1,5 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { selectCurrentUser } from "@/app/authSlice";
 
 import classes from "./CarForm.module.css";
 import { ICar } from "@/types/car-interface";
@@ -10,6 +12,8 @@ import BodyTypeOptions from "@/components/shared/CarForm/BodyTypeOptions";
 import CurrencyOptions from "./CurrencyOptions";
 import Button from "@/components/shared/Button/Button";
 import uploadIcon from "@/assets/icons/uploadIcon.svg";
+import { useCreateCarMutation } from "@/app/api/carsApiSplice";
+import { getCurrentDateHelper } from "@/utils/getCurrentDateHelper";
 
 interface IFormInput extends ICar {
   minYear: string;
@@ -22,6 +26,7 @@ interface IFormInput extends ICar {
   maxEngineDisplacement: string;
   minEnginePower: string;
   maxEnginePower: string;
+  imageFile: FileList;
 }
 
 interface IProps {
@@ -30,6 +35,11 @@ interface IProps {
 }
 
 const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
+  const [createCar, { error }] = useCreateCarMutation();
+  const user = useSelector(selectCurrentUser);
+
+  const [imageFile, setImageFile] = useState<File | undefined>(undefined);
+
   const {
     register,
     handleSubmit,
@@ -38,11 +48,36 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
   } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = async (
-    formData: Partial<ICar>
+    data: Partial<IFormInput>
   ) => {
-    isCreate
-      ? console.log("create", formData)
-      : console.log("search", formData);
+    if (isCreate) {
+      let formData = new FormData();
+
+      // for (let key in data) {
+      //   const value = data[key];
+
+      //   if (typeof value === "string") formData.append(key, String(value));
+      // }
+      if (data.imageFile) {
+        setImageFile(data.imageFile[0]);
+        imageFile ? formData.append("image", imageFile) : null;
+      }
+      formData.append("brand", data.brand!);
+      for (const val of formData.entries()) {
+        console.log("formData values", val);
+      }
+
+      await createCar(formData).unwrap();
+    }
+
+    // isCreate
+    //   ? await createCar({
+    //       ...formData,
+    //       user: user?.id,
+    //       image: imageFile,
+    //       adDate: getCurrentDateHelper(),
+    //     }).unwrap()
+    //   : console.log("search", formData);
   };
 
   let imageField;
@@ -70,7 +105,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
             id="upload"
             className={classes["upload-image"]}
             accept="image/*"
-            {...register("image")}
+            {...register("imageFile")}
           />
         </label>
       </div>
@@ -184,11 +219,11 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
         <input {...register("series")} type="text" placeholder="Series" />
         <div className={`${classes["radio-wrapper"]} flex`}>
           <label>
-            <input {...register("used")} type="radio" value="new" />
+            <input {...register("used")} type="radio" value="false" />
             New
           </label>
           <label>
-            <input {...register("used")} type="radio" value="used" />
+            <input {...register("used")} type="radio" value="true" />
             Used
           </label>
         </div>
@@ -212,7 +247,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
             <input
               {...register("transmissionType")}
               type="radio"
-              value="auto"
+              value="AUTOMATIC"
             />
             Automatic
           </label>
@@ -220,7 +255,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
             <input
               {...register("transmissionType")}
               type="radio"
-              value="manuel"
+              value="MANUAL"
             />
             Manuel
           </label>
@@ -235,8 +270,8 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
         {enginePowerField}
         <div className={`${classes["radio-wrapper"]} flex`}>
           <label>
-            <input {...register("traction")} type="radio" value="4x2" />
-            4x2
+            <input {...register("traction")} type="radio" value="2x4" />
+            2x4
           </label>
           <label>
             <input {...register("traction")} type="radio" value="4x4" />
@@ -268,7 +303,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
           </select>
         </div>
         {detailsField}
-        <Button isSubmit={true}>Search</Button>
+        <Button isSubmit={true}>{isCreate ? "SELL" : "SEARCH"}</Button>
       </form>
     </div>
   );
