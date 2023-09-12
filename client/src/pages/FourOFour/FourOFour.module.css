@@ -20,3 +20,7 @@
 .four-o-four-text h2 {
   text-align: center;
 }
+
+.four-o-four-text a {
+  font-size: var(--h3-font-size);
+}
