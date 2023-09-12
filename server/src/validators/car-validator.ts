@@ -8,20 +8,29 @@ export const createCarValidation: ValidationChain[] = [
     .withMessage("Used must be a boolean value")
     .toBoolean(),
   body("brand").trim().notEmpty().withMessage("Brand is required"),
-  body("type")
-    .trim()
-    .notEmpty()
-    .withMessage("Type is required")
-    .isIn(["NEW", "USED"])
-    .withMessage("Invalid type"),
   body("series").trim().notEmpty().withMessage("Series is required"),
-  body("model").trim().notEmpty().withMessage("Model is required"),
   body("year")
     .trim()
     .notEmpty()
     .withMessage("Year is required")
     .isInt()
     .withMessage("Year must be an integer"),
+  body("color")
+    .trim()
+    .notEmpty()
+    .withMessage("Color is requered")
+    .isIn([
+      "BLACK",
+      "WHITE",
+      "SILVER",
+      "RED",
+      "BLUE",
+      "GREEN",
+      "YELLOW",
+      "BROWN",
+      "PURPLE",
+    ]),
+  body("metallicColor").notEmpty(),
   body("mileage").trim().notEmpty().withMessage("Mileage is required"),
   body("transmissionType")
     .trim()
@@ -48,18 +57,12 @@ export const createCarValidation: ValidationChain[] = [
     .withMessage("Engine Power is required")
     .isNumeric()
     .withMessage("Engine Power must be a number"),
-  body("Traction")
+  body("traction")
     .trim()
     .notEmpty()
     .withMessage("Traction is required")
-    .isIn(["AUTOMATIC", "MANUAL"])
+    .isIn(["2x4", "4x4"])
     .withMessage("Invalid traction"),
-  body("fuelTankCapacity")
-    .trim()
-    .notEmpty()
-    .withMessage("Fuel Tank Capacity is required")
-    .isNumeric()
-    .withMessage("Fuel Tank Capacity must be a number"),
   body("paintChanged")
     .trim()
     .isBoolean()

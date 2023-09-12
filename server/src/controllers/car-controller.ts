@@ -19,11 +19,18 @@ export const createCar = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  console.log(req.file);
+
   validationHelper(validationResult(req), next);
   let createdCar: CarDocument;
   try {
-    createdCar = await createCarService(req.body);
+    createdCar = await createCarService({
+      ...req.body,
+      image: req.file?.path,
+    });
   } catch (err) {
+    console.log(err);
+
     return next(
       throwErrorHelper(err, "Creating car failed, please try again.")
     );

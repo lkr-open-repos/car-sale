@@ -6,9 +6,23 @@ const carSchema = new Schema<CarDocument>(
     user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     used: { type: Boolean, default: false, required: true },
     brand: { type: String, required: true },
-    type: { type: String, required: true, enum: ["NEW", "USED"] },
     series: { type: String, required: true },
     year: { type: Number, required: true },
+    color: {
+      type: String,
+      required: true,
+      enum: [
+        "BLACK",
+        "WHITE",
+        "SILVER",
+        "RED",
+        "BLUE",
+        "GREEN",
+        "YELLOW",
+        "BROWN",
+        "PURPLE",
+      ],
+    },
     mileage: { type: String, required: true },
     transmissionType: {
       type: String,
@@ -23,7 +37,7 @@ const carSchema = new Schema<CarDocument>(
     bodyType: { type: String, required: true },
     engineDisplacement: { type: Number, required: true },
     enginePower: { type: Number, required: true },
-    traction: { type: String, required: true, enum: ["AUTOMATIC", "MANUAL"] },
+    traction: { type: String, required: true, enum: ["2x4", "4x4"] },
     paintChanged: { type: Boolean, required: true, default: false },
     eligibleForTrade: { type: Boolean, required: true, default: false },
     adDate: { type: String, required: true },
@@ -39,7 +53,9 @@ const carSchema = new Schema<CarDocument>(
       enum: ["USD", "EUR", "TRY"],
     },
     image: { type: String, required: false },
+    details: { type: String, required: false },
   },
+
   { timestamps: true }
 );
 

@@ -11,7 +11,6 @@ interface IProps {
 
 const CarCard: React.FC<IProps> = ({ car }) => {
   const currencyIcon = currencyIconHelper(car.currency);
-  console.log(car.id);
 
   return (
     <Link to={`/cars/${car.id}`}>
@@ -22,9 +21,11 @@ const CarCard: React.FC<IProps> = ({ car }) => {
         <div className={classes["car-image"]}>
           <img
             className={classes["car-image_img"]}
+            crossOrigin="anonymous"
             src={
-              car.image ||
-              "https://images.pexels.com/photos/2876872/pexels-photo-2876872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              car?.image && typeof car.image === "string"
+                ? import.meta.env.VITE_BACKEND_URL + car.image
+                : "https://images.pexels.com/photos/2876872/pexels-photo-2876872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             }
             alt=""
           />

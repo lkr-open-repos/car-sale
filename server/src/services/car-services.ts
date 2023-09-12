@@ -7,7 +7,7 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
     user,
     used,
     brand,
-    type,
+    series,
     year,
     color,
     metallicColor,
@@ -23,16 +23,18 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
     adDate,
     seller,
     price,
+    details,
     currency,
     image,
   } = carData;
+
   let createdCar: CarDocument;
 
   createdCar = await Car.create({
     user,
     used,
     brand,
-    type,
+    series,
     year,
     color,
     metallicColor,
@@ -49,6 +51,7 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
     seller,
     price,
     currency,
+    details,
     image,
   });
   await createdCar.save();
@@ -97,7 +100,6 @@ export const updateCarService = async (
     user,
     used,
     brand,
-    type,
     year,
     color,
     metallicColor,
@@ -114,6 +116,7 @@ export const updateCarService = async (
     seller,
     price,
     currency,
+    details,
     image,
   } = carData;
 
@@ -133,7 +136,6 @@ export const updateCarService = async (
   car.user = user;
   car.used = used;
   car.brand = brand;
-  car.type = type;
   car.year = year;
   car.color = color;
   car.metallicColor = metallicColor;
@@ -151,6 +153,7 @@ export const updateCarService = async (
   car.price = price;
   car.currency = currency;
   car.image = image;
+  car.details = details;
 
   car = await car.save();
   return car;

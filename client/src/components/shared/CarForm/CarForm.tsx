@@ -14,8 +14,9 @@ import Button from "@/components/shared/Button/Button";
 import uploadIcon from "@/assets/icons/uploadIcon.svg";
 import { useCreateCarMutation } from "@/app/api/carsApiSplice";
 import { getCurrentDateHelper } from "@/utils/getCurrentDateHelper";
+import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
 
-interface IFormInput extends ICar {
+export interface IFormInput extends ICar {
   minYear: string;
   maxYear: string;
   minMileage: string;
@@ -51,33 +52,12 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
     data: Partial<IFormInput>
   ) => {
     if (isCreate) {
-      let formData = new FormData();
-
-      // for (let key in data) {
-      //   const value = data[key];
-
-      //   if (typeof value === "string") formData.append(key, String(value));
-      // }
       if (data.imageFile) {
         setImageFile(data.imageFile[0]);
-        imageFile ? formData.append("image", imageFile) : null;
       }
-      formData.append("brand", data.brand!);
-      for (const val of formData.entries()) {
-        console.log("formData values", val);
-      }
-
+      const formData = appendFormDataHelper(data, user, imageFile);
       await createCar(formData).unwrap();
     }
-
-    // isCreate
-    //   ? await createCar({
-    //       ...formData,
-    //       user: user?.id,
-    //       image: imageFile,
-    //       adDate: getCurrentDateHelper(),
-    //     }).unwrap()
-    //   : console.log("search", formData);
   };
 
   let imageField;

@@ -12,11 +12,6 @@ enum FuelType {
   HYBRID = "HYBRID",
 }
 
-enum Type {
-  NEW = "NEW",
-  USED = "USED",
-}
-
 enum Seller {
   OWNER = "OWNER",
   GALLERY = "GALLERY",
@@ -44,7 +39,6 @@ export interface ICar {
   user: Schema.Types.ObjectId;
   used: boolean;
   brand: string;
-  type: Type;
   series: string;
   year: number;
   color: Colors;

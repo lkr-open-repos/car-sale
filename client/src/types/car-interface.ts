@@ -63,7 +63,7 @@ export interface ICar {
   seller: Seller; //
   price: string; //
   currency: Currency; //
-  image?: File; //
+  image?: File | string; //
   details?: string;
   id: string;
 }

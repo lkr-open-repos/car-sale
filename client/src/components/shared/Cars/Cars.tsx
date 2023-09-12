@@ -11,9 +11,7 @@ const Cars: React.FC = () => {
 
   const cars = data || [];
 
-  useEffect(() => {
-    console.log(cars);
-  }, [cars]);
+  useEffect(() => {}, [cars]);
 
   return (
     <div className={`${classes["cars"]} grid`}>

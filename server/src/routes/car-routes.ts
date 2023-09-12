@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { checkAuthToken } from "../middleware";
+import { Request, Response, NextFunction } from "../types";
 
 import {
   createCar,
@@ -22,7 +23,20 @@ router.get("/user/:uid", getCarsByUser);
 
 router.use(checkAuthToken);
 
-router.post("/", fileUpload.single("image"), createCarValidation, createCar);
+router.post(
+  "/",
+  // (req: Request, res: Response, next: NextFunction) => {
+  //   console.log(req.body, "before multer body");
+  //   next();
+  // },
+  fileUpload.single("image"),
+  // (req: Request, res: Response, next: NextFunction) => {
+  //   console.log("after multer body", req.body);
+  //   next();
+  // },
+  createCarValidation,
+  createCar
+);
 
 router.patch(
   "/:cid",

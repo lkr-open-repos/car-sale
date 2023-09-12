@@ -1,4 +1,5 @@
 import multer from "multer";
+import path from "path";
 import { v1 as uuidv1 } from "uuid";
 
 const MIME_TYPE_MAP: { [key: string]: string } = {
@@ -15,7 +16,7 @@ export const fileUpload = multer({
   },
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "uploads/images");
+      cb(null, "./uploads/images");
     },
     filename: (req, file, cb) => {
       const ext = MIME_TYPE_MAP[file.mimetype];
