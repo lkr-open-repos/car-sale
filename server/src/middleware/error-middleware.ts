@@ -10,7 +10,7 @@ export const errorHandler = (
 ): void => {
   if (req.file) {
     fs.unlink(req.file.path, (err) => {
-      console.log(err);
+      // console.log(err);
     });
   }
   if (res.headersSent) {

@@ -23,20 +23,7 @@ router.get("/user/:uid", getCarsByUser);
 
 router.use(checkAuthToken);
 
-router.post(
-  "/",
-  // (req: Request, res: Response, next: NextFunction) => {
-  //   console.log(req.body, "before multer body");
-  //   next();
-  // },
-  fileUpload.single("image"),
-  // (req: Request, res: Response, next: NextFunction) => {
-  //   console.log("after multer body", req.body);
-  //   next();
-  // },
-  createCarValidation,
-  createCar
-);
+router.post("/", fileUpload.single("image"), createCarValidation, createCar);
 
 router.patch(
   "/:cid",
