@@ -66,10 +66,6 @@ const Auth = () => {
     reset();
   };
 
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
-
   const onSubmit: SubmitHandler<IFormInput> = async (formData: IUser) => {
     try {
       await signHelper(formData);

@@ -18,9 +18,10 @@ export const carsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: newCar,
         formData: true,
-        user: {
-          id: String(newCar.get("user")),
-        },
+        // user add on BE?
+        // user: {
+        //   id: String(newCar.get("user")),
+        // },
       }),
       invalidatesTags: ["Cars"],
     }),

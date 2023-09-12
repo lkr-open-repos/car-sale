@@ -13,7 +13,6 @@ import CurrencyOptions from "./CurrencyOptions";
 import Button from "@/components/shared/Button/Button";
 import uploadIcon from "@/assets/icons/uploadIcon.svg";
 import { useCreateCarMutation } from "@/app/api/carsApiSplice";
-import { getCurrentDateHelper } from "@/utils/getCurrentDateHelper";
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
 
 export interface IFormInput extends ICar {
