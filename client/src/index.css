@@ -79,3 +79,8 @@ img {
 .wrapper {
   padding: 2rem 1rem;
 }
+
+.error-text {
+  color: #ff0033;
+  font-weight: bold;
+}

@@ -35,11 +35,6 @@
   color: green;
 }
 
-.error-text {
-  color: #ff0033;
-  font-weight: bold;
-}
-
 .auth-form input:last-child {
   margin-top: 2rem;
 }

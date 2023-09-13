@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 const CheckAuth = () => {
+  // refresh redirects to auth. maybe useEffect solves.
   const dispatch = useDispatch();
   let userId;
   let storageUserData = localStorage.getItem("userData");
@@ -17,6 +18,8 @@ const CheckAuth = () => {
     ) {
       userId = useAuth();
     } else {
+      console.log("checkAuth", "removing localstorage");
+
       localStorage.removeItem("userData");
       dispatch(signOut());
     }

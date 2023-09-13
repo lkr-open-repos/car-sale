@@ -4,12 +4,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import classes from "./Auth.module.css";
 
 import { IUser } from "@/types/user-interface";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectCurrentToken,
-  selectCurrentUser,
-  setAuth,
-} from "@/app/authSlice";
+import { useDispatch } from "react-redux";
+import { setAuth } from "@/app/authSlice";
 import { useSignInMutation, useSignUpMutation } from "@/app/api/authApiSlice";
 
 interface IFormInput {
@@ -22,8 +18,6 @@ const Auth = () => {
   const [signUp] = useSignUpMutation();
   const [signIn] = useSignInMutation();
   const dispatch = useDispatch();
-  const user = useSelector(selectCurrentUser);
-  const token = useSelector(selectCurrentToken);
 
   const [isSignUpMode, setSignUpMode] = useState(true);
   const [signError, setSignError] = useState(null);
@@ -88,9 +82,7 @@ const Auth = () => {
         className={`${classes["auth-form"]} flex`}
         onSubmit={handleSubmit(onSubmit)}
       >
-        {signError ? (
-          <p className={classes["error-text"]}>{signError}!</p>
-        ) : null}
+        {signError && <p className={`error-text`}>{signError}!</p>}
         <label>E-mail</label>
         <input
           type="text"
@@ -105,9 +97,7 @@ const Auth = () => {
             },
           })}
         />
-        {errors.email && (
-          <p className={classes["error-text"]}>{errors.email.message}</p>
-        )}
+        {errors.email && <p className={`error-text`}>{errors.email.message}</p>}
         {isSignUpMode ? (
           <>
             <label>Name</label>
@@ -123,7 +113,7 @@ const Auth = () => {
               })}
             />
             {errors.name && (
-              <p className={classes["error-text"]}>{errors.name.message}</p>
+              <p className={`error-text`}>{errors.name.message}</p>
             )}
           </>
         ) : null}
@@ -141,7 +131,7 @@ const Auth = () => {
           })}
         />
         {errors.password && (
-          <p className={classes["error-text"]}>{errors.password.message}</p>
+          <p className={`error-text`}>{errors.password.message}</p>
         )}
 
         {/* change input to custom button component */}

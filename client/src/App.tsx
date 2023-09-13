@@ -27,6 +27,7 @@ function App() {
       ) {
         dispatch(setAuth(userData));
       } else {
+        console.log("app.ts", "removing localstorage");
         localStorage.removeItem("userData");
       }
     }
