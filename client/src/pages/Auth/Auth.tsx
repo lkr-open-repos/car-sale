@@ -36,25 +36,25 @@ const Auth = () => {
   } = useForm<IFormInput>();
 
   const signHelper = async (formData: IUser) => {
-    if (formData.name) {
-      try {
-        const response = await signUp(formData).unwrap();
-        dispatch(setAuth(response));
-        localStorage.setItem(
-          "userData",
-          JSON.stringify({ user: response.user, token: response.token })
-        );
-      } catch (err: any) {
-        throw err.data.message;
-      }
-    }
-
     try {
-      const response = await signIn(formData).unwrap();
+      let response;
+      if (formData.name) {
+        response = await signUp(formData).unwrap();
+      } else {
+        response = await signIn(formData).unwrap();
+      }
       dispatch(setAuth(response));
+      const backendTokenExpiresIn = 1000 * 60 * 60 * 24 * 7; //7 days
+      const tokenExpiration = new Date(
+        new Date().getTime() + backendTokenExpiresIn - 1
+      );
       localStorage.setItem(
         "userData",
-        JSON.stringify({ user: response.user, token: response.user })
+        JSON.stringify({
+          user: response.user,
+          token: response.token,
+          tokenExpiration: tokenExpiration.toISOString(),
+        })
       );
     } catch (err: any) {
       throw err.data.message;

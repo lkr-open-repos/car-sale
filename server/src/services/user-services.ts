@@ -34,7 +34,7 @@ export const signUpService = async (
     token = jwt.sign(
       { userId: createdUser.id, email: createdUser.email },
       process.env.JWT_SECRET!,
-      { expiresIn: "15 days" }
+      { expiresIn: "7 days" }
     );
   } catch (err) {
     throw throwErrorHelper(
@@ -69,7 +69,7 @@ export const signInService = async (
     token = jwt.sign(
       { userId: user.id, email: user.email },
       process.env.JWT_SECRET!,
-      { expiresIn: "1h" }
+      { expiresIn: "7 days" }
     );
   } catch (err) {
     throw throwErrorHelper(err, "Signin failed, please try again.");
