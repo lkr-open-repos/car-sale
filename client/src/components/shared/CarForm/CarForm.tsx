@@ -215,8 +215,6 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
     );
   }
 
-  console.log(errors);
-
   return (
     <div className={`${classes["car-form-wrapper"]} flex`}>
       {children || ""}

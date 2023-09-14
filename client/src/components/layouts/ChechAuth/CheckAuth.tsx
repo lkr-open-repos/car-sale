@@ -2,9 +2,10 @@ import { signOut } from "@/app/authSlice";
 import { useAuth } from "@/hooks/useAuth";
 import { IUserData } from "@/types/user-data-interface";
 import { useDispatch } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const CheckAuth = () => {
+  const location = useLocation();
   // refresh redirects to auth. maybe useEffect solves.
   const dispatch = useDispatch();
   let userId;
@@ -25,7 +26,11 @@ const CheckAuth = () => {
     }
   }
 
-  return !!userId ? <Outlet /> : <Navigate to="/auth" />;
+  return !!userId ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/auth" state={{ from: location }} replace />
+  );
 };
 
 export default CheckAuth;

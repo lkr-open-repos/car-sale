@@ -7,6 +7,8 @@ import { IUser } from "@/types/user-interface";
 import { useDispatch } from "react-redux";
 import { setAuth } from "@/app/authSlice";
 import { useSignInMutation, useSignUpMutation } from "@/app/api/authApiSlice";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import Button from "@/components/shared/Button/Button";
 
 interface IFormInput {
   email: string;
@@ -18,6 +20,10 @@ const Auth = () => {
   const [signUp] = useSignUpMutation();
   const [signIn] = useSignInMutation();
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [isSignUpMode, setSignUpMode] = useState(true);
   const [signError, setSignError] = useState(null);
@@ -63,6 +69,7 @@ const Auth = () => {
   const onSubmit: SubmitHandler<IFormInput> = async (formData: IUser) => {
     try {
       await signHelper(formData);
+      navigate(from, { replace: true });
     } catch (err: any) {
       setSignError(err);
     }
@@ -133,9 +140,7 @@ const Auth = () => {
         {errors.password && (
           <p className={`error-text`}>{errors.password.message}</p>
         )}
-
-        {/* change input to custom button component */}
-        <input type="submit" value={isSignUpMode ? "Sign Up" : "Sign In"} />
+        <Button isSubmit={true}>{isSignUpMode ? "Sign Up" : "Sign In"}</Button>
       </form>
       {isSignUpMode ? (
         <p>
