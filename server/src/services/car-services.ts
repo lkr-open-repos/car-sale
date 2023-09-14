@@ -91,6 +91,21 @@ export const getCarsByUserService = async (
   return cars;
 };
 
+export const getCarsBySearchDataService = async (searchData: {}): Promise<
+  CarDocument[]
+> => {
+  let cars: CarDocument[] = [];
+  console.log("serch service");
+
+  try {
+    cars = await Car.find({ ...searchData });
+    console.log({ ...searchData });
+  } catch (err) {
+    console.log(err);
+  }
+  return cars;
+};
+
 export const updateCarService = async (
   carId: string,
   userId: string,

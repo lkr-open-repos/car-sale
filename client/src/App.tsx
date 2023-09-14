@@ -12,6 +12,7 @@ import CreateCar from "@/pages/CreateCar/CreateCar";
 import FourOFour from "@/pages/FourOFour/FourOFour";
 import CheckAuth from "./components/layouts/ChechAuth/CheckAuth";
 import { IUserData } from "./types/user-data-interface";
+import CarSearchResults from "./pages/CarSearchResults";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
           <Route path="/auth/" element={<Auth />} />
           <Route path="/cars/:cid" element={<Car />} />
           <Route path="/search" element={<CarSearch />} />
+          <Route path="/searchresults" element={<CarSearchResults />} />
           <Route element={<CheckAuth />}>
             <Route path="/createcar" element={<CreateCar />} />
           </Route>

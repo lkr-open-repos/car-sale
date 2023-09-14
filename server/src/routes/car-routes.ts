@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { checkAuthToken } from "../middleware";
-import { Request, Response, NextFunction } from "../types";
 
 import {
   createCar,
@@ -9,6 +8,7 @@ import {
   getCarsByUser,
   deleteCar,
   updateCar,
+  getCarsBySearchData,
 } from "../controllers";
 import { createCarValidation } from "../validators";
 import { fileUpload } from "../middleware";
@@ -16,6 +16,8 @@ import { fileUpload } from "../middleware";
 const router = Router();
 
 router.get("/", getAllCars);
+
+router.get("/search", getCarsBySearchData);
 
 router.get("/:cid", getCarById);
 

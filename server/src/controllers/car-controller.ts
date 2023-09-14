@@ -11,8 +11,10 @@ import {
   getAllCarsService,
   getCarByIdService,
   getCarsByUserService,
+  deleteCarService,
+  getCarsBySearchDataService,
+  updateCarService,
 } from "../services";
-import { deleteCarService, updateCarService } from "../services/car-services";
 
 export const createCar = async (
   req: Request,
@@ -78,6 +80,22 @@ export const getCarsByUser = async (
   }
 
   res.json({ cars: cars.map((car) => car.toObject({ getters: true })) });
+};
+
+export const getCarsBySearchData = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  let cars: CarDocument[];
+  try {
+    console.log(req.body);
+
+    cars = await getCarsBySearchDataService(req.body);
+  } catch (err) {
+    return next(throwErrorHelper(err));
+  }
+  res.json({ cars });
 };
 
 export const updateCar = async (

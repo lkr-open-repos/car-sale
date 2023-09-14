@@ -3,6 +3,9 @@ export {
   getAllCarsService,
   getCarByIdService,
   getCarsByUserService,
+  getCarsBySearchDataService,
+  deleteCarService,
+  updateCarService,
 } from "./car-services";
 
 export {

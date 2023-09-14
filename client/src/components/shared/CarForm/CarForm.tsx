@@ -11,9 +11,13 @@ import BodyTypeOptions from "@/components/shared/CarForm/BodyTypeOptions";
 import CurrencyOptions from "./CurrencyOptions";
 import Button from "@/components/shared/Button/Button";
 import uploadIcon from "@/assets/icons/uploadIcon.svg";
-import { useCreateCarMutation } from "@/app/api/carsApiSplice";
+import {
+  useCreateCarMutation,
+  useGetCarSearchMutation,
+} from "@/app/api/carsApiSplice";
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
 import { ICarFormInput } from "@/types/car-form-input-interface";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   children?: ReactNode;
@@ -21,8 +25,11 @@ interface IProps {
 }
 
 const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
+  const [carSearch] = useGetCarSearchMutation();
   const [createCar] = useCreateCarMutation();
   const user = useSelector(selectCurrentUser);
+
+  const navigate = useNavigate();
 
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [imageThumbnail, setImageThumbnail] = useState("");
@@ -48,6 +55,9 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
         .catch((error) => {
           setQueryError(error.data.message);
         });
+    } else {
+      const searchResults = await carSearch({ ...data }).unwrap();
+      navigate("/searchresults", { replace: true, state: { searchResults } });
     }
     reset();
   };

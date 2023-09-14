@@ -11,11 +11,9 @@ export const checkAuthToken = (
   if (req.method === "OPTIONS") {
     return next();
   }
-  console.log("auth-middleware", req.headers);
 
   try {
     const token = req.headers.authorization?.split(" ")[1];
-    console.log("auth-middleware", req.headers.authorization);
 
     if (!token) {
       throw new Error("You are not logged in.");
