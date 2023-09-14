@@ -16,7 +16,15 @@
 }
 
 .car-form_form > *:not(p) {
-  height: 4rem;
+  min-height: 4rem;
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+.image-thumbnail {
+  height: 100px;
 }
 
 .upload-image-label {

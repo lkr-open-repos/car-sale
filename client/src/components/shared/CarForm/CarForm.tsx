@@ -4,7 +4,6 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { selectCurrentUser } from "@/app/authSlice";
 
 import classes from "./CarForm.module.css";
-import { ICar } from "@/types/car-interface";
 import BrandSelectOptions from "./BrandSelectOptions";
 import ColorSelectOptions from "./ColorSelectOptions";
 import FuelTypeOptions from "./FuelTypeOptions";
@@ -14,31 +13,19 @@ import Button from "@/components/shared/Button/Button";
 import uploadIcon from "@/assets/icons/uploadIcon.svg";
 import { useCreateCarMutation } from "@/app/api/carsApiSplice";
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
-
-export interface IFormInput extends ICar {
-  minYear: string;
-  maxYear: string;
-  minMileage: string;
-  maxMileage: string;
-  minPrice: string;
-  maxPrice: string;
-  minEngineDisplacement: string;
-  maxEngineDisplacement: string;
-  minEnginePower: string;
-  maxEnginePower: string;
-  imageFile: FileList;
-}
+import { ICarFormInput } from "@/types/car-form-input-interface";
 
 interface IProps {
   children?: ReactNode;
   isCreate?: boolean;
 }
 
-const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
-  const [createCar, { error }] = useCreateCarMutation();
+const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
+  const [createCar] = useCreateCarMutation();
   const user = useSelector(selectCurrentUser);
 
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
+  const [imageThumbnail, setImageThumbnail] = useState("");
   const [queryError, setQueryError] = useState<string>("");
 
   const {
@@ -46,10 +33,10 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm<ICarFormInput>();
 
-  const onSubmit: SubmitHandler<IFormInput> = async (
-    data: Partial<IFormInput>
+  const onSubmit: SubmitHandler<ICarFormInput> = async (
+    data: Partial<ICarFormInput>
   ) => {
     if (isCreate) {
       if (data.imageFile) {
@@ -62,6 +49,7 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
           setQueryError(error.data.message);
         });
     }
+    reset();
   };
 
   let imageField;
@@ -78,6 +66,11 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
     );
     imageField = (
       <div className={`${classes["image-wrapper"]}`}>
+        <img
+          className={`${classes["image-thumbnail"]}`}
+          src={imageThumbnail}
+          alt="car image thumbnail"
+        />
         <label
           className={`${classes["upload-image-label"]} flex`}
           htmlFor="upload"
@@ -91,6 +84,9 @@ const CarForm: React.FC<IProps> = ({ isCreate, children }) => {
             accept="image/*"
             {...register("imageFile", {
               required: "Car image is required",
+              onChange: (e) => {
+                setImageThumbnail(URL.createObjectURL(e.target.files[0]));
+              },
             })}
           />
         </label>
