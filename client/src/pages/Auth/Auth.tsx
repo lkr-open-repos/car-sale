@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import classes from "./Auth.module.css";
 
 import { IUser } from "@/types/user-interface";
-import { useDispatch } from "react-redux";
-import { setAuth } from "@/app/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentUser, setAuth } from "@/app/authSlice";
 import { useSignInMutation, useSignUpMutation } from "@/app/api/authApiSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Button from "@/components/shared/Button/Button";
@@ -27,6 +27,14 @@ const Auth = () => {
 
   const [isSignUpMode, setSignUpMode] = useState(true);
   const [signError, setSignError] = useState(null);
+
+  const user = useSelector(selectCurrentUser);
+
+  // helps refresh redirecting to login page on a auth required page.
+  // does not seem like a good practice. needs a more elegant way.
+  useEffect(() => {
+    user && navigate(from, { replace: true });
+  }, [user]);
 
   const {
     register,
