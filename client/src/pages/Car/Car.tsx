@@ -41,20 +41,15 @@ const Car = () => {
       <div className={`${classes["car-secondary-info"]} flex`}>
         <h3>
           <span className={classes["car-info-key"]}>Color: </span>
-          {/* {car?.metallicColor ? "metallic" : null} */}{" "}
-          {car?.color || "white"}
+          {car?.color || "white"} {car?.metallicColor ? "metallic" : null}
         </h3>
         <h3>
           <span className={classes["car-info-key"]}>Transmission: </span>
-          {car?.transmissionType}
+          {car?.transmissionType.toLowerCase()}
         </h3>
         <h3>
           <span className={classes["car-info-key"]}>Fuel: </span>
-          {car?.fuelType}
-        </h3>
-        <h3>
-          <span className={classes["car-info-key"]}>Displacement: </span>
-          {car?.engineDisplacement}
+          {car?.fuelType.toLocaleLowerCase()}
         </h3>
         <h3>
           <span className={classes["car-info-key"]}>Power: </span>
@@ -70,7 +65,7 @@ const Car = () => {
         </h3>
         <h3>
           <span className={classes["car-info-key"]}>Traction: </span>
-          {car?.traction || "2x4"}
+          {car?.traction.toLowerCase() || "2x4"}
         </h3>
         <h3>
           <span className={classes["car-info-key"]}>Trade Eligibility: </span>
@@ -89,8 +84,11 @@ const Car = () => {
       </div>
       <div className={`${classes["car-details"]}`}>
         <h3>
-          <span className={classes["car-info-key"]}>More Details: </span>
-          {car?.details}
+          {car?.details && (
+            <span className={classes["car-info-key"]}>
+              More Details: {car?.details}
+            </span>
+          )}
         </h3>
       </div>
     </div>
