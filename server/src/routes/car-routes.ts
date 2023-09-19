@@ -8,7 +8,7 @@ import {
   getCarsByUser,
   deleteCar,
   updateCar,
-  getCarsBySearchData,
+  getCarsBySearch,
 } from "../controllers";
 import { createCarValidation } from "../validators";
 import { fileUpload } from "../middleware";
@@ -17,7 +17,7 @@ const router = Router();
 
 router.get("/", getAllCars);
 
-router.get("/search", getCarsBySearchData);
+router.post("/search", getCarsBySearch);
 
 router.get("/:cid", getCarById);
 

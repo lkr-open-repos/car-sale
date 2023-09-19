@@ -5,7 +5,7 @@ export {
   getCarsByUser,
   updateCar,
   deleteCar,
-  getCarsBySearchData,
+  getCarsBySearch,
 } from "./car-controller";
 
 export {

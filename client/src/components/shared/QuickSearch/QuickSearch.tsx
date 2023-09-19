@@ -1,10 +1,11 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import classes from "./QuickSearch.module.css";
 import Button from "@/components/shared/Button/Button";
 import { ICar } from "@/types/car-interface";
 import BrandSelectOptions from "@/components/shared/CarForm/BrandSelectOptions";
+import { useGetCarSearchMutation } from "@/app/api/carsApiSplice";
 
 interface IFormInput extends ICar {
   maxYear: string;
@@ -14,22 +15,29 @@ interface IFormInput extends ICar {
 // brand, model, price, year
 
 const QuickSearch = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<IFormInput>();
+  const [carSearch] = useGetCarSearchMutation();
 
-  const onSubmit: SubmitHandler<IFormInput> = async (
-    formData: Partial<ICar>
-  ) => {
-    console.log(formData);
+  const navigate = useNavigate();
+
+  const { register, handleSubmit, reset } = useForm<IFormInput>();
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data: Partial<ICar>) => {
+    let searchResults;
+    try {
+      searchResults = await carSearch(data).unwrap();
+    } catch (err) {
+      console.log(err);
+    }
+
+    navigate("/searchresults", {
+      replace: true,
+      state: { carsData: searchResults },
+    });
+    reset();
   };
 
   return (
     <div className={`${classes["quick-search-wrapper"]} flex`}>
-      <h1>Find Your Dream Car</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`${classes["quick-search"]} grid`}

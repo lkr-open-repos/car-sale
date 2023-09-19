@@ -1,6 +1,7 @@
 import { Car, HttpError } from "../models";
 import { CarDocument, ICar } from "../types";
-import { deleteImageHelper } from "../utils";
+import { deleteImageHelper, fillSearchDataHelper } from "../utils";
+import { ICarFormInput } from "../types";
 
 export const createCarService = async (carData: ICar): Promise<CarDocument> => {
   const {
@@ -91,15 +92,14 @@ export const getCarsByUserService = async (
   return cars;
 };
 
-export const getCarsBySearchDataService = async (searchData: {}): Promise<
-  CarDocument[]
-> => {
+export const getCarsBySearchService = async (
+  rawSearchData: Partial<ICarFormInput>
+): Promise<CarDocument[]> => {
   let cars: CarDocument[] = [];
-  console.log("serch service");
+  let searchData: Partial<ICar> = fillSearchDataHelper(rawSearchData);
 
   try {
     cars = await Car.find({ ...searchData });
-    console.log({ ...searchData });
   } catch (err) {
     console.log(err);
   }

@@ -12,7 +12,7 @@ import CreateCar from "@/pages/CreateCar/CreateCar";
 import FourOFour from "@/pages/FourOFour/FourOFour";
 import CheckAuth from "./components/layouts/ChechAuth/CheckAuth";
 import { IUserData } from "./types/user-data-interface";
-import CarSearchResults from "./pages/CarSearchResults";
+import CarSearchResults from "./pages/CarSearchResults/CarSearchResults";
 
 function App() {
   const dispatch = useDispatch();

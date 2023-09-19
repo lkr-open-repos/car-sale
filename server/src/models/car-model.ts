@@ -23,7 +23,7 @@ const carSchema = new Schema<CarDocument>(
         "PURPLE",
       ],
     },
-    mileage: { type: String, required: true },
+    mileage: { type: Number, required: true },
     transmissionType: {
       type: String,
       required: true,
@@ -46,7 +46,7 @@ const carSchema = new Schema<CarDocument>(
       required: true,
       enum: ["OWNER", "GALLERY"],
     },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
     currency: {
       type: String,
       required: true,

@@ -35,29 +35,31 @@ enum Colors {
   PURPLE = "PURPLE",
 }
 
+//fix "any"s with search data helper
+
 export interface ICar {
   user: Schema.Types.ObjectId;
   used: boolean;
   brand: string;
   series: string;
-  year: number;
+  year: any;
   color: Colors;
   metallicColor: boolean;
-  mileage: string;
+  mileage: any;
   transmissionType: TransmissionType;
   fuelType: FuelType;
   bodyType: string;
-  engineDisplacement: number;
-  enginePower: number;
+  engineDisplacement: any;
+  enginePower: any;
   traction: string;
   paintChanged: boolean;
   eligibleForTrade: boolean;
   adDate: string;
   seller: Seller;
-  price: string;
+  price: any;
   currency: Currency;
   image?: string;
-  details?: string;
+  details?: any;
 }
 
 export interface CarDocument extends ICar, Document {}

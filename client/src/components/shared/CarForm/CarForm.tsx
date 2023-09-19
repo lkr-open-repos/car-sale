@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { selectCurrentUser } from "@/app/authSlice";
 
@@ -18,6 +18,7 @@ import {
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
 import { ICarFormInput } from "@/types/car-form-input-interface";
 import { useNavigate } from "react-router-dom";
+import { ICar } from "@/types/car-interface";
 
 interface IProps {
   children?: ReactNode;
@@ -56,8 +57,19 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           setQueryError(error.data.message);
         });
     } else {
-      const searchResults = await carSearch({ ...data }).unwrap();
-      navigate("/searchresults", { replace: true, state: { searchResults } });
+      let searchResults;
+      try {
+        searchResults = await carSearch(data).unwrap();
+      } catch (err) {
+        console.log(err);
+      }
+
+      console.log(searchResults);
+
+      navigate("/searchresults", {
+        replace: true,
+        state: { carsData: searchResults },
+      });
     }
     reset();
   };
@@ -76,11 +88,13 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
     );
     imageField = (
       <div className={`${classes["image-wrapper"]}`}>
-        <img
-          className={`${classes["image-thumbnail"]}`}
-          src={imageThumbnail}
-          alt="car image thumbnail"
-        />
+        {imageThumbnail && (
+          <img
+            className={`${classes["image-thumbnail"]}`}
+            src={imageThumbnail}
+            alt="car image thumbnail"
+          />
+        )}
         <label
           className={`${classes["upload-image-label"]} flex`}
           htmlFor="upload"
@@ -237,7 +251,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           {...register("brand", {
             validate: {
               require: (value) =>
-                (isCreate && value !== "") || "Brand Name Required",
+                !isCreate || value !== "" || "Brand Name Required",
             },
           })}
         >
@@ -250,7 +264,8 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           {...register("series", {
             validate: {
               require: (value) =>
-                (isCreate && value !== "") ||
+                !isCreate ||
+                value !== "" ||
                 "Car Series Required (ex. Corolla, Polo)",
             },
           })}
@@ -264,7 +279,8 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("used", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) ||
+                    !isCreate ||
+                    value !== null ||
                     "Used / New Car Information Needed",
                 },
               })}
@@ -278,7 +294,8 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("used", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) ||
+                    !isCreate ||
+                    value !== null ||
                     "Used / New Car Information Needed",
                 },
               })}
@@ -296,7 +313,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
             validate: {
               require: (value) =>
                 // @ts-ignore
-                (isCreate && value !== "") || "Color Required",
+                !isCreate || value !== "" || "Color Required",
             },
           })}
         >
@@ -311,7 +328,8 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("metallicColor", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) ||
+                    !isCreate ||
+                    value !== null ||
                     "Metallic / Matte color Information Needed",
                 },
               })}
@@ -325,7 +343,8 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("metallicColor", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) ||
+                    !isCreate ||
+                    value !== null ||
                     "Metallic / Matte color Information Needed",
                 },
               })}
@@ -348,7 +367,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("transmissionType", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) || "Transmission Type Needed",
+                    !isCreate || value !== null || "Transmission Type Needed",
                 },
               })}
               type="radio"
@@ -361,7 +380,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("transmissionType", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) || "Transmission Type Needed",
+                    !isCreate || value !== null || "Transmission Type Needed",
                 },
               })}
               type="radio"
@@ -378,7 +397,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
             validate: {
               require: (value) =>
                 // @ts-ignore
-                (isCreate && value !== "") || "Fuel Type Required",
+                !isCreate || value !== "" || "Fuel Type Required",
             },
           })}
         >
@@ -392,7 +411,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
             validate: {
               require: (value) =>
                 // @ts-ignore
-                (isCreate && value !== "") || "Body Type Required",
+                !isCreate || value !== "" || "Body Type Required",
             },
           })}
         >
@@ -415,7 +434,8 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("traction", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) ||
+                    !isCreate ||
+                    value !== null ||
                     "Traction Information Needed",
                 },
               })}
@@ -429,7 +449,8 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("traction", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) ||
+                    !isCreate ||
+                    value !== null ||
                     "Traction Information Needed",
                 },
               })}
@@ -456,7 +477,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("seller", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) || "Seller Information Needed",
+                    !isCreate || value !== null || "Seller Information Needed",
                 },
               })}
               type="radio"
@@ -469,7 +490,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               {...register("seller", {
                 validate: {
                   require: (value) =>
-                    (isCreate && value !== null) || "Seller Information Needed",
+                    !isCreate || value !== null || "Seller Information Needed",
                 },
               })}
               type="radio"
@@ -489,7 +510,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               validate: {
                 require: (value) =>
                   // @ts-ignore
-                  (isCreate && value !== "") || "Currency Required",
+                  !isCreate || value !== "" || "Currency Required",
               },
             })}
           >

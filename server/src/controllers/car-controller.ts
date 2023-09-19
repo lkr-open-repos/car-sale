@@ -12,7 +12,7 @@ import {
   getCarByIdService,
   getCarsByUserService,
   deleteCarService,
-  getCarsBySearchDataService,
+  getCarsBySearchService,
   updateCarService,
 } from "../services";
 
@@ -82,20 +82,22 @@ export const getCarsByUser = async (
   res.json({ cars: cars.map((car) => car.toObject({ getters: true })) });
 };
 
-export const getCarsBySearchData = async (
+export const getCarsBySearch = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   let cars: CarDocument[];
   try {
-    console.log(req.body);
-
-    cars = await getCarsBySearchDataService(req.body);
+    cars = await getCarsBySearchService(req.body);
   } catch (err) {
     return next(throwErrorHelper(err));
   }
-  res.json({ cars });
+  console.log(cars);
+
+  res
+    .status(200)
+    .json({ cars: cars.map((car) => car.toObject({ getters: true })) });
 };
 
 export const updateCar = async (

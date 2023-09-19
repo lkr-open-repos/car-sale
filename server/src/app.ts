@@ -40,9 +40,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 mongoose
-  .connect(
-    "mongodb+srv://4dm1n:xLdGhy6JlSg7BDBO@cluster0.6l6ml.mongodb.net/cars?retryWrites=true&w=majority"
-  )
+  .connect(`${process.env.MONGODB_CONNECTION_STRING!}`)
   .then(() => {
     app.listen(process.env.PORT || 5000);
   })

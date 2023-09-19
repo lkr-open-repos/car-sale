@@ -15,11 +15,11 @@ export const carsApiSlice = apiSlice.injectEndpoints({
     }),
     getCarSearch: builder.mutation<ICar[], Partial<ICarFormInput>>({
       query: (searchData) => ({
-        url: "cars/search",
-        method: "GET",
-        body: searchData,
+        url: "/cars/search",
+        method: "POST",
+        body: { ...searchData },
       }),
-      transformResponse: (res: { car: ICar[] }) => res.car,
+      transformResponse: (res: { cars: ICar[] }) => res.cars,
     }),
     createCar: builder.mutation<ICar, FormData>({
       query: (newCar) => ({
