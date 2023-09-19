@@ -57,18 +57,9 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           setQueryError(error.data.message);
         });
     } else {
-      let searchResults;
-      try {
-        searchResults = await carSearch(data).unwrap();
-      } catch (err) {
-        console.log(err);
-      }
-
-      console.log(searchResults);
-
       navigate("/searchresults", {
         replace: true,
-        state: { carsData: searchResults },
+        state: { ...data },
       });
     }
     reset();

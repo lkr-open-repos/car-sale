@@ -8,8 +8,6 @@ interface IProps {
 }
 
 const Cars: React.FC<IProps> = ({ cars }) => {
-  console.log(cars);
-
   return (
     <div className={`${classes["cars"]} grid`}>
       {cars ? (
