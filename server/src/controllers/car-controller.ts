@@ -87,17 +87,25 @@ export const getCarsBySearch = async (
   res: Response,
   next: NextFunction
 ) => {
-  let cars: CarDocument[];
+  let cars: CarDocument[] = [];
+  let totalPages: Number = 0;
+
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 20;
+
   try {
-    cars = await getCarsBySearchService(req.body);
+    const result = await getCarsBySearchService(req.body, page, limit);
+    cars = result.cars;
+    totalPages = result.totalPages;
   } catch (err) {
     return next(throwErrorHelper(err));
   }
   console.log(cars);
 
-  res
-    .status(200)
-    .json({ cars: cars.map((car) => car.toObject({ getters: true })) });
+  res.status(200).json({
+    cars: cars.map((car) => car.toObject({ getters: true })),
+    totalPages,
+  });
 };
 
 export const updateCar = async (

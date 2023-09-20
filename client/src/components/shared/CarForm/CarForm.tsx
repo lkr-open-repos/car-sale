@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { selectCurrentUser } from "@/app/authSlice";
 
@@ -11,14 +11,10 @@ import BodyTypeOptions from "@/components/shared/CarForm/BodyTypeOptions";
 import CurrencyOptions from "./CurrencyOptions";
 import Button from "@/components/shared/Button/Button";
 import uploadIcon from "@/assets/icons/uploadIcon.svg";
-import {
-  useCreateCarMutation,
-  useGetCarSearchMutation,
-} from "@/app/api/carsApiSplice";
+import { useCreateCarMutation } from "@/app/api/carsApiSplice";
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
 import { ICarFormInput } from "@/types/car-form-input-interface";
 import { useNavigate } from "react-router-dom";
-import { ICar } from "@/types/car-interface";
 
 interface IProps {
   children?: ReactNode;
@@ -26,7 +22,6 @@ interface IProps {
 }
 
 const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
-  const [carSearch] = useGetCarSearchMutation();
   const [createCar] = useCreateCarMutation();
   const user = useSelector(selectCurrentUser);
 

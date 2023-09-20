@@ -4,11 +4,12 @@ import { ICarFormInput } from "@/types/car-form-input-interface";
 
 export const carsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllCars: builder.query<ICar[], void>({
-      query: () => "/cars",
-      transformResponse: (res: { cars: ICar[] }) => res.cars,
-      providesTags: ["Cars"],
-    }),
+    // not needed anymore
+    // getAllCars: builder.query<ICar[], void>({
+    //   query: () => "/cars",
+    //   transformResponse: (res: { cars: ICar[] }) => res.cars,
+    //   providesTags: ["Cars"],
+    // }),
     getCarById: builder.query<ICar, string>({
       query: (cid) => `cars/${cid}`,
       transformResponse: (res: { car: ICar }) => res.car,
@@ -19,7 +20,8 @@ export const carsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...searchData },
       }),
-      transformResponse: (res: { cars: ICar[] }) => res.cars,
+      transformResponse: (res: { cars: ICar[]; totalPages: number }) =>
+        res.cars,
     }),
     createCar: builder.mutation<ICar, FormData>({
       query: (newCar) => ({
@@ -34,7 +36,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetAllCarsQuery,
+  // useGetAllCarsQuery,
   useGetCarByIdQuery,
   useGetCarSearchMutation,
   useCreateCarMutation,

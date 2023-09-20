@@ -93,17 +93,24 @@ export const getCarsByUserService = async (
 };
 
 export const getCarsBySearchService = async (
-  rawSearchData: Partial<ICarFormInput>
-): Promise<CarDocument[]> => {
+  rawSearchData: Partial<ICarFormInput>,
+  page: number,
+  limit: number
+): Promise<{ cars: CarDocument[]; totalPages: Number }> => {
   let cars: CarDocument[] = [];
+  let totalPages: Number = 0;
   let searchData: Partial<ICar> = fillSearchDataHelper(rawSearchData);
 
   try {
-    cars = await Car.find({ ...searchData });
+    const totalItems = await Car.countDocuments();
+    totalPages = Math.ceil(totalItems / limit);
+    cars = await Car.find({ ...searchData })
+      .skip((page - 1) * limit)
+      .limit(limit);
   } catch (err) {
     console.log(err);
   }
-  return cars;
+  return { cars, totalPages };
 };
 
 export const updateCarService = async (
