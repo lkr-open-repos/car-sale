@@ -91,7 +91,7 @@ export const getCarsBySearch = async (
   let totalPages: Number = 0;
 
   const page = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 20;
+  const limit = Number(req.query.limit) || 12;
 
   try {
     const result = await getCarsBySearchService(req.body, page, limit);

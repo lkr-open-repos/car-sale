@@ -102,7 +102,7 @@ export const getCarsBySearchService = async (
   let searchData: Partial<ICar> = fillSearchDataHelper(rawSearchData);
 
   try {
-    const totalItems = await Car.countDocuments();
+    const totalItems = await Car.countDocuments({ ...searchData });
     totalPages = Math.ceil(totalItems / limit);
     cars = await Car.find({ ...searchData })
       .skip((page - 1) * limit)

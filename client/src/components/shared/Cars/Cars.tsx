@@ -10,13 +10,20 @@ interface IProps {
 }
 
 const Cars: React.FC<IProps> = ({ carsSearchData }) => {
-  const [carsData, setCarsData] = useState<ICar[]>([]);
+  const [carsData, setCarsData] = useState<{
+    cars: ICar[];
+    totalPages: number;
+  }>({ cars: [], totalPages: 0 });
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [carSearch] = useGetCarSearchMutation();
 
   const dataHelper = async (carsSearchData: Partial<ICarFormInput>) => {
     try {
-      setCarsData(await carSearch(carsSearchData).unwrap());
+      setCarsData(
+        await carSearch({ searchData: carsSearchData, currentPage }).unwrap()
+      );
     } catch (err) {
       console.log(err);
     }
@@ -24,16 +31,58 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
 
   useEffect(() => {
     dataHelper(carsSearchData);
-  }, [carsSearchData]);
+  }, [carsSearchData, currentPage]);
+
+  const pageButtons = [];
+
+  if (carsData.totalPages > 1) {
+    pageButtons.push(
+      <button
+        disabled={currentPage === 1}
+        onClick={() => {
+          setCurrentPage((prevState) => prevState - 1);
+        }}
+      >
+        Prev
+      </button>
+    );
+    for (let i = 0; i < carsData.totalPages; i++) {
+      pageButtons.push(
+        <button
+          disabled={currentPage === i + 1}
+          onClick={() => {
+            setCurrentPage(i + 1);
+          }}
+        >
+          {i + 1}
+        </button>
+      );
+    }
+    pageButtons.push(
+      <button
+        disabled={currentPage === carsData.totalPages}
+        onClick={() => {
+          setCurrentPage((prevState) => prevState + 1);
+        }}
+      >
+        Next
+      </button>
+    );
+  }
 
   return (
-    <div className={`${classes["cars"]} grid`}>
-      {carsData ? (
-        carsData.map((car: any) => <CarCard key={car.id} car={car} />)
-      ) : (
-        <p>No Cars Found For Your Search.</p>
-      )}
-    </div>
+    <>
+      <div className={`${classes["cars-wrapper"]} grid`}>
+        {carsData ? (
+          carsData.cars.map((car: any) => <CarCard key={car.id} car={car} />)
+        ) : (
+          <p>No Cars Found For Your Search.</p>
+        )}
+      </div>
+      <div className={`${classes["pagination-wrapper"]} flex`}>
+        {carsData.totalPages > 1 && pageButtons.map((button) => button)}
+      </div>
+    </>
   );
 };
 

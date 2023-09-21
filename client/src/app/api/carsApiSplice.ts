@@ -14,14 +14,15 @@ export const carsApiSlice = apiSlice.injectEndpoints({
       query: (cid) => `cars/${cid}`,
       transformResponse: (res: { car: ICar }) => res.car,
     }),
-    getCarSearch: builder.mutation<ICar[], Partial<ICarFormInput>>({
-      query: (searchData) => ({
-        url: "/cars/search",
+    getCarSearch: builder.mutation<
+      { cars: ICar[]; totalPages: number },
+      { searchData: Partial<ICarFormInput>; currentPage: number }
+    >({
+      query: ({ searchData, currentPage }) => ({
+        url: `/cars/search?page=${currentPage}`,
         method: "POST",
         body: { ...searchData },
       }),
-      transformResponse: (res: { cars: ICar[]; totalPages: number }) =>
-        res.cars,
     }),
     createCar: builder.mutation<ICar, FormData>({
       query: (newCar) => ({
