@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import Layout from "@/components/layouts/Layout/Layout";
 import Home from "@/pages/Home/Home";
 import CarSearch from "@/pages/CarSearch/CarSearch";
-import Car from "@/pages/Car/Car";
+import Car from "./pages/Car/Car";
 import Auth from "@/pages/Auth/Auth";
 import CreateCar from "@/pages/CreateCar/CreateCar";
 import FourOFour from "@/pages/FourOFour/FourOFour";

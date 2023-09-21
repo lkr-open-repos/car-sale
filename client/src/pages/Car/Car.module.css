@@ -1,5 +1,4 @@
 .car-wrapper {
-  grid-template-columns: 3fr 2fr;
   gap: 2rem;
 }
 
@@ -16,21 +15,11 @@
 }
 
 .car-price {
-  margin: 2rem 0;
   position: relative;
 }
 
-.car-price::before {
-  content: " ";
-  position: absolute;
-  top: -1rem;
-  width: 70%;
-  border-top: solid 1px grey;
-  box-shadow: var(--box-shadow);
-}
-
 .car-secondary-info {
-  grid-column: span 2;
+  margin-top: 2rem;
   gap: 2rem;
   flex-wrap: wrap;
 }
@@ -40,7 +29,17 @@
 }
 
 .car-details {
-  grid-column: span 2;
+}
+
+.edit {
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.car-features-wrapper {
+  justify-content: start;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 h3 {

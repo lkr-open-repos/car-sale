@@ -73,10 +73,10 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
   return (
     <>
       <div className={`${classes["cars-wrapper"]} grid`}>
-        {carsData ? (
+        {carsData.cars && carsData.cars.length > 0 ? (
           carsData.cars.map((car: any) => <CarCard key={car.id} car={car} />)
         ) : (
-          <p>No Cars Found For Your Search.</p>
+          <h2>No Cars Found For Your Search.</h2>
         )}
       </div>
       <div className={`${classes["pagination-wrapper"]} flex`}>

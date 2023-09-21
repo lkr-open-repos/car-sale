@@ -4,17 +4,30 @@ import classes from "./CarCard.module.css";
 import { currencyIconHelper } from "@/utils/currencyIconHelper";
 import favStarIcon from "@/assets/icons/favStarIcon.svg";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "@/app/authSlice";
 
 interface IProps {
   car: ICar;
 }
 
 const CarCard: React.FC<IProps> = ({ car }) => {
+  const user = useSelector(selectCurrentUser);
+
   const currencyIcon = currencyIconHelper(car.currency);
+
+  let isOwner = false;
+  if (car.user === user?.id) {
+    isOwner = true;
+  }
 
   return (
     <Link to={`/cars/${car.id}`}>
-      <div className={`${classes["car-card"]} flex`}>
+      <div
+        className={`${classes["car-card"]} flex ${
+          user?.id && isOwner && classes["owner"]
+        }`}
+      >
         <div className={classes["fav-icon"]}>
           <img src={favStarIcon} alt="" />
         </div>

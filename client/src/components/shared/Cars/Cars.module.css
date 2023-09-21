@@ -3,6 +3,13 @@
   gap: 1.5rem;
 }
 
+.cars-wrapper h2 {
+  margin-top: 2rem;
+  grid-column: 1 / -1;
+  align-self: center;
+  justify-self: center;
+}
+
 .pagination-wrapper {
   margin-top: 2rem;
   justify-content: center;

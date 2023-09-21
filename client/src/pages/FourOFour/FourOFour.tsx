@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import classes from "./FourOFour.module.css";
 import { Link, useNavigate } from "react-router-dom";

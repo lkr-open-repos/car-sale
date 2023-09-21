@@ -42,6 +42,10 @@
   margin-top: 0.5rem;
 }
 
+.owner {
+  background-color: var(--foreground-color);
+}
+
 @media screen and (min-width: 480) {
   .car-card {
     border-radius: 1rem 1rem 0 0;

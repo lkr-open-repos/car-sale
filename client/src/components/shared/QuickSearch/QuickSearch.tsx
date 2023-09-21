@@ -5,33 +5,21 @@ import classes from "./QuickSearch.module.css";
 import Button from "@/components/shared/Button/Button";
 import { ICar } from "@/types/car-interface";
 import BrandSelectOptions from "@/components/shared/CarForm/BrandSelectOptions";
-import { useGetCarSearchMutation } from "@/app/api/carsApiSplice";
 
 interface IFormInput extends ICar {
   maxYear: string;
   maxPrice: string;
 }
-//Dropdown => select !!!!
-// brand, model, price, year
 
 const QuickSearch = () => {
-  const [carSearch] = useGetCarSearchMutation();
-
   const navigate = useNavigate();
 
   const { register, handleSubmit, reset } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: Partial<ICar>) => {
-    let searchResults;
-    try {
-      searchResults = await carSearch(data).unwrap();
-    } catch (err) {
-      console.log(err);
-    }
-
     navigate("/searchresults", {
       replace: true,
-      state: { carsData: searchResults },
+      state: { ...data },
     });
     reset();
   };
