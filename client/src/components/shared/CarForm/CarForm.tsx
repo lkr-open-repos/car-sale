@@ -2,6 +2,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { ReactNode, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { selectCurrentUser } from "@/app/authSlice";
+import { useCreateCarMutation } from "@/app/api/carsApiSlice";
+import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
+import { ICarFormInput } from "@/types/car-form-input-interface";
+import { useNavigate } from "react-router-dom";
 
 import classes from "./CarForm.module.css";
 import BrandSelectOptions from "@/components/shared/CarFormSelectOptions/BrandSelectOptions";
@@ -11,10 +15,6 @@ import BodyTypeOptions from "@/components/shared/CarFormSelectOptions/BodyTypeOp
 import CurrencyOptions from "@/components/shared/CarFormSelectOptions/CurrencyOptions";
 import Button from "@/components/shared/Button/Button";
 import uploadIcon from "@/assets/icons/uploadIcon.svg";
-import { useCreateCarMutation } from "@/app/api/carsApiSplice";
-import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
-import { ICarFormInput } from "@/types/car-form-input-interface";
-import { useNavigate } from "react-router-dom";
 
 interface IProps {
   children?: ReactNode;

@@ -1,0 +1,65 @@
+.car-wrapper {
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.car-image_img {
+  aspect-ratio: 5/4;
+  max-height: 40rem;
+  object-fit: cover;
+  height: 100%;
+}
+
+.car-primary-info {
+  flex-direction: column;
+  gap: 2rem;
+  align-items: start;
+}
+
+.car-price {
+  position: relative;
+}
+
+.car-secondary-info {
+  margin-top: 2rem;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.car-info-key {
+  font-weight: bold;
+}
+
+.edit {
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.car-features-wrapper {
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.car-feature-wrapper {
+  justify-content: start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.car-buttons {
+  margin-top: 1rem;
+}
+
+button {
+  margin-right: 1rem;
+}
+
+@media screen and (min-width: 767px) {
+  .car-primary-info {
+    flex-direction: row;
+  }
+
+  .car-primary-info {
+    align-items: center;
+  }
+}

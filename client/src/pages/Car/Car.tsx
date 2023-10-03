@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import {
   useGetCarByIdQuery,
   useUpdateCarMutation,
-} from "@/app/api/carsApiSplice";
+} from "@/app/api/carsApiSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
 import { useEffect, useState } from "react";

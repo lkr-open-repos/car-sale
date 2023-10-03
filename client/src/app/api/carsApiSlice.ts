@@ -41,6 +41,13 @@ export const carsApiSlice = apiSlice.injectEndpoints({
         formData: true,
       }),
     }),
+    deleteCar: builder.mutation<{ success: boolean; cid: string }, string>({
+      query: (cid) => ({
+        url: `/cars/${cid}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Cars"],
+    }),
   }),
 });
 
@@ -50,4 +57,5 @@ export const {
   useGetCarSearchMutation,
   useCreateCarMutation,
   useUpdateCarMutation,
+  useDeleteCarMutation,
 } = carsApiSlice;

@@ -1,4 +1,4 @@
-import { useGetCarSearchMutation } from "@/app/api/carsApiSplice";
+import { useGetCarSearchMutation } from "@/app/api/carsApiSlice";
 import classes from "./Cars.module.css";
 import { ICarFormInput } from "@/types/car-form-input-interface";
 import { ICar } from "@/types/car-interface";

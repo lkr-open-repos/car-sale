@@ -11,8 +11,9 @@ export const appendFormDataHelper = (
     // @ts-ignore
     formData.append(key, data[key]);
   }
-  imageFile ? formData.append("image", imageFile) : null;
+  imageFile && formData.append("image", imageFile);
   formData.append("user", user!.id);
   formData.append("adDate", getCurrentDateHelper());
+
   return formData;
 };

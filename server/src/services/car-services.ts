@@ -120,8 +120,9 @@ export const updateCarService = async (
 ): Promise<CarDocument> => {
   const {
     user,
-    used,
     brand,
+    series,
+    used,
     year,
     color,
     metallicColor,
@@ -139,7 +140,6 @@ export const updateCarService = async (
     price,
     currency,
     details,
-    image,
   } = carData;
 
   let car: CarDocument;
@@ -157,8 +157,9 @@ export const updateCarService = async (
   // }
 
   car.user = user;
-  car.used = used;
   car.brand = brand;
+  car.series = series;
+  car.used = used;
   car.year = year;
   car.color = color;
   car.metallicColor = metallicColor;
@@ -175,8 +176,9 @@ export const updateCarService = async (
   car.seller = seller;
   car.price = price;
   car.currency = currency;
-  car.image = image;
   car.details = details;
+
+  console.log("car save", car);
 
   car = await car.save();
   return car;
