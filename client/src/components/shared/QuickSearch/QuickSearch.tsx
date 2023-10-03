@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classes from "./QuickSearch.module.css";
 import Button from "@/components/shared/Button/Button";
 import { ICar } from "@/types/car-interface";
-import BrandSelectOptions from "@/components/shared/CarForm/BrandSelectOptions";
+import BrandSelectOptions from "../CarFormSelectOptions/BrandSelectOptions";
 
 interface IFormInput extends ICar {
   maxYear: string;

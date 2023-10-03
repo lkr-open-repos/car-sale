@@ -38,7 +38,7 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
     series,
     year,
     color,
-    metallicColor,
+    metallicColor: metallicColor || false,
     mileage,
     transmissionType,
     fuelType,
@@ -99,7 +99,7 @@ export const getCarsBySearchService = async (
 ): Promise<{ cars: CarDocument[]; totalPages: Number }> => {
   let cars: CarDocument[] = [];
   let totalPages: Number = 0;
-  let searchData: Partial<ICar> = fillSearchDataHelper(rawSearchData);
+  let searchData = fillSearchDataHelper(rawSearchData);
 
   try {
     const totalItems = await Car.countDocuments({ ...searchData });
@@ -143,6 +143,7 @@ export const updateCarService = async (
   } = carData;
 
   let car: CarDocument;
+
   car = (await Car.findById(carId)) as CarDocument;
   if (!car) {
     throw new HttpError("Could not find car for this id", 404);
@@ -150,10 +151,10 @@ export const updateCarService = async (
   if (car.user.toString() !== userId) {
     throw new HttpError("You are not authorized to update this car", 401);
   }
-  const imagePath = car.image;
-  if (!!imagePath) {
-    deleteImageHelper(imagePath);
-  }
+  // const imagePath = car.image;
+  // if (!!imagePath) {
+  //   deleteImageHelper(imagePath);
+  // }
 
   car.user = user;
   car.used = used;

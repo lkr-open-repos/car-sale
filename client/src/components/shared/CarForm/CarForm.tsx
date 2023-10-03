@@ -4,11 +4,11 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { selectCurrentUser } from "@/app/authSlice";
 
 import classes from "./CarForm.module.css";
-import BrandSelectOptions from "./BrandSelectOptions";
-import ColorSelectOptions from "./ColorSelectOptions";
-import FuelTypeOptions from "./FuelTypeOptions";
-import BodyTypeOptions from "@/components/shared/CarForm/BodyTypeOptions";
-import CurrencyOptions from "./CurrencyOptions";
+import BrandSelectOptions from "@/components/shared/CarFormSelectOptions/BrandSelectOptions";
+import ColorSelectOptions from "@/components/shared/CarFormSelectOptions/ColorSelectOptions";
+import FuelTypeOptions from "@/components/shared/CarFormSelectOptions/FuelTypeOptions";
+import BodyTypeOptions from "@/components/shared/CarFormSelectOptions/BodyTypeOptions";
+import CurrencyOptions from "@/components/shared/CarFormSelectOptions/CurrencyOptions";
 import Button from "@/components/shared/Button/Button";
 import uploadIcon from "@/assets/icons/uploadIcon.svg";
 import { useCreateCarMutation } from "@/app/api/carsApiSplice";

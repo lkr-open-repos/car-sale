@@ -1,20 +1,20 @@
 import { Model, Document, Schema } from "mongoose";
 
 enum TransmissionType {
-  MANUAL = "MANUAL",
-  AUTOMATIC = "AUTOMATIC",
+  Manual = "Manual",
+  Automatic = "Automatic",
 }
 
 enum FuelType {
-  PETROL = "PETROL",
-  DIESEL = "DIESEL",
-  ELECTRIC = "ELECTRIC",
-  HYBRID = "HYBRID",
+  Petrol = "Petrol",
+  Diesel = "Diesel",
+  Electric = "Electric",
+  Hybrid = "Hybrid",
 }
 
 enum Seller {
-  OWNER = "OWNER",
-  GALLERY = "GALLERY",
+  Owner = "Owner",
+  Gallery = "Gallery",
 }
 
 enum Currency {
@@ -24,42 +24,50 @@ enum Currency {
 }
 
 enum Colors {
-  BLACK = "BLACK",
-  WHITE = "WHITE",
-  SILVER = "SILVER",
-  RED = "RED",
-  BLUE = "BLUE",
-  GREEN = "GREEN",
-  YELLOW = "YELLOW",
-  BROWN = "BROWN",
-  PURPLE = "PURPLE",
+  Black = "Black",
+  White = "White",
+  Silver = "Silver",
+  Red = "Red",
+  Blue = "Blue",
+  Green = "Green",
+  Yellow = "Yellow",
+  Brown = "Brown",
+  Purple = "Purple",
 }
 
-//fix "any"s with search data helper
+enum MetallicColor {
+  Metallic = "Metallic",
+  Matte = "Matte",
+}
+
+enum Used {
+  New = "New",
+  Used = "Used",
+}
 
 export interface ICar {
   user: Schema.Types.ObjectId;
-  used: boolean;
+  used: Used;
   brand: string;
   series: string;
-  year: any;
+  year: number;
   color: Colors;
-  metallicColor: boolean;
-  mileage: any;
+  metallicColor: MetallicColor;
+  mileage: number;
   transmissionType: TransmissionType;
   fuelType: FuelType;
   bodyType: string;
-  engineDisplacement: any;
-  enginePower: any;
+  engineDisplacement: number;
+  enginePower: number;
   traction: string;
   paintChanged: boolean;
   eligibleForTrade: boolean;
   adDate: string;
   seller: Seller;
-  price: any;
+  price: number;
   currency: Currency;
   image?: string;
-  details?: any;
+  details?: string;
 }
 
 export interface CarDocument extends ICar, Document {}

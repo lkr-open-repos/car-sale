@@ -16,6 +16,11 @@
   padding: 0.5rem;
 }
 
+.quick-search > input {
+  border: solid 1px;
+  outline: none;
+}
+
 .search-buttons {
   grid-column: span 2;
   gap: 1rem;

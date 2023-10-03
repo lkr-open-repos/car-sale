@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { checkAuthToken } from "../middleware";
 
+import { Request, Response, NextFunction, ICar } from "../types";
+
 import {
   createCar,
   getCarById,

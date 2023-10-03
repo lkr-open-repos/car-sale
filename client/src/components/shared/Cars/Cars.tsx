@@ -38,6 +38,7 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
   if (carsData.totalPages > 1) {
     pageButtons.push(
       <button
+        key={88888}
         disabled={currentPage === 1}
         onClick={() => {
           setCurrentPage((prevState) => prevState - 1);
@@ -49,6 +50,7 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
     for (let i = 0; i < carsData.totalPages; i++) {
       pageButtons.push(
         <button
+          key={i}
           disabled={currentPage === i + 1}
           onClick={() => {
             setCurrentPage(i + 1);
@@ -60,6 +62,7 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
     }
     pageButtons.push(
       <button
+        key={99999}
         disabled={currentPage === carsData.totalPages}
         onClick={() => {
           setCurrentPage((prevState) => prevState + 1);

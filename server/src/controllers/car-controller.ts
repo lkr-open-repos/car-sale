@@ -21,7 +21,10 @@ export const createCar = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  validationHelper(validationResult(req), next);
+  const validationError = validationHelper(validationResult(req), next);
+  if (validationError) {
+    return next(validationError);
+  }
   let createdCar: CarDocument;
   try {
     createdCar = await createCarService({
@@ -56,6 +59,7 @@ export const getCarById = async (
   next: NextFunction
 ): Promise<void> => {
   const carId = req.params.cid;
+
   let car: CarDocument;
   try {
     car = await getCarByIdService(carId);
@@ -113,14 +117,19 @@ export const updateCar = async (
   res: Response,
   next: NextFunction
 ) => {
-  validationHelper(validationResult(req), next);
   const carId = req.params.cid;
+  const validationError = validationHelper(validationResult(req), next);
+  if (validationError) {
+    return next(validationError);
+  }
+
   let car: CarDocument;
   try {
     car = await updateCarService(carId, req.user!.Id, req.body);
   } catch (err) {
-    const error = new HttpError("Something went wrong", 500);
-    return next(error);
+    return next(
+      throwErrorHelper(err, "Updating car failed, please try again.")
+    );
   }
 
   res.status(200).json({ car: car.toObject({ getters: true }) });

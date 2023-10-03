@@ -7,8 +7,8 @@ const Footer = () => {
   return (
     <footer className={`${classes["footer"]} grid wrapper`}>
       <LogoSection isFooter={true} />
-      <TopBrands />
       <NavLinks />
+      <TopBrands />
     </footer>
   );
 };

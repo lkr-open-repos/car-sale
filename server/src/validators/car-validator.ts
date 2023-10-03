@@ -4,9 +4,9 @@ export const createCarValidation: ValidationChain[] = [
   body("user").trim().notEmpty().withMessage("User is required"),
   body("used")
     .trim()
-    .isBoolean()
-    .withMessage("Used must be a boolean value")
-    .toBoolean(),
+    .notEmpty()
+    .withMessage("Used information is required")
+    .isIn(["New", "Used"]),
   body("brand").trim().notEmpty().withMessage("Brand is required"),
   body("series").trim().notEmpty().withMessage("Series is required"),
   body("year")
@@ -15,34 +15,20 @@ export const createCarValidation: ValidationChain[] = [
     .withMessage("Year is required")
     .isInt()
     .withMessage("Year must be an integer"),
-  body("color")
-    .trim()
-    .notEmpty()
-    .withMessage("Color is requered")
-    .isIn([
-      "BLACK",
-      "WHITE",
-      "SILVER",
-      "RED",
-      "BLUE",
-      "GREEN",
-      "YELLOW",
-      "BROWN",
-      "PURPLE",
-    ]),
+  body("color").trim().notEmpty().withMessage("Color is requered"),
   body("metallicColor").notEmpty(),
   body("mileage").trim().notEmpty().withMessage("Mileage is required"),
   body("transmissionType")
     .trim()
     .notEmpty()
     .withMessage("Transmission Type is required")
-    .isIn(["MANUAL", "AUTOMATIC"])
+    .isIn(["Manual", "Automatic"])
     .withMessage("Invalid transmission type"),
   body("fuelType")
     .trim()
     .notEmpty()
     .withMessage("Fuel Type is required")
-    .isIn(["PETROL", "DIESEL", "ELECTRIC", "HYBRID"])
+    .isIn(["Petrol", "Diesel", "Electric", "Hybrid"])
     .withMessage("Invalid fuel type"),
   body("bodyType").trim().notEmpty().withMessage("Body Type is required"),
   body("engineDisplacement")
@@ -78,7 +64,7 @@ export const createCarValidation: ValidationChain[] = [
     .trim()
     .notEmpty()
     .withMessage("Seller is required")
-    .isIn(["OWNER", "GALLERY"])
+    .isIn(["Owner", "Gallery"])
     .withMessage("Invalid seller"),
   body("price").trim().notEmpty().withMessage("Price is required"),
   body("currency")

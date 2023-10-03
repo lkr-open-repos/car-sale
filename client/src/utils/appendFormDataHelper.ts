@@ -1,8 +1,8 @@
-import { IFormInput } from "@/components/shared/CarForm/CarForm";
+import { ICarFormInput } from "@/types/car-form-input-interface";
 import { getCurrentDateHelper } from "./getCurrentDateHelper";
 
 export const appendFormDataHelper = (
-  data: Partial<IFormInput>,
+  data: Partial<ICarFormInput>,
   user: { id: string; email: string } | null,
   imageFile?: File
 ): FormData => {

@@ -11,7 +11,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
     //   providesTags: ["Cars"],
     // }),
     getCarById: builder.query<ICar, string>({
-      query: (cid) => `cars/${cid}`,
+      query: (cid) => `/cars/${cid}`,
       transformResponse: (res: { car: ICar }) => res.car,
     }),
     getCarSearch: builder.mutation<
@@ -33,6 +33,14 @@ export const carsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Cars"],
     }),
+    updateCar: builder.mutation<ICar, { updateData: FormData; cid: string }>({
+      query: ({ updateData, cid }) => ({
+        url: `/cars/${cid}`,
+        method: "PATCH",
+        body: updateData,
+        formData: true,
+      }),
+    }),
   }),
 });
 
@@ -41,4 +49,5 @@ export const {
   useGetCarByIdQuery,
   useGetCarSearchMutation,
   useCreateCarMutation,
+  useUpdateCarMutation,
 } = carsApiSlice;

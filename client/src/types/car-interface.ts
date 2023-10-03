@@ -1,27 +1,18 @@
-export enum TransmissionType {
-  MANUAL = "MANUAL",
-  AUTOMATIC = "AUTOMATIC",
+enum TransmissionType {
+  Manual = "Manual",
+  Automatic = "Automatic",
 }
 
 enum FuelType {
-  PETROL = "PETROL",
-  DIESEL = "DIESEL",
-  ELECTRIC = "ELECTRIC",
-  HYBRID = "HYBRID",
-}
-
-enum BodyType {
-  HATCHBACK = "HATCHBACK",
-  SEDAN = "SEDAN",
-  SUV = "SUV",
-  COUPE = "COUPE",
-  CONVERTIBLE = "CONVERTIBLE",
-  PICKUP = "PICKUP",
+  Petrol = "Petrol",
+  Diesel = "Diesel",
+  Electric = "Electric",
+  Hybrid = "Hybrid",
 }
 
 enum Seller {
-  OWNER = "OWNER",
-  GALLERY = "GALLERY",
+  Owner = "Owner",
+  Gallery = "Gallery",
 }
 
 enum Currency {
@@ -31,25 +22,44 @@ enum Currency {
 }
 
 enum Colors {
-  BLACK = "BLACK",
-  WHITE = "WHITE",
-  SILVER = "SILVER",
-  RED = "RED",
-  BLUE = "BLUE",
-  GREEN = "GREEN",
-  YELLOW = "YELLOW",
-  BROWN = "BROWN",
-  PURPLE = "PURPLE",
+  Black = "Black",
+  White = "White",
+  Silver = "Silver",
+  Red = "Red",
+  Blue = "Blue",
+  Green = "Green",
+  Yellow = "Yellow",
+  Brown = "Brown",
+  Purple = "Purple",
+}
+
+enum MetallicColor {
+  Metallic = "Metallic",
+  Matte = "Matte",
+}
+
+enum BodyType {
+  Hatchback = "Hatchback",
+  Sedan = "Sedan",
+  SUV = "SUV",
+  Coupe = "Coupe",
+  Convertible = "Convertible",
+  Pickup = "Pickup",
+}
+
+enum Used {
+  New = "New",
+  Used = "Used",
 }
 
 export interface ICar {
   user: string;
-  used: boolean; //
+  used: Used; //
   brand: string; //
   series: string; //
   year: number; //
   color: Colors; //
-  metallicColor: boolean; //
+  metallicColor: MetallicColor; //
   mileage: string; //
   transmissionType: TransmissionType; //
   fuelType: FuelType; //

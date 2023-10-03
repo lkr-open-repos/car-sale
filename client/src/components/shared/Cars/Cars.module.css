@@ -34,13 +34,13 @@
 }
 
 @media screen and (min-width: 480px) {
-  .cars {
+  .cars-wrapper {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media screen and (min-width: 1060px) {
-  .cars {
+  .cars-wrapper {
     grid-template-columns: repeat(4, 1fr);
   }
 }

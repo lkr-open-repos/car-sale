@@ -1,4 +1,5 @@
 .car-wrapper {
+  flex-direction: column;
   gap: 2rem;
 }
 
@@ -42,6 +43,16 @@
   gap: 0.5rem;
 }
 
+.car-buttons {
+  margin-top: 2rem;
+}
+
 h3 {
   text-transform: capitalize;
+}
+
+@media screen and (min-width: 767px) {
+  .car-wrapper {
+    flex-direction: row;
+  }
 }

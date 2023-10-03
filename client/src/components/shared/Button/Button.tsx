@@ -4,13 +4,15 @@ import classes from "./Button.module.css";
 interface IProps {
   children?: string;
   isSubmit?: boolean;
+  onClick?: () => void;
 }
 
-const Button: React.FC<IProps> = ({ children, isSubmit }) => {
+const Button: React.FC<IProps> = ({ children, isSubmit, onClick }) => {
   return (
     <button
-      type={isSubmit ? "submit" : undefined}
+      type={isSubmit ? "submit" : "button"}
       className={classes["button"]}
+      onClick={onClick}
     >
       {children}
     </button>
