@@ -17,7 +17,6 @@
 }
 
 .quick-search > input {
-  border: solid 1px;
   outline: none;
 }
 
@@ -31,6 +30,11 @@
   cursor: pointer;
   align-self: center;
   justify-self: start;
+}
+
+input {
+  border: none;
+  outline: none;
 }
 
 @media screen and (min-width: 767px) {

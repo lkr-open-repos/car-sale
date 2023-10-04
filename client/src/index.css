@@ -82,4 +82,5 @@ img {
 .error-text {
   color: #ff0033;
   font-weight: bold;
+  display: block;
 }

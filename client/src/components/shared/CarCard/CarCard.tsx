@@ -44,7 +44,8 @@ const CarCard: React.FC<IProps> = ({ car }) => {
           />
         </div>
         <div className={classes["car-info"]}>
-          <h1>{`${car.brand} ${car.series}`}</h1>
+          <h1>{car.brand}</h1>
+          <h1> {car.series}</h1>
           <h3>
             <span>{currencyIcon} </span>
             {car.price}

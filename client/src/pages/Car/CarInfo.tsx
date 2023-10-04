@@ -135,7 +135,7 @@ const CarInfo: React.FC<IProps> = ({ car, setEditMode, isOwner }) => {
         <div className={`${classes["car-details"]}`}>
           <div className={`${classes["car-features-wrapper"]} flex`}>
             <h3>
-              {car?.details && (
+              {car?.details && car?.details !== "undefined" && (
                 <span className={classes["car-info-key"]}>
                   More Details: {car?.details}
                 </span>

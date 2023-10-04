@@ -4,6 +4,7 @@ import { ICarFormInput } from "@/types/car-form-input-interface";
 import { ICar } from "@/types/car-interface";
 import { useEffect, useState } from "react";
 import CarCard from "../CarCard/CarCard";
+import Button from "@/components/shared/Button/Button";
 
 interface IProps {
   carsSearchData: Partial<ICarFormInput>;
@@ -37,7 +38,7 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
 
   if (carsData.totalPages > 1) {
     pageButtons.push(
-      <button
+      <Button
         key={88888}
         disabled={currentPage === 1}
         onClick={() => {
@@ -45,23 +46,23 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
         }}
       >
         Prev
-      </button>
+      </Button>
     );
     for (let i = 0; i < carsData.totalPages; i++) {
       pageButtons.push(
-        <button
+        <Button
           key={i}
           disabled={currentPage === i + 1}
           onClick={() => {
             setCurrentPage(i + 1);
           }}
         >
-          {i + 1}
-        </button>
+          {(i + 1).toString()}
+        </Button>
       );
     }
     pageButtons.push(
-      <button
+      <Button
         key={99999}
         disabled={currentPage === carsData.totalPages}
         onClick={() => {
@@ -69,7 +70,7 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
         }}
       >
         Next
-      </button>
+      </Button>
     );
   }
 

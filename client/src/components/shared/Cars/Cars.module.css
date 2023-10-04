@@ -14,19 +14,6 @@
   margin-top: 2rem;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-}
-
-.pagination-wrapper button {
-  color: var(--text-color);
-  background-color: var(--foreground-color);
-  height: 3rem;
-  border: none;
-  box-shadow: var(--box-shadow);
-  font-size: var(--h2-font-size);
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0.5rem;
 }
 
 .pagination-wrapper button:disabled {

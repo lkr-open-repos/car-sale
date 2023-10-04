@@ -1,5 +1,5 @@
 import { ICar } from "@/types/car-interface";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { ICarFormInput } from "@/types/car-form-input-interface";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
@@ -40,7 +40,7 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
   useEffect(() => {
     if (car) {
       setValue("used", car.used);
-      setValue("traction", car.traction);
+      setValue("traction", car.traction || "2x4");
       setValue("metallicColor", car.metallicColor);
       setValue("transmissionType", car.transmissionType);
       setValue("seller", car.seller);
@@ -55,21 +55,30 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
   ) => {
     const formData = appendFormDataHelper(data, user);
 
-    console.log(formData.get("series"));
-
     if (cid) {
-      let response = await updateCar({ updateData: formData, cid })
+      await updateCar({ updateData: formData, cid })
         .unwrap()
+        .then((res) => console.log(res))
         .catch((error) => {
           console.log(error);
         });
 
-      console.log(response);
+      reset();
+      window.location.reload();
     }
-
-    reset();
-    // window.location.reload();
   };
+
+  let errorsField: ReactNode[] = [];
+  Object.keys(errors).forEach((key, index) =>
+    errorsField.push(
+      <p key={index} className="error-text">
+        {
+          //@ts-ignore
+          errors[key].message
+        }
+      </p>
+    )
+  );
 
   return (
     <section>
@@ -88,26 +97,46 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={`${classes["car-primary-info"]} flex`}>
+            {errors && errorsField.map((error) => error)}
             <div className={`${classes["car-feature-wrapper"]} flex`}>
               <h3 className={classes["car-info-key"]}>Brand: </h3>
-              <select {...register("brand", { value: car?.brand })}>
+              <select
+                {...register("brand", {
+                  value: car?.brand,
+                  required: "Car Brand is Required",
+                })}
+              >
                 <BrandSelectOptions />
               </select>
             </div>
             <div className={`${classes["car-feature-wrapper"]} flex`}>
               <h3 className={classes["car-info-key"]}>Series: </h3>
               <input
-                {...register("series", { value: car?.series })}
+                {...register("series", {
+                  value: car?.series,
+                  required: "Car Series is Required",
+                })}
                 type="text"
               />
             </div>
             <div className={`${classes["car-feature-wrapper"]} flex`}>
               <h3 className={classes["car-info-key"]}>Year: </h3>
-              <input type="text" {...register("year", { value: car?.year })} />
+              <input
+                type="text"
+                {...register("year", {
+                  value: car?.year,
+                  required: "Car Year is Required",
+                })}
+              />
             </div>
             <div className={`${classes["car-feature-wrapper"]} flex`}>
               <h3 className={classes["car-info-key"]}>Body Type: </h3>
-              <select {...register("bodyType", { value: car?.bodyType })}>
+              <select
+                {...register("bodyType", {
+                  value: car?.bodyType,
+                  required: "Car Body Type is Required",
+                })}
+              >
                 <BodyTypeOptions />
               </select>
             </div>
@@ -115,11 +144,23 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
               <>
                 <div className={`${classes["radio-wrapper"]} flex`}>
                   <label>
-                    <input {...register("used")} type="radio" value="New" />
+                    <input
+                      {...register("used", {
+                        required: "Car Used Information Required",
+                      })}
+                      type="radio"
+                      value="New"
+                    />
                     New
                   </label>
                   <label>
-                    <input {...register("used")} type="radio" value="Used" />
+                    <input
+                      {...register("used", {
+                        required: "Car Used Information Required",
+                      })}
+                      type="radio"
+                      value="Used"
+                    />
                     Used
                   </label>
                 </div>
@@ -129,7 +170,10 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
               <div className={`${classes["car-feature-wrapper"]} flex`}>
                 <h2>
                   <input
-                    {...register("mileage", { value: car?.mileage || "0" })}
+                    {...register("mileage", {
+                      value: car?.mileage || "0",
+                      required: "Car Mileage Value is Required",
+                    })}
                     type="text"
                   />
                   km
@@ -138,14 +182,22 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
             )}
             <div className={`${classes["car-feature-wrapper"]} flex`}>
               <h1 className={`${classes["car-price"]}`}>
-                <select {...register("currency", { value: car?.currency })}>
+                <select
+                  {...register("currency", {
+                    value: car?.currency,
+                    required: "Price Currency Required",
+                  })}
+                >
                   <CurrencyOptions />
                 </select>
 
                 <input
                   type="text"
                   placeholder="Price"
-                  {...register("price", { value: car?.price })}
+                  {...register("price", {
+                    value: car?.price,
+                    required: "Car Price is Required",
+                  })}
                 />
               </h1>
             </div>
@@ -155,14 +207,21 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
               <h3>
                 <span className={classes["car-info-key"]}>Color: </span>
 
-                <select {...register("color", { value: car?.color })}>
+                <select
+                  {...register("color", {
+                    value: car?.color,
+                    required: "Car Color is Required",
+                  })}
+                >
                   <ColorSelectOptions />
                 </select>
 
                 <>
                   <label>
                     <input
-                      {...register("metallicColor")}
+                      {...register("metallicColor", {
+                        required: "Paint Type is Required",
+                      })}
                       type="radio"
                       value="Metallic"
                     />
@@ -170,7 +229,9 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
                   </label>{" "}
                   <label>
                     <input
-                      {...register("metallicColor")}
+                      {...register("metallicColor", {
+                        required: "Paint Type is Required",
+                      })}
                       type="radio"
                       value="Matte"
                     />
@@ -185,7 +246,9 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
                 <>
                   <label>
                     <input
-                      {...register("transmissionType")}
+                      {...register("transmissionType", {
+                        required: "Transmission Type is Required",
+                      })}
                       type="radio"
                       value="Automatic"
                     />
@@ -193,7 +256,9 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
                   </label>
                   <label>
                     <input
-                      {...register("transmissionType")}
+                      {...register("transmissionType", {
+                        required: "Transmission Type is Required",
+                      })}
                       type="radio"
                       value="Manual"
                     />
@@ -205,7 +270,12 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
             <div className={`${classes["car-feature-wrapper"]} flex`}>
               <h3>
                 <span className={classes["car-info-key"]}>Fuel: </span>
-                <select {...register("fuelType", { value: car?.fuelType })}>
+                <select
+                  {...register("fuelType", {
+                    value: car?.fuelType,
+                    required: "Fuel Type is Required",
+                  })}
+                >
                   <FuelTypeOptions />
                 </select>
               </h3>
@@ -214,7 +284,10 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
               <h3>
                 <span className={classes["car-info-key"]}>Power: </span>
                 <input
-                  {...register("enginePower", { value: car?.enginePower })}
+                  {...register("enginePower", {
+                    value: car?.enginePower,
+                    required: "Engine Power is Required",
+                  })}
                   type="text"
                   placeholder="Engine Power"
                 />
@@ -226,6 +299,7 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
                 <input
                   {...register("engineDisplacement", {
                     value: car?.engineDisplacement,
+                    required: "Engine Displacement is Required",
                   })}
                   type="text"
                   placeholder="Engine Displacement"
@@ -261,7 +335,7 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
             <div className={`${classes["car-feature-wrapper"]} flex`}>
               <h3>
                 <span className={classes["car-info-key"]}>
-                  Trade Eligibility:{" "}
+                  Trade Eligibility:
                 </span>
                 <input
                   {...register("eligibleForTrade", {
@@ -276,12 +350,20 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
                 <span className={classes["car-info-key"]}>Seller: </span>
                 <>
                   <label>
-                    <input {...register("seller")} type="radio" value="Owner" />
+                    <input
+                      {...register("seller", {
+                        required: "Seller Information Required",
+                      })}
+                      type="radio"
+                      value="Owner"
+                    />
                     Owner
                   </label>
                   <label>
                     <input
-                      {...register("seller")}
+                      {...register("seller", {
+                        required: "Seller Information Required",
+                      })}
                       type="radio"
                       value="Gallery"
                     />
