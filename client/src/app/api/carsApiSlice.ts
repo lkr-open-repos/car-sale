@@ -23,6 +23,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...searchData },
       }),
+      invalidatesTags: ["Cars"],
     }),
     createCar: builder.mutation<ICar, FormData>({
       query: (newCar) => ({

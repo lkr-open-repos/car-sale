@@ -65,6 +65,14 @@ img {
   height: auto;
 }
 
+input,
+textarea,
+select {
+  display: inline-block;
+  border: none;
+  outline: none;
+}
+
 /*==================== UTILITIES ====================*/
 
 .flex {

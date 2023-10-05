@@ -5,6 +5,7 @@ import { ICar } from "@/types/car-interface";
 import { useEffect, useState } from "react";
 import CarCard from "../CarCard/CarCard";
 import Button from "@/components/shared/Button/Button";
+import Spinner from "../Spinner/Spinner";
 
 interface IProps {
   carsSearchData: Partial<ICarFormInput>;
@@ -18,7 +19,7 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [carSearch] = useGetCarSearchMutation();
+  const [carSearch, { isLoading, isSuccess }] = useGetCarSearchMutation();
 
   const dataHelper = async (carsSearchData: Partial<ICarFormInput>) => {
     try {
@@ -76,16 +77,23 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
 
   return (
     <>
-      <div className={`${classes["cars-wrapper"]} grid`}>
-        {carsData.cars && carsData.cars.length > 0 ? (
-          carsData.cars.map((car: any) => <CarCard key={car.id} car={car} />)
-        ) : (
-          <h2>No Cars Found For Your Search.</h2>
-        )}
-      </div>
-      <div className={`${classes["pagination-wrapper"]} flex`}>
-        {carsData.totalPages > 1 && pageButtons.map((button) => button)}
-      </div>
+      {isLoading && <Spinner />}
+      {isSuccess && (
+        <>
+          <div className={`${classes["cars-wrapper"]} grid`}>
+            {carsData.cars && carsData.cars.length > 0 ? (
+              carsData.cars.map((car: any) => (
+                <CarCard key={car.id} car={car} />
+              ))
+            ) : (
+              <h2>No Cars Found For Your Search.</h2>
+            )}
+          </div>
+          <div className={`${classes["pagination-wrapper"]} flex`}>
+            {carsData.totalPages > 1 && pageButtons.map((button) => button)}
+          </div>
+        </>
+      )}
     </>
   );
 };

@@ -53,29 +53,15 @@ h3 {
   text-transform: capitalize;
 }
 
-input,
-select,
-label {
+.car-wrapper input,
+.car-wrapper select,
+.car-wrapper label {
   margin-right: 0.4rem;
   height: 2rem;
 }
 
-input,
-textarea,
-select {
-  display: inline-block;
-  border: none;
-  outline: none;
-}
-
-label input[type="radio"],
-input[type="checkbox"] {
+.car-wrapper input[type="radio"],
+.car-wrapper input[type="checkbox"] {
   margin-top: -0.3rem;
   vertical-align: middle;
-}
-
-@media screen and (min-width: 767px) {
-  /* .car-wrapper {
-    flex-direction: row;
-  } */
 }

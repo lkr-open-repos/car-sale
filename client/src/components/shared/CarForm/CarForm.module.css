@@ -82,6 +82,12 @@
   margin: 0.5rem;
 }
 
+.car-form-wrapper input[type="radio"],
+.car-form-wrapper input[type="checkbox"] {
+  margin-top: 0.1rem;
+  vertical-align: middle;
+}
+
 .min-max-wrapper select {
   width: 20%;
 }

@@ -7,6 +7,7 @@
   border-radius: 0.5rem 0.5rem 0 0;
   overflow: hidden;
   cursor: pointer;
+  min-height: 20rem;
 }
 
 .fav-icon {
@@ -40,6 +41,10 @@
 
 .car-info > * {
   height: 2rem;
+}
+
+.car-info h1:first-of-type {
+  height: auto;
 }
 
 .owner {

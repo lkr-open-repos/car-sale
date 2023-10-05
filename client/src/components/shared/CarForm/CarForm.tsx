@@ -6,6 +6,14 @@ import { useCreateCarMutation } from "@/app/api/carsApiSlice";
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
 import { ICarFormInput } from "@/types/car-form-input-interface";
 import { useNavigate } from "react-router-dom";
+import {
+  MileageField,
+  ImageField,
+  YearField,
+  EngineDispleacementField,
+  EnginePowerField,
+  PriceField,
+} from "./CarFormConditionalFields";
 
 import classes from "./CarForm.module.css";
 import BrandSelectOptions from "@/components/shared/CarFormSelectOptions/BrandSelectOptions";
@@ -60,166 +68,9 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
     reset();
   };
 
-  let imageField;
-  let yearField;
-  let mileageField;
-  let engineDispleacementField;
-  let enginePowerField;
-  let priceField;
-  let detailsField;
-
-  if (isCreate) {
-    detailsField = (
-      <textarea cols={30} rows={8} {...register("details")}></textarea>
-    );
-    imageField = (
-      <div className={`${classes["image-wrapper"]}`}>
-        {imageThumbnail && (
-          <img
-            className={`${classes["image-thumbnail"]}`}
-            src={imageThumbnail}
-            alt="car image thumbnail"
-          />
-        )}
-        <label
-          className={`${classes["upload-image-label"]} flex`}
-          htmlFor="upload"
-        >
-          <img src={uploadIcon} alt="" />
-          Upload Car Image
-          <input
-            type="file"
-            id="upload"
-            className={classes["upload-image"]}
-            accept="image/*"
-            {...register("imageFile", {
-              required: "Car image is required",
-              onChange: (e) => {
-                setImageThumbnail(URL.createObjectURL(e.target.files[0]));
-              },
-            })}
-          />
-        </label>
-      </div>
-    );
-    yearField = (
-      <input
-        type="text"
-        placeholder="Year"
-        {...register("year", {
-          required: "Manufacture year is required",
-        })}
-      />
-    );
-    mileageField = (
-      <input
-        type="text"
-        placeholder="Mileage"
-        {...register("mileage", {
-          required: "Car milage is required",
-        })}
-      />
-    );
-    engineDispleacementField = (
-      <input
-        {...register("engineDisplacement", {
-          required: "Engine displacement is required",
-        })}
-        type="text"
-        placeholder="Engine Displacement"
-      />
-    );
-    enginePowerField = (
-      <input
-        {...register("enginePower", {
-          required: "Engine power is required",
-        })}
-        type="text"
-        placeholder="Engine Power"
-      />
-    );
-    priceField = (
-      <input
-        type="text"
-        placeholder="Price"
-        {...register("price", {
-          required: "price is required",
-        })}
-      />
-    );
-  } else {
-    imageField = "";
-    priceField = (
-      <>
-        <input
-          type="text"
-          placeholder="Minimum Price"
-          {...register("minPrice")}
-        />
-        <input
-          type="text"
-          placeholder="Maximum Price"
-          {...register("maxPrice")}
-        />
-      </>
-    );
-    enginePowerField = (
-      <div className={`${classes["min-max-wrapper"]} flex`}>
-        <input
-          {...register("minEnginePower")}
-          type="text"
-          placeholder="Minimum Engine Power"
-        />
-        <input
-          {...register("maxEnginePower")}
-          type="text"
-          placeholder="Maximum Engine Power"
-        />
-      </div>
-    );
-    engineDispleacementField = (
-      <div className={`${classes["min-max-wrapper"]} flex`}>
-        <input
-          {...register("minEngineDisplacement")}
-          type="text"
-          placeholder="Minimum Engine Displacement"
-        />
-        <input
-          {...register("maxEngineDisplacement")}
-          type="text"
-          placeholder="Maximum Engine Displacement"
-        />
-      </div>
-    );
-    mileageField = (
-      <div className={`${classes["min-max-wrapper"]} flex`}>
-        <input
-          type="text"
-          placeholder="Minimum mileage"
-          {...register("minMileage")}
-        />
-        <input
-          type="text"
-          placeholder="Maximum mileage"
-          {...register("maxMileage")}
-        />
-      </div>
-    );
-    yearField = (
-      <div className={`${classes["min-max-wrapper"]} flex`}>
-        <input
-          type="text"
-          placeholder="Minimum Year"
-          {...register("minYear")}
-        />
-        <input
-          type="text"
-          placeholder="Maximum Year"
-          {...register("maxYear")}
-        />
-      </div>
-    );
-  }
+  const setImageThumbnailHandler = (value: string) => {
+    setImageThumbnail(value);
+  };
 
   return (
     <div className={`${classes["car-form-wrapper"]} flex`}>
@@ -231,7 +82,14 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
         {errors.imageFile && (
           <p className={`error-text`}>{errors.imageFile.message}</p>
         )}
-        {imageField}
+        <ImageField
+          register={register}
+          isCreate={isCreate}
+          imageThumbnail={imageThumbnail}
+          classes={classes}
+          uploadIcon={uploadIcon}
+          setImageThumbnailHandler={setImageThumbnailHandler}
+        />
         {errors.brand && <p className={`error-text`}>{errors.brand.message}</p>}
         <select
           {...register("brand", {
@@ -292,7 +150,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           </label>
         </div>
         {errors.year && <p className={`error-text`}>{errors.year.message}</p>}
-        {yearField}
+        <YearField classes={classes} register={register} isCreate={isCreate} />
         {errors.color && <p className={`error-text`}>{errors.color.message}</p>}
         <select
           {...register("color", {
@@ -322,7 +180,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               type="radio"
               value="true"
             />
-            metallic
+            Metallic
           </label>
           <label>
             <input
@@ -337,13 +195,17 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
               type="radio"
               value="false"
             />
-            matte
+            Matte
           </label>
         </div>
         {errors.mileage && (
           <p className={`error-text`}>{errors.mileage.message}</p>
         )}
-        {mileageField}
+        <MileageField
+          classes={classes}
+          register={register}
+          isCreate={isCreate}
+        />
         {errors.transmissionType && (
           <p className={`error-text`}>{errors.transmissionType.message}</p>
         )}
@@ -406,11 +268,19 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
         {errors.engineDisplacement && (
           <p className={`error-text`}>{errors.engineDisplacement.message}</p>
         )}
-        {engineDispleacementField}
+        <EngineDispleacementField
+          classes={classes}
+          isCreate={isCreate}
+          register={register}
+        />
         {errors.enginePower && (
           <p className={`error-text`}>{errors.enginePower.message}</p>
         )}
-        {enginePowerField}
+        <EnginePowerField
+          classes={classes}
+          register={register}
+          isCreate={isCreate}
+        />
         {errors.traction && (
           <p className={`error-text`}>{errors.traction.message}</p>
         )}
@@ -490,7 +360,11 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           <p className={`error-text`}>{errors.currency.message}</p>
         )}
         <div className={`${classes["min-max-wrapper"]} flex`}>
-          {priceField}
+          <PriceField
+            classes={classes}
+            register={register}
+            isCreate={isCreate}
+          />
           <select
             {...register("currency", {
               validate: {
@@ -503,7 +377,14 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
             <CurrencyOptions />
           </select>
         </div>
-        {detailsField}
+        {isCreate && (
+          <textarea
+            cols={30}
+            rows={8}
+            placeholder="More Details"
+            {...register("details")}
+          ></textarea>
+        )}
         {queryError && <p className={`error-text`}>{queryError}</p>}
         <Button isSubmit={true}>{isCreate ? "SELL" : "SEARCH"}</Button>
       </form>
