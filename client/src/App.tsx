@@ -13,6 +13,7 @@ import FourOFour from "@/pages/FourOFour/FourOFour";
 import CheckAuth from "./components/layouts/ChechAuth/CheckAuth";
 import { IUserData } from "./types/user-data-interface";
 import CarSearchResults from "./pages/CarSearchResults/CarSearchResults";
+import User from "./pages/User/User";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ function App() {
           <Route path="/search" element={<CarSearch />} />
           <Route path="/searchresults" element={<CarSearchResults />} />
           <Route element={<CheckAuth />}>
+            <Route path="/user" element={<User />} />
             <Route path="/createcar" element={<CreateCar />} />
           </Route>
           <Route path="*" element={<FourOFour />} />

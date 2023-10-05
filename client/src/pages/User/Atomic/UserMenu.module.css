@@ -1,0 +1,11 @@
+.user-menu {
+  grid-area: a;
+  align-items: center;
+  gap: 3rem;
+  border-bottom: none;
+  padding: 0.5rem;
+}
+
+.cars-container {
+  flex-direction: column;
+}

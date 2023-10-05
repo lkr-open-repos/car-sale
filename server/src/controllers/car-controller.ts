@@ -104,7 +104,6 @@ export const getCarsBySearch = async (
   } catch (err) {
     return next(throwErrorHelper(err));
   }
-  console.log(cars);
 
   res.status(200).json({
     cars: cars.map((car) => car.toObject({ getters: true })),

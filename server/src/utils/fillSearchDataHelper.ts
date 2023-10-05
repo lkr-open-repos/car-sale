@@ -9,6 +9,7 @@ interface ICarSearchFields
     | "enginePower"
     | "price"
     | "details"
+    | "user"
   > {
   year: {};
   mileage: {};
@@ -16,6 +17,7 @@ interface ICarSearchFields
   enginePower: {};
   price: {};
   details: {};
+  user: string;
 }
 
 export const fillSearchDataHelper = (rawSearchData: Partial<ICarFormInput>) => {
@@ -129,5 +131,10 @@ export const fillSearchDataHelper = (rawSearchData: Partial<ICarFormInput>) => {
       details: { $regex: rawSearchData.details, $options: "i" },
     });
 
+  rawSearchData.user &&
+    (searchData = {
+      ...searchData,
+      user: searchData.user,
+    });
   return searchData;
 };

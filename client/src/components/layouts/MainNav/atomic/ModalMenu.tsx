@@ -16,7 +16,7 @@ const ModalMenu: React.FC<IProps> = ({ closeToggle }) => {
   return (
     <div>
       <>
-        <div className={classes["backdrop"]}></div>
+        <div className={classes["backdrop"]} onClick={closeToggleHandler}></div>
         <div className={classes["modal-menu_nav"]}>
           <div className={classes["close-modal-menu"]}>
             <img
@@ -28,7 +28,7 @@ const ModalMenu: React.FC<IProps> = ({ closeToggle }) => {
           <nav className={classes["modal-menu_navigation_links"]}>
             <NavLinks closeToggle={closeToggleHandler} />
           </nav>
-          <UserLink modal={true} />
+          <UserLink closeToggle={closeToggleHandler} modal={true} />
         </div>
       </>
     </div>
