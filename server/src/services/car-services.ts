@@ -2,7 +2,6 @@ import { Car, HttpError } from "../models";
 import { CarDocument, ICar } from "../types";
 import { deleteImageHelper, fillSearchDataHelper } from "../utils";
 import { ICarFormInput } from "../types";
-import { raw } from "body-parser";
 
 export const createCarService = async (carData: ICar): Promise<CarDocument> => {
   const {
@@ -29,6 +28,8 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
     currency,
     image,
   } = carData;
+
+  console.log(carData, "car-services 32");
 
   let createdCar: CarDocument;
 
@@ -100,10 +101,10 @@ export const getCarsBySearchService = async (
 ): Promise<{ cars: CarDocument[]; totalPages: Number }> => {
   let cars: CarDocument[] = [];
   let totalPages: Number = 0;
-  console.log(rawSearchData);
+  console.log(rawSearchData, "car-services 103");
 
   let searchData = fillSearchDataHelper(rawSearchData);
-  console.log(searchData);
+  console.log(searchData, "car services 106");
 
   try {
     const totalItems = await Car.countDocuments({ ...searchData });

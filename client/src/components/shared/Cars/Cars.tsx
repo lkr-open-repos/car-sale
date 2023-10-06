@@ -1,7 +1,7 @@
 import { useGetCarSearchMutation } from "@/app/api/carsApiSlice";
 import classes from "./Cars.module.css";
-import { ICarFormInput } from "@/types/car-form-input-interface";
-import { ICar } from "@/types/car-interface";
+import { ICarFormInput } from "@/types/CarFormInputInterface";
+import { ICar } from "@/types/carInterface";
 import { useEffect, useState } from "react";
 import CarCard from "../CarCard/CarCard";
 import Button from "@/components/shared/Button/Button";

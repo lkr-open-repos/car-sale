@@ -1,28 +1,35 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { selectCurrentUser } from "@/app/authSlice";
 import { useCreateCarMutation } from "@/app/api/carsApiSlice";
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
-import { ICarFormInput } from "@/types/car-form-input-interface";
+import { ICarFormInput } from "@/types/CarFormInputInterface";
 import { useNavigate } from "react-router-dom";
-import {
-  MileageField,
-  ImageField,
-  YearField,
-  EngineDispleacementField,
-  EnginePowerField,
-  PriceField,
-} from "./CarFormConditionalFields";
 
 import classes from "./CarForm.module.css";
-import BrandSelectOptions from "@/components/shared/CarFormSelectOptions/BrandSelectOptions";
-import ColorSelectOptions from "@/components/shared/CarFormSelectOptions/ColorSelectOptions";
-import FuelTypeOptions from "@/components/shared/CarFormSelectOptions/FuelTypeOptions";
-import BodyTypeOptions from "@/components/shared/CarFormSelectOptions/BodyTypeOptions";
-import CurrencyOptions from "@/components/shared/CarFormSelectOptions/CurrencyOptions";
 import Button from "@/components/shared/Button/Button";
 import uploadIcon from "@/assets/icons/uploadIcon.svg";
+import ImageField from "./Atomic/ImageField";
+import YearField from "./Atomic/YearField";
+import MileageField from "./Atomic/MileageFiled";
+import EngineDispleacementField from "./Atomic/EngineDispleacementField";
+import EnginePowerField from "./Atomic/EnginePower";
+import PriceField from "./Atomic/PriceField";
+import BrandField from "./Atomic/BrandField";
+import SeriesField from "./Atomic/SeriesField";
+import UsedField from "./Atomic/UsedField";
+import ColorField from "./Atomic/ColorField";
+import MetallicColorField from "./Atomic/MetallicColorField";
+import TransmissionTypeField from "./Atomic/TransmissionTypeField";
+import FuelTypeField from "./Atomic/FuelTypeField";
+import BodyTypeField from "./Atomic/BodyTypeField";
+import TractionField from "./Atomic/TractionField";
+import PaintChangedField from "./Atomic/PaintChangedField";
+import EligibleForTradeField from "./Atomic/EligibleForTradeField";
+import SellerField from "./Atomic/SellerField";
+import CurrencyField from "./Atomic/CurrencyField";
+import DetailsField from "./Atomic/DetailsField";
 
 interface IProps {
   children?: ReactNode;
@@ -30,20 +37,20 @@ interface IProps {
 }
 
 const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
-  const [createCar] = useCreateCarMutation();
+  const [createCar, { isSuccess }] = useCreateCarMutation();
   const user = useSelector(selectCurrentUser);
-
   const navigate = useNavigate();
 
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [imageThumbnail, setImageThumbnail] = useState("");
   const [queryError, setQueryError] = useState<string>("");
+  const [createdCar, setCreatedCar] = useState("");
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { isSubmitted, errors },
   } = useForm<ICarFormInput>();
 
   const onSubmit: SubmitHandler<ICarFormInput> = async (
@@ -53,11 +60,16 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
       if (data.imageFile) {
         setImageFile(data.imageFile[0]);
       }
+      console.log(data, "CarForm 62");
+
       const formData = appendFormDataHelper(data, user, imageFile);
+      console.log([...formData], "carform 65");
+
       await createCar(formData)
         .unwrap()
+        .then((res) => setCreatedCar(res.id))
         .catch((error) => {
-          setQueryError(error.data.message);
+          setQueryError(error);
         });
     } else {
       navigate("/searchresults", {
@@ -65,8 +77,13 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
         state: { ...data },
       });
     }
-    reset();
   };
+
+  useEffect(() => {
+    isSubmitted && !queryError && reset();
+    isSubmitted && queryError && console.log(queryError);
+    isSuccess && !queryError && console.log(createdCar);
+  }, [isSubmitted, queryError, isSuccess, createdCar]);
 
   const setImageThumbnailHandler = (value: string) => {
     setImageThumbnail(value);
@@ -91,113 +108,26 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           setImageThumbnailHandler={setImageThumbnailHandler}
         />
         {errors.brand && <p className={`error-text`}>{errors.brand.message}</p>}
-        <select
-          {...register("brand", {
-            validate: {
-              require: (value) =>
-                !isCreate || value !== "" || "Brand Name Required",
-            },
-          })}
-        >
-          <BrandSelectOptions />
-        </select>
+        <BrandField isCreate={isCreate} register={register} />
         {errors.series && (
           <p className={`error-text`}>{errors.series.message}</p>
         )}
-        <input
-          {...register("series", {
-            validate: {
-              require: (value) =>
-                !isCreate ||
-                value !== "" ||
-                "Car Series Required (ex. Corolla, Polo)",
-            },
-          })}
-          type="text"
-          placeholder="Series (Corolla, Polo etc.)"
-        />
+        <SeriesField register={register} isCreate={isCreate} />
         {errors.used && <p className={`error-text`}>{errors.used.message}</p>}
-        <div className={`${classes["radio-wrapper"]} flex`}>
-          <label>
-            <input
-              {...register("used", {
-                validate: {
-                  require: (value) =>
-                    !isCreate ||
-                    value !== null ||
-                    "Used / New Car Information Needed",
-                },
-              })}
-              type="radio"
-              value="false"
-            />
-            New
-          </label>
-          <label>
-            <input
-              {...register("used", {
-                validate: {
-                  require: (value) =>
-                    !isCreate ||
-                    value !== null ||
-                    "Used / New Car Information Needed",
-                },
-              })}
-              type="radio"
-              value="true"
-            />
-            Used
-          </label>
-        </div>
+        <UsedField register={register} classes={classes} isCreate={isCreate} />
         {errors.year && <p className={`error-text`}>{errors.year.message}</p>}
         <YearField classes={classes} register={register} isCreate={isCreate} />
         {errors.color && <p className={`error-text`}>{errors.color.message}</p>}
-        <select
-          {...register("color", {
-            validate: {
-              require: (value) =>
-                // @ts-ignore
-                !isCreate || value !== "" || "Color Required",
-            },
-          })}
-        >
-          <ColorSelectOptions />
-        </select>
+        <ColorField register={register} />
+
         {errors.metallicColor && (
           <p className={`error-text`}>{errors.metallicColor.message}</p>
         )}
-        <div className={`${classes["radio-wrapper"]} flex`}>
-          <label>
-            <input
-              {...register("metallicColor", {
-                validate: {
-                  require: (value) =>
-                    !isCreate ||
-                    value !== null ||
-                    "Metallic / Matte color Information Needed",
-                },
-              })}
-              type="radio"
-              value="true"
-            />
-            Metallic
-          </label>
-          <label>
-            <input
-              {...register("metallicColor", {
-                validate: {
-                  require: (value) =>
-                    !isCreate ||
-                    value !== null ||
-                    "Metallic / Matte color Information Needed",
-                },
-              })}
-              type="radio"
-              value="false"
-            />
-            Matte
-          </label>
-        </div>
+        <MetallicColorField
+          register={register}
+          classes={classes}
+          isCreate={isCreate}
+        />
         {errors.mileage && (
           <p className={`error-text`}>{errors.mileage.message}</p>
         )}
@@ -209,62 +139,19 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
         {errors.transmissionType && (
           <p className={`error-text`}>{errors.transmissionType.message}</p>
         )}
-        <div className={`${classes["radio-wrapper"]} flex`}>
-          <label>
-            <input
-              {...register("transmissionType", {
-                validate: {
-                  require: (value) =>
-                    !isCreate || value !== null || "Transmission Type Needed",
-                },
-              })}
-              type="radio"
-              value="AUTOMATIC"
-            />
-            Automatic
-          </label>
-          <label>
-            <input
-              {...register("transmissionType", {
-                validate: {
-                  require: (value) =>
-                    !isCreate || value !== null || "Transmission Type Needed",
-                },
-              })}
-              type="radio"
-              value="MANUAL"
-            />
-            Manuel
-          </label>
-        </div>
+        <TransmissionTypeField
+          register={register}
+          classes={classes}
+          isCreate={isCreate}
+        />
         {errors.fuelType && (
           <p className={`error-text`}>{errors.fuelType.message}</p>
         )}
-        <select
-          {...register("fuelType", {
-            validate: {
-              require: (value) =>
-                // @ts-ignore
-                !isCreate || value !== "" || "Fuel Type Required",
-            },
-          })}
-        >
-          <FuelTypeOptions />
-        </select>
+        <FuelTypeField register={register} isCreate={isCreate} />
         {errors.bodyType && (
           <p className={`error-text`}>{errors.bodyType.message}</p>
         )}
-        <select
-          {...register("bodyType", {
-            validate: {
-              require: (value) =>
-                // @ts-ignore
-                !isCreate || value !== "" || "Body Type Required",
-            },
-          })}
-        >
-          <BodyTypeOptions />
-        </select>
+        <BodyTypeField register={register} isCreate={isCreate} />
         {errors.engineDisplacement && (
           <p className={`error-text`}>{errors.engineDisplacement.message}</p>
         )}
@@ -284,77 +171,21 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
         {errors.traction && (
           <p className={`error-text`}>{errors.traction.message}</p>
         )}
-        <div className={`${classes["radio-wrapper"]} flex`}>
-          <label>
-            <input
-              {...register("traction", {
-                validate: {
-                  require: (value) =>
-                    !isCreate ||
-                    value !== null ||
-                    "Traction Information Needed",
-                },
-              })}
-              type="radio"
-              value="2x4"
-            />
-            2x4
-          </label>
-          <label>
-            <input
-              {...register("traction", {
-                validate: {
-                  require: (value) =>
-                    !isCreate ||
-                    value !== null ||
-                    "Traction Information Needed",
-                },
-              })}
-              type="radio"
-              value="4x4"
-            />
-            4x4
-          </label>
-        </div>
-        <label className={`${classes["checkbox_label"]} flex`}>
-          <input {...register("paintChanged")} type="checkbox" />
-          Paint Change
-        </label>
-        <label className={`${classes["checkbox_label"]} flex`}>
-          <input {...register("eligibleForTrade")} type="checkbox" />
-          Eligible For Trade{" "}
-        </label>
+        <TractionField
+          register={register}
+          classes={classes}
+          isCreate={isCreate}
+        />
+        <PaintChangedField register={register} classes={classes} />
+        <EligibleForTradeField register={register} classes={classes} />
         {errors.seller && (
           <p className={`error-text`}>{errors.seller.message}</p>
         )}
-        <div className={`${classes["radio-wrapper"]} flex`}>
-          <label>
-            <input
-              {...register("seller", {
-                validate: {
-                  require: (value) =>
-                    !isCreate || value !== null || "Seller Information Needed",
-                },
-              })}
-              type="radio"
-              value="OWNER"
-            />
-            Owner
-          </label>
-          <label>
-            <input
-              {...register("seller", {
-                validate: {
-                  require: (value) =>
-                    !isCreate || value !== null || "Seller Information Needed",
-                },
-              })}
-              type="radio"
-              value="GALLERY"
-            />
-            Gallery
-          </label>
-        </div>
+        <SellerField
+          register={register}
+          classes={classes}
+          isCreate={isCreate}
+        />
         {errors.price && <p className={`error-text`}>{errors.price.message}</p>}
         {errors.currency && (
           <p className={`error-text`}>{errors.currency.message}</p>
@@ -365,26 +196,9 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
             register={register}
             isCreate={isCreate}
           />
-          <select
-            {...register("currency", {
-              validate: {
-                require: (value) =>
-                  // @ts-ignore
-                  !isCreate || value !== "" || "Currency Required",
-              },
-            })}
-          >
-            <CurrencyOptions />
-          </select>
+          <CurrencyField register={register} isCreate={isCreate} />
         </div>
-        {isCreate && (
-          <textarea
-            cols={30}
-            rows={8}
-            placeholder="More Details"
-            {...register("details")}
-          ></textarea>
-        )}
+        <DetailsField register={register} isCreate={isCreate} />
         {queryError && <p className={`error-text`}>{queryError}</p>}
         <Button isSubmit={true}>{isCreate ? "SELL" : "SEARCH"}</Button>
       </form>

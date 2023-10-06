@@ -1,4 +1,4 @@
-import { ICar } from "./car-interface";
+import { ICar } from "./carInterface";
 
 export interface ICarFormInput extends ICar {
   minYear: string;

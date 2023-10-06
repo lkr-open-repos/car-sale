@@ -16,3 +16,5 @@ export {
   updateUser,
   deleteUser,
 } from "./user-controller";
+
+export { newFavorite } from "./favorite-controller";

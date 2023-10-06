@@ -1,5 +1,5 @@
 import React from "react";
-import { ICar } from "@/types/car-interface";
+import { ICar } from "@/types/carInterface";
 import classes from "./CarCard.module.css";
 import { currencyIconHelper } from "@/utils/currencyIconHelper";
 import favStarIcon from "@/assets/icons/favStarIcon.svg";
@@ -28,9 +28,11 @@ const CarCard: React.FC<IProps> = ({ car }) => {
           user?.id && isOwner && classes["owner"]
         }`}
       >
-        <div className={classes["fav-icon"]}>
-          <img src={favStarIcon} alt="" />
-        </div>
+        {user?.id !== car.user && (
+          <div className={classes["fav-icon"]}>
+            <img src={favStarIcon} alt="" />
+          </div>
+        )}
         <div className={classes["car-image"]}>
           <img
             className={classes["car-image_img"]}

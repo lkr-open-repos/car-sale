@@ -7,7 +7,7 @@ import { selectCurrentUser } from "@/app/authSlice";
 
 const User = () => {
   const [tab, setTab] = useState("myCars");
-  const currentUser = useSelector(selectCurrentUser);
+  const user = useSelector(selectCurrentUser);
 
   const setTabHandler = (value: string) => {
     setTab(value);
@@ -18,7 +18,7 @@ const User = () => {
       <UserMenu setTabHandler={setTabHandler} />
       {tab === "myCars" && (
         <div className={`${classes["cars-container"]} flex`}>
-          <Cars carsSearchData={{ user: currentUser?.id }} />
+          <Cars carsSearchData={{ user: user?.id }} />
         </div>
       )}
     </section>

@@ -1,6 +1,6 @@
-import { ICar } from "@/types/car-interface";
+import { ICar } from "@/types/carInterface";
 import React, { ReactNode, useEffect, useState } from "react";
-import { ICarFormInput } from "@/types/car-form-input-interface";
+import { ICarFormInput } from "@/types/CarFormInputInterface";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
 import { useUpdateCarMutation } from "@/app/api/carsApiSlice";

@@ -1,6 +1,6 @@
-import { ICar } from "@/types/car-interface";
+import { ICar } from "@/types/carInterface";
 import { apiSlice } from "./apiSlice";
-import { ICarFormInput } from "@/types/car-form-input-interface";
+import { ICarFormInput } from "@/types/CarFormInputInterface";
 
 export const carsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

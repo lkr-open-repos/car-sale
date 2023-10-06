@@ -1,4 +1,4 @@
-import { ICar } from "@/types/car-interface";
+import { ICar } from "@/types/carInterface";
 import React from "react";
 import classes from "./CarInfo.module.css";
 import Button from "@/components/shared/Button/Button";

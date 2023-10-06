@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import classes from "./QuickSearch.module.css";
 import Button from "@/components/shared/Button/Button";
-import { ICar } from "@/types/car-interface";
+import { ICar } from "@/types/carInterface";
 import BrandSelectOptions from "../CarFormSelectOptions/BrandSelectOptions";
 
 interface IFormInput extends ICar {

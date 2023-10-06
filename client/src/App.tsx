@@ -11,7 +11,7 @@ import Auth from "@/pages/Auth/Auth";
 import CreateCar from "@/pages/CreateCar/CreateCar";
 import FourOFour from "@/pages/FourOFour/FourOFour";
 import CheckAuth from "./components/layouts/ChechAuth/CheckAuth";
-import { IUserData } from "./types/user-data-interface";
+import { IUserData } from "./types/userDataInterface";
 import CarSearchResults from "./pages/CarSearchResults/CarSearchResults";
 import User from "./pages/User/User";
 

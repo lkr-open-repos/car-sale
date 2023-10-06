@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { ICar, ICarFormInput } from "../types";
 
 interface ICarSearchFields
@@ -9,7 +10,6 @@ interface ICarSearchFields
     | "enginePower"
     | "price"
     | "details"
-    | "user"
   > {
   year: {};
   mileage: {};
@@ -17,7 +17,6 @@ interface ICarSearchFields
   enginePower: {};
   price: {};
   details: {};
-  user: string;
 }
 
 export const fillSearchDataHelper = (rawSearchData: Partial<ICarFormInput>) => {
@@ -134,7 +133,7 @@ export const fillSearchDataHelper = (rawSearchData: Partial<ICarFormInput>) => {
   rawSearchData.user &&
     (searchData = {
       ...searchData,
-      user: searchData.user,
+      user: rawSearchData.user,
     });
   return searchData;
 };

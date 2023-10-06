@@ -1,4 +1,4 @@
-import { ICarFormInput } from "@/types/car-form-input-interface";
+import { ICarFormInput } from "@/types/CarFormInputInterface";
 import { getCurrentDateHelper } from "./getCurrentDateHelper";
 
 export const appendFormDataHelper = (

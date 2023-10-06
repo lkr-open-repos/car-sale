@@ -3,11 +3,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import classes from "./Auth.module.css";
 
-import { IUser } from "@/types/user-interface";
+import { IUser } from "@/types/userInterface";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser, setAuth } from "@/app/authSlice";
 import { useSignInMutation, useSignUpMutation } from "@/app/api/authApiSlice";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "@/components/shared/Button/Button";
 
 interface IFormInput {

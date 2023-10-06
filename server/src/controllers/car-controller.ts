@@ -1,9 +1,6 @@
-import fs from "fs";
 import { validationResult } from "express-validator";
-import { Request, Response, NextFunction, ICar } from "../types";
+import { Request, Response, NextFunction } from "../types";
 
-import { HttpError } from "../models";
-import { Car } from "../models";
 import { CarDocument } from "../types";
 import { throwErrorHelper, validationHelper } from "../utils/";
 import {
@@ -21,8 +18,15 @@ export const createCar = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  console.log(req.body, "car controller 21");
+
   const validationError = validationHelper(validationResult(req), next);
   if (validationError) {
+    console.log(
+      validationError.validationMessages?.validationMessages,
+      "car comtroller 25"
+    );
+
     return next(validationError);
   }
   let createdCar: CarDocument;
@@ -36,7 +40,7 @@ export const createCar = async (
       throwErrorHelper(err, "Creating car failed, please try again.")
     );
   }
-  res.status(201).json({ car: createdCar });
+  res.status(201).json({ car: createdCar.toObject({ getters: true }) });
 };
 
 export const getAllCars = async (
@@ -104,6 +108,8 @@ export const getCarsBySearch = async (
   } catch (err) {
     return next(throwErrorHelper(err));
   }
+
+  console.log(cars, "cars controller");
 
   res.status(200).json({
     cars: cars.map((car) => car.toObject({ getters: true })),
