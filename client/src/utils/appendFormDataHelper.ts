@@ -1,5 +1,4 @@
 import { ICarFormInput } from "@/types/CarFormInputInterface";
-import { getCurrentDateHelper } from "./getCurrentDateHelper";
 
 export const appendFormDataHelper = (
   data: Partial<ICarFormInput>,
@@ -13,7 +12,6 @@ export const appendFormDataHelper = (
   }
   imageFile && formData.append("image", imageFile);
   formData.append("user", user!.id);
-  formData.append("adDate", getCurrentDateHelper());
 
   return formData;
 };

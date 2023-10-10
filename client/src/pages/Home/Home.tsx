@@ -6,9 +6,9 @@ const Home = () => {
   return (
     <>
       <section className={`${classes["hero"]} flex`}>
-        <h1>Buy?</h1>
+        <h1 className={classes["fade-fast"]}>Buy?</h1>
         <h1>Sell?</h1>
-        <h1>Your Journey, Our Expertise!</h1>
+        <h1 className={classes["fade-slow"]}>Your Journey, Our Expertise!</h1>
       </section>
       <section className={classes["search"]}>
         <h1>Find Your Dream Car</h1>

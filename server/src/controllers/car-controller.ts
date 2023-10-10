@@ -22,11 +22,6 @@ export const createCar = async (
 
   const validationError = validationHelper(validationResult(req), next);
   if (validationError) {
-    console.log(
-      validationError.validationMessages?.validationMessages,
-      "car comtroller 25"
-    );
-
     return next(validationError);
   }
   let createdCar: CarDocument;
@@ -35,6 +30,7 @@ export const createCar = async (
       ...req.body,
       image: req.file?.path,
     });
+    console.log(req.file?.path);
   } catch (err) {
     return next(
       throwErrorHelper(err, "Creating car failed, please try again.")
@@ -108,8 +104,6 @@ export const getCarsBySearch = async (
   } catch (err) {
     return next(throwErrorHelper(err));
   }
-
-  console.log(cars, "cars controller");
 
   res.status(200).json({
     cars: cars.map((car) => car.toObject({ getters: true })),

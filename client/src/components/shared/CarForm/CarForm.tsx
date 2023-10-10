@@ -30,6 +30,7 @@ import EligibleForTradeField from "./Atomic/EligibleForTradeField";
 import SellerField from "./Atomic/SellerField";
 import CurrencyField from "./Atomic/CurrencyField";
 import DetailsField from "./Atomic/DetailsField";
+import { getCurrentDateHelper } from "@/utils/getCurrentDateHelper";
 
 interface IProps {
   children?: ReactNode;
@@ -37,11 +38,10 @@ interface IProps {
 }
 
 const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
-  const [createCar, { isSuccess }] = useCreateCarMutation();
+  const [createCar] = useCreateCarMutation();
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
 
-  const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const [imageThumbnail, setImageThumbnail] = useState("");
   const [queryError, setQueryError] = useState<string>("");
   const [createdCar, setCreatedCar] = useState("");
@@ -50,24 +50,26 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitted, errors },
+    formState: { errors },
   } = useForm<ICarFormInput>();
 
   const onSubmit: SubmitHandler<ICarFormInput> = async (
     data: Partial<ICarFormInput>
   ) => {
     if (isCreate) {
+      let imageFile: File | undefined = undefined;
       if (data.imageFile) {
-        setImageFile(data.imageFile[0]);
+        imageFile = data.imageFile[0];
       }
-      console.log(data, "CarForm 62");
 
       const formData = appendFormDataHelper(data, user, imageFile);
-      console.log([...formData], "carform 65");
+      formData.append("adDate", getCurrentDateHelper());
 
       await createCar(formData)
         .unwrap()
-        .then((res) => setCreatedCar(res.id))
+        .then((res) => {
+          setCreatedCar(res.car.id);
+        })
         .catch((error) => {
           setQueryError(error);
         });
@@ -80,10 +82,9 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
   };
 
   useEffect(() => {
-    isSubmitted && !queryError && reset();
-    isSubmitted && queryError && console.log(queryError);
-    isSuccess && !queryError && console.log(createdCar);
-  }, [isSubmitted, queryError, isSuccess, createdCar]);
+    createdCar && reset();
+    createdCar && navigate(`/cars/${createdCar}`);
+  }, [createdCar]);
 
   const setImageThumbnailHandler = (value: string) => {
     setImageThumbnail(value);

@@ -2,7 +2,8 @@
   min-height: 50vh;
   background: url(../../assets/images/heroImage.jpg) #33333377;
   background-size: cover;
-  background-position: bottom;
+  animation: moveCar 10s;
+  animation-fill-mode: forwards;
   background-blend-mode: multiply;
   color: var(--text-color);
   flex-direction: column;
@@ -10,6 +11,37 @@
   justify-content: start;
   padding: 2rem;
   font-size: 1.5rem;
+}
+
+.hero h1 {
+  animation: fadeInText 10s;
+}
+
+.hero .fade-fast {
+  animation: fadeInText 5s;
+}
+
+.hero .fade-slow {
+  animation: fadeInText 15s;
+}
+
+@keyframes fadeInText {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes moveCar {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: bottom;
+  }
 }
 
 .search h1 {
@@ -27,7 +59,16 @@
 
 @media screen and (min-width: 767px) {
   .hero {
-    background-position: 50% 80%;
     justify-content: center;
+  }
+
+  @keyframes moveCar {
+    0% {
+      background-position: 0 0;
+    }
+
+    100% {
+      background-position: 50% 80%;
+    }
   }
 }

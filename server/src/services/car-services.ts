@@ -29,7 +29,7 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
     image,
   } = carData;
 
-  console.log(carData, "car-services 32");
+  console.log(image, "car servies 32");
 
   let createdCar: CarDocument;
 
@@ -101,10 +101,8 @@ export const getCarsBySearchService = async (
 ): Promise<{ cars: CarDocument[]; totalPages: Number }> => {
   let cars: CarDocument[] = [];
   let totalPages: Number = 0;
-  console.log(rawSearchData, "car-services 103");
 
   let searchData = fillSearchDataHelper(rawSearchData);
-  console.log(searchData, "car services 106");
 
   try {
     const totalItems = await Car.countDocuments({ ...searchData });
