@@ -33,7 +33,7 @@ enum Colors {
   Purple = "Purple",
 }
 
-enum MetallicColor {
+export enum MetallicColor {
   Metallic = "Metallic",
   Matte = "Matte",
 }

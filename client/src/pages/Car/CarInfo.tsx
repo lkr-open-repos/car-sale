@@ -70,7 +70,7 @@ const CarInfo: React.FC<IProps> = ({ car, setEditMode, isOwner }) => {
           <div className={`${classes["car-features-wrapper"]} flex`}>
             <h3>
               <span className={classes["car-info-key"]}>Color: </span>
-              {car?.color} {car?.metallicColor && "metallic"}
+              {car?.color} {car?.metallicColor}
             </h3>
           </div>
           <div className={`${classes["car-features-wrapper"]} flex`}>

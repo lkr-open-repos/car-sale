@@ -18,7 +18,7 @@ const MetallicColorField: React.FC<ICarFormFields> = ({
             },
           })}
           type="radio"
-          value="true"
+          value="Metallic"
         />
         Metallic
       </label>
@@ -33,7 +33,7 @@ const MetallicColorField: React.FC<ICarFormFields> = ({
             },
           })}
           type="radio"
-          value="false"
+          value="Matte"
         />
         Matte
       </label>

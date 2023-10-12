@@ -44,7 +44,6 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
 
   const [imageThumbnail, setImageThumbnail] = useState("");
   const [queryError, setQueryError] = useState<string>("");
-  const [createdCar, setCreatedCar] = useState("");
 
   const {
     register,
@@ -68,7 +67,8 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
       await createCar(formData)
         .unwrap()
         .then((res) => {
-          setCreatedCar(res.car.id);
+          reset();
+          navigate(`/cars/${res.car.id}`);
         })
         .catch((error) => {
           setQueryError(error);
@@ -80,11 +80,6 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
       });
     }
   };
-
-  useEffect(() => {
-    createdCar && reset();
-    createdCar && navigate(`/cars/${createdCar}`);
-  }, [createdCar]);
 
   const setImageThumbnailHandler = (value: string) => {
     setImageThumbnail(value);

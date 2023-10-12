@@ -138,7 +138,6 @@ export const updateCarService = async (
     traction,
     paintChanged,
     eligibleForTrade,
-    adDate,
     seller,
     price,
     currency,
@@ -175,7 +174,6 @@ export const updateCarService = async (
   car.traction = traction;
   car.paintChanged = paintChanged;
   car.eligibleForTrade = eligibleForTrade;
-  car.adDate = adDate;
   car.seller = seller;
   car.price = price;
   car.currency = currency;

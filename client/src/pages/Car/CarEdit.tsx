@@ -1,4 +1,4 @@
-import { ICar } from "@/types/carInterface";
+import { ICar, MetallicColor } from "@/types/carInterface";
 import React, { ReactNode, useEffect, useState } from "react";
 import { ICarFormInput } from "@/types/CarFormInputInterface";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -25,7 +25,6 @@ interface IProps {
 
 const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
   const [updateCar] = useUpdateCarMutation();
-  const [queryErrors, setQueryErrors] = useState(null);
 
   const { cid } = useParams();
 
@@ -58,13 +57,13 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
     if (cid) {
       await updateCar({ updateData: formData, cid })
         .unwrap()
-        .then((res) => console.log(res))
+        .then(() => {
+          reset();
+          window.location.reload();
+        })
         .catch((error) => {
           console.log(error);
         });
-
-      reset();
-      window.location.reload();
     }
   };
 
@@ -79,6 +78,8 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
       </p>
     )
   );
+
+  console.log(car.metallicColor);
 
   return (
     <section>
@@ -225,7 +226,7 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
                       type="radio"
                       value="Metallic"
                     />
-                    metallic
+                    Metallic
                   </label>{" "}
                   <label>
                     <input
@@ -235,7 +236,7 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
                       type="radio"
                       value="Matte"
                     />
-                    matte
+                    Matte
                   </label>
                 </>
               </h3>

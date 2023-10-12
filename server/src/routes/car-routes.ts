@@ -14,6 +14,7 @@ import {
 } from "../controllers";
 import { createCarValidation } from "../validators";
 import { fileUpload } from "../middleware";
+import { updateCarValidation } from "../validators/car-validator";
 
 const router = Router();
 
@@ -32,7 +33,7 @@ router.post("/", fileUpload.single("image"), createCarValidation, createCar);
 router.patch(
   "/:cid",
   fileUpload.single("image"),
-  createCarValidation,
+  updateCarValidation,
   updateCar
 );
 
