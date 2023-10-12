@@ -111,7 +111,7 @@ export const getCarsBySearchService = async (
       .skip((page - 1) * limit)
       .limit(limit);
   } catch (err) {
-    console.log(err);
+    throw new HttpError("Check search paramaters", 404);
   }
   return { cars, totalPages };
 };

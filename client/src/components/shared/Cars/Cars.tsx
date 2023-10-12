@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import CarCard from "../CarCard/CarCard";
 import Button from "@/components/shared/Button/Button";
 import Spinner from "../Spinner/Spinner";
+import { useGetFavoritesByUserQuery } from "@/app/api/favoriteApiSlice";
 
 interface IProps {
   carsSearchData: Partial<ICarFormInput>;
@@ -20,6 +21,7 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [carSearch, { isLoading, isSuccess }] = useGetCarSearchMutation();
+  const { data } = useGetFavoritesByUserQuery();
 
   const dataHelper = async (carsSearchData: Partial<ICarFormInput>) => {
     try {
@@ -40,7 +42,7 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
   if (carsData.totalPages > 1) {
     pageButtons.push(
       <Button
-        key={88888}
+        key={"prevPage"}
         disabled={currentPage === 1}
         onClick={() => {
           setCurrentPage((prevState) => prevState - 1);
@@ -64,7 +66,7 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
     }
     pageButtons.push(
       <Button
-        key={99999}
+        key={"nextPage"}
         disabled={currentPage === carsData.totalPages}
         onClick={() => {
           setCurrentPage((prevState) => prevState + 1);
@@ -83,7 +85,11 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
           <div className={`${classes["cars-wrapper"]} grid`}>
             {carsData.cars && carsData.cars.length > 0 ? (
               carsData.cars.map((car: any) => (
-                <CarCard key={car.id} car={car} />
+                <CarCard
+                  key={car.id}
+                  car={car}
+                  isFavorite={data?.includes(car.id)}
+                />
               ))
             ) : (
               <h2>No Cars Found For Your Search.</h2>

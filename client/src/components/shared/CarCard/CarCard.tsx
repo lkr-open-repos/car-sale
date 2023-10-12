@@ -6,13 +6,16 @@ import favStarIcon from "@/assets/icons/favStarIcon.svg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
+import { useCreateFavoriteMutation } from "@/app/api/favoriteApiSlice";
 
 interface IProps {
   car: ICar;
+  isFavorite?: boolean;
 }
 
 const CarCard: React.FC<IProps> = ({ car }) => {
   const user = useSelector(selectCurrentUser);
+  const [addFavorite] = useCreateFavoriteMutation();
 
   const currencyIcon = currencyIconHelper(car.currency);
 
@@ -28,8 +31,13 @@ const CarCard: React.FC<IProps> = ({ car }) => {
           user?.id && isOwner && classes["owner"]
         }`}
       >
-        {user?.id !== car.user && (
-          <div className={classes["fav-icon"]}>
+        {!isOwner && (
+          <div
+            onClick={() => {
+              addFavorite(car.id);
+            }}
+            className={classes["fav-icon"]}
+          >
             <img src={favStarIcon} alt="" />
           </div>
         )}

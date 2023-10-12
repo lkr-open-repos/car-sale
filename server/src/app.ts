@@ -8,6 +8,7 @@ import path from "path";
 
 import carsRoutes from "./routes/car-routes";
 import userRoutes from "./routes/user-routes";
+import favoriteRoutes from "./routes/favorite-routes";
 
 import { errorHandler, notFound } from "./middleware";
 
@@ -34,6 +35,7 @@ dotenv.config();
 // Routes
 app.use("/api/v1/cars", carsRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/favorites", favoriteRoutes);
 
 // Error handling middlewares
 app.use(notFound);
