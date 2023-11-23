@@ -16,7 +16,7 @@
   top: 0.5rem;
   height: 2rem;
   width: 2rem;
-  z-index: 999;
+  z-index: 9;
   background-color: var(--overlay-color);
   border-radius: 50%;
   display: flex;

@@ -11,6 +11,8 @@ import userRoutes from "./routes/user-routes";
 import favoriteRoutes from "./routes/favorite-routes";
 
 import { errorHandler, notFound } from "./middleware";
+import messageRoutes from "./routes/message-routes";
+import conversationRoutes from "./routes/conversation-routes";
 
 const app = express();
 
@@ -36,6 +38,8 @@ dotenv.config();
 app.use("/api/v1/cars", carsRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/favorites", favoriteRoutes);
+app.use("api/v1/messages", messageRoutes);
+app.use("/api/v1/conversations", conversationRoutes);
 
 // Error handling middlewares
 app.use(notFound);

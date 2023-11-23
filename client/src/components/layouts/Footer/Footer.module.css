@@ -4,6 +4,8 @@
   align-items: start;
   min-width: 251px;
   color: var(--text-color);
+  bottom: 0;
+  margin-top: auto;
 }
 
 .footer ul {

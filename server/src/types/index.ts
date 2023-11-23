@@ -8,3 +8,9 @@ export {
   FavoriteDocument,
   FavoriteModel,
 } from "./favorite-interface";
+export {
+  IConversation,
+  ConversationDocument,
+  ConversationModel,
+} from "./conversation-interface";
+export { IMessage, MessageDocument, MessageModel } from "./message-interface";

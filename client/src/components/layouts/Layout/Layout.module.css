@@ -4,6 +4,9 @@
   margin-right: auto;
   min-width: 251px;
   background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .layout main {

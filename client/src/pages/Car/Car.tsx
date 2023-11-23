@@ -4,10 +4,10 @@ import { useGetCarByIdQuery } from "@/app/api/carsApiSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
 import { useState } from "react";
-import Button from "@/components/shared/Button/Button";
 import CarInfo from "./CarInfo";
 import CarEdit from "./CarEdit";
 import Spinner from "@/components/shared/Spinner/Spinner";
+import MessageButton from "./MessageButton/MessageButton";
 
 const Car = () => {
   const { cid } = useParams();
@@ -37,7 +37,9 @@ const Car = () => {
             setEditMode={setEditMode}
           ></CarInfo>
         ))}
-      {isSuccess && !isOwner && <Button>Message Seller</Button>}
+      {isSuccess && !isOwner && (
+        <MessageButton targetUser={car!.user}>Message Seller</MessageButton>
+      )}
     </>
   );
 };

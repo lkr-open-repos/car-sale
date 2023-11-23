@@ -17,4 +17,16 @@ export {
   deleteUser,
 } from "./user-controller";
 
-export { newFavorite } from "./favorite-controller";
+export {
+  createFavorite,
+  getFavoritesByUser,
+  getCarsByFavorites,
+} from "./favorite-controller";
+
+export { createMessage, getMessagesByConversation } from "./message-controller";
+
+export {
+  createConversation,
+  getConversationsByUser,
+  getConversationByUsers,
+} from "./conversation-controller";

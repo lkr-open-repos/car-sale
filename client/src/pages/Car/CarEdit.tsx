@@ -58,8 +58,8 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
       await updateCar({ updateData: formData, cid })
         .unwrap()
         .then(() => {
-          reset();
-          window.location.reload();
+          // reset();
+          // window.location.reload();
         })
         .catch((error) => {
           console.log(error);

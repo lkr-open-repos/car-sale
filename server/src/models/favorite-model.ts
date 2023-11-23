@@ -2,12 +2,14 @@ import { model, Schema } from "mongoose";
 import { FavoriteDocument } from "../types";
 
 const favoriteSchema = new Schema({
-  user: {
+  userId: {
     type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
-  car: {
+  carId: {
     type: Schema.Types.ObjectId,
+    ref: "Car",
     required: true,
   },
 });

@@ -13,7 +13,7 @@ interface IProps {
   isFavorite?: boolean;
 }
 
-const CarCard: React.FC<IProps> = ({ car }) => {
+const CarCard: React.FC<IProps> = ({ car, isFavorite }) => {
   const user = useSelector(selectCurrentUser);
   const [addFavorite] = useCreateFavoriteMutation();
 
@@ -24,6 +24,15 @@ const CarCard: React.FC<IProps> = ({ car }) => {
     isOwner = true;
   }
 
+  const addFavoriteHandler = async () => {
+    console.log(car.id);
+
+    addFavorite({ carId: car.id })
+      .unwrap()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Link to={`/cars/${car.id}`}>
       <div
@@ -31,13 +40,8 @@ const CarCard: React.FC<IProps> = ({ car }) => {
           user?.id && isOwner && classes["owner"]
         }`}
       >
-        {!isOwner && (
-          <div
-            onClick={() => {
-              addFavorite(car.id);
-            }}
-            className={classes["fav-icon"]}
-          >
+        {!isOwner && !isFavorite && (
+          <div onClick={addFavoriteHandler} className={classes["fav-icon"]}>
             <img src={favStarIcon} alt="" />
           </div>
         )}

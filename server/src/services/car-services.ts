@@ -29,8 +29,6 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
     image,
   } = carData;
 
-  console.log(image, "car servies 32");
-
   let createdCar: CarDocument;
 
   createdCar = await Car.create({

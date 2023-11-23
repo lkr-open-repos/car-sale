@@ -7,21 +7,31 @@ export const createFavoriteService = async (
 ): Promise<FavoriteDocument> => {
   let createdFavorite: FavoriteDocument;
 
-  createdFavorite = await Favorite.create({ carId, userId });
+  const isFavorite = await Favorite.findOne({ carId: carId, userId: userId });
+  if (!isFavorite) {
+    createdFavorite = await Favorite.create({ carId, userId });
+    await createdFavorite.save();
+    return createdFavorite;
+  }
 
-  await createdFavorite.save();
-
-  return createdFavorite;
+  return isFavorite;
 };
 
-export const getFavoritesByUserService = async (
-  userId: string
+export const getFavoritesService = async (
+  userId: string,
+  asCars: boolean = false
 ): Promise<FavoriteDocument[]> => {
   let favorites: FavoriteDocument[] = [];
 
-  favorites = await Favorite.find({ userId });
-  if (!favorites || favorites.length < 1) {
-    throw new HttpError("Could not find favorites for this user", 404);
+  if (asCars) {
+    favorites = await Favorite.find({ userId: userId }).populate("carId");
+    favorites = favorites.map((favorite: any) => favorite.carId);
+    return favorites;
+  }
+
+  favorites = await Favorite.find({ userId: userId });
+  if (!favorites) {
+    favorites = [];
   }
 
   return favorites;

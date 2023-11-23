@@ -1,23 +1,5 @@
 .user-wrapper {
   min-height: 70vh;
-  grid-template:
-    "a a" 4rem
-    "b c" auto / 2fr 5fr;
-}
-
-.user-submenu {
-  grid-area: b;
-  border: solid 2px;
-}
-
-.user-items {
-  grid-area: c;
-  border: solid 2px;
-  border-left: none;
-}
-
-.cars-container {
-  grid-column-start: b;
-  grid-column-end: c;
   flex-direction: column;
+  gap: 2rem;
 }

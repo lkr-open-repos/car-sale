@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import CarCard from "../CarCard/CarCard";
 import Button from "@/components/shared/Button/Button";
 import Spinner from "../Spinner/Spinner";
-import { useGetFavoritesByUserQuery } from "@/app/api/favoriteApiSlice";
+import { useLazyGetFavoritesByUserQuery } from "@/app/api/favoriteApiSlice";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "@/app/authSlice";
 
 interface IProps {
   carsSearchData: Partial<ICarFormInput>;
@@ -19,9 +21,16 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
   }>({ cars: [], totalPages: 0 });
 
   const [currentPage, setCurrentPage] = useState(1);
+  const user = useSelector(selectCurrentUser);
 
   const [carSearch, { isLoading, isSuccess }] = useGetCarSearchMutation();
-  const { data } = useGetFavoritesByUserQuery();
+  const [fetchTrigger, { data, error }] = useLazyGetFavoritesByUserQuery();
+
+  useEffect(() => {
+    if (user) {
+      fetchTrigger();
+    }
+  }, [user]);
 
   const dataHelper = async (carsSearchData: Partial<ICarFormInput>) => {
     try {
