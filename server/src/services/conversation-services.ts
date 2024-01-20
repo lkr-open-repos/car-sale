@@ -10,7 +10,16 @@ export const getConversationsByUserService = async (
     .populate("members", "name", { _id: { $ne: userId } } as any)
     .exec();
 
-  console.log("conversations service 13", conversations);
-
   return conversations;
+};
+
+export const getConversationByUsersService = async (
+  firstUserId: string,
+  secondUserId: string
+): Promise<ConversationDocument | null> => {
+  const conversation = await Conversation.findOne({
+    members: { $all: [firstUserId, secondUserId] },
+  });
+
+  return conversation;
 };

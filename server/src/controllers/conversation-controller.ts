@@ -1,5 +1,8 @@
 import { Conversation } from "../models";
-import { getConversationsByUserService } from "../services/conversation-services";
+import {
+  getConversationByUsersService,
+  getConversationsByUserService,
+} from "../services/conversation-services";
 import { Request, Response, NextFunction } from "../types";
 
 import { ConversationDocument } from "../types";
@@ -10,18 +13,28 @@ export const createConversation = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  let newConversation: ConversationDocument;
-
-  newConversation = await Conversation.create({
-    members: [req.body.senderId, req.body.receiverId],
-  });
+  let conversation: ConversationDocument | null;
 
   try {
-    const savedConversation = await newConversation.save();
-    res.status(200).json(savedConversation);
+    conversation = await getConversationByUsersService(
+      req.body.senderId,
+      req.body.receiverId
+    );
+    if (!conversation) {
+      conversation = await Conversation.create({
+        members: [req.body.senderId, req.body.receiverId],
+      });
+
+      conversation = await conversation.save();
+    }
   } catch (err) {
     return next(throwErrorHelper(err));
   }
+  console.log(
+    conversation.toObject({ getters: true }),
+    "conversation controller 30"
+  );
+  res.status(200).json(conversation.toObject({ getters: true }));
 };
 
 export const getConversationsByUser = async (
@@ -50,10 +63,11 @@ export const getConversationByUsers = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const conversation = await Conversation.find({
-      members: { $all: [req.params.firstUserId, req.params.secondUserId] },
-    });
-    res.status(200).json(conversation);
+    const conversation = await getConversationByUsersService(
+      req.body.firstUserId,
+      req.body.secondUserId
+    );
+    res.status(200).json(conversation?.toObject({ getters: true }));
   } catch (err) {
     return next(throwErrorHelper(err));
   }

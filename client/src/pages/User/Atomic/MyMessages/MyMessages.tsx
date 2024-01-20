@@ -1,16 +1,29 @@
-import { useSelector } from "react-redux";
 import Conversations from "../Conversations/Conversations";
 import classes from "./MyMessages.module.css";
-import { selectCurrentUser } from "@/app/authSlice";
+import Messenger from "../Messages/Messages";
+import { useState } from "react";
 
-const MyMessages = () => {
-  const user = useSelector(selectCurrentUser);
+interface IProps {
+  conversationId?: string;
+}
+
+const MyMessages = ({ conversationId }: IProps) => {
+  const [activeConversation, setActiveConversation] = useState<string | null>(
+    conversationId || null
+  );
+
+  const setConversationHandler = (conversationId: string | null) => {
+    setActiveConversation(conversationId);
+  };
 
   return (
-    <section className={`${classes["messenger-container"]} flex`}>
-      <Conversations userId={user!.id} />
-      <div className={`${classes["messenger-messages"]} flex`}>something</div>
-    </section>
+    <div className={`${classes["messenger-container"]} flex`}>
+      <Conversations
+        setActiveConversation={setConversationHandler}
+        activeConversation={activeConversation}
+      />
+      <Messenger activeConversation={activeConversation} />
+    </div>
   );
 };
 

@@ -1,5 +1,6 @@
 .user-wrapper {
-  min-height: 70vh;
+  height: auto;
+  min-height: 30rem;
   flex-direction: column;
   gap: 2rem;
 }

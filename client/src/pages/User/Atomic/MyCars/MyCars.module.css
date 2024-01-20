@@ -1,3 +1,4 @@
 .cars-container {
   flex-direction: column;
+  height: auto;
 }

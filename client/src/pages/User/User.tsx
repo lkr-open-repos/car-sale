@@ -6,10 +6,13 @@ import { selectCurrentUser } from "@/app/authSlice";
 import MyFavorites from "./Atomic/MyFavorites/MyFavorites";
 import MyCars from "./Atomic/MyCars/MyCars";
 import MyMessages from "./Atomic/MyMessages/MyMessages";
+import { useLocation } from "react-router-dom";
 
 const User = () => {
   const [tab, setTab] = useState("myMessages");
   const user = useSelector(selectCurrentUser);
+  const location = useLocation();
+  const conversationData = location.state?.conversation || null;
 
   const setTabHandler = (value: string) => {
     setTab(value);
@@ -20,7 +23,9 @@ const User = () => {
       <UserMenu setTabHandler={setTabHandler} />
       {tab === "myCars" && <MyCars userId={user?.id} />}
       {tab === "myFavorites" && <MyFavorites />}
-      {tab === "myMessages" && <MyMessages />}
+      {tab === "myMessages" && (
+        <MyMessages conversationId={conversationData?.id} />
+      )}
     </section>
   );
 };

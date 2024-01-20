@@ -1,14 +1,3 @@
 .messenger-container {
   height: 100%;
 }
-
-.messenger-menu {
-  flex: 2;
-  background-color: aliceblue;
-}
-
-.messenger-messages {
-  flex: 6;
-  height: 100%;
-  margin-left: 1rem;
-}

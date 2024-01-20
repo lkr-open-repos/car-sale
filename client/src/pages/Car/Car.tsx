@@ -4,10 +4,10 @@ import { useGetCarByIdQuery } from "@/app/api/carsApiSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
 import { useState } from "react";
-import CarInfo from "./CarInfo";
-import CarEdit from "./CarEdit";
+import CarInfo from "./Atomic/CarInfo/CarInfo";
+import CarEdit from "./Atomic/CarEdit/CarEdit";
 import Spinner from "@/components/shared/Spinner/Spinner";
-import MessageButton from "./MessageButton/MessageButton";
+import MessageButton from "./Atomic/MessageButton/MessageButton";
 
 const Car = () => {
   const { cid } = useParams();
