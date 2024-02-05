@@ -1,7 +1,8 @@
 import Conversations from "../Conversations/Conversations";
 import classes from "./MyMessages.module.css";
 import Messenger from "../Messages/Messages";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { io, Socket } from "socket.io-client";
 
 interface IProps {
   conversationId?: string;
@@ -12,9 +13,19 @@ const MyMessages = ({ conversationId }: IProps) => {
     conversationId || null
   );
 
+  const socketRef = useRef<Socket | null>(null);
+
   const setConversationHandler = (conversationId: string | null) => {
     setActiveConversation(conversationId);
   };
+
+  useEffect(() => {
+    socketRef.current = io("ws://localhost:5000");
+
+    return () => {
+      socketRef.current?.close();
+    };
+  }, []);
 
   return (
     <div className={`${classes["messenger-container"]} flex`}>
@@ -22,7 +33,10 @@ const MyMessages = ({ conversationId }: IProps) => {
         setActiveConversation={setConversationHandler}
         activeConversation={activeConversation}
       />
-      <Messenger activeConversation={activeConversation} />
+      <Messenger
+        activeConversation={activeConversation}
+        socket={socketRef.current}
+      />
     </div>
   );
 };

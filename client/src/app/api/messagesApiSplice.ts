@@ -3,7 +3,7 @@ import { apiSlice } from "./apiSlice";
 
 export const messagesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createMessage: builder.mutation<IMessage, IMessage>({
+    createMessage: builder.mutation<IMessage, Omit<IMessage, "id">>({
       query: (message) => ({
         url: `/messages`,
         method: "POST",
@@ -16,6 +16,7 @@ export const messagesApiSlice = apiSlice.injectEndpoints({
         url: `/messages/${conversationId}`,
         method: "GET",
       }),
+      transformResponse: (res: { messages: IMessage[] }) => res.messages,
       providesTags: ["Messages"],
     }),
   }),

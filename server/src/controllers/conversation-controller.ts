@@ -30,10 +30,7 @@ export const createConversation = async (
   } catch (err) {
     return next(throwErrorHelper(err));
   }
-  console.log(
-    conversation.toObject({ getters: true }),
-    "conversation controller 30"
-  );
+
   res.status(200).json(conversation.toObject({ getters: true }));
 };
 

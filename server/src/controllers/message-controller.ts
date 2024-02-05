@@ -29,7 +29,13 @@ export const getMessagesByConversation = async (
     const messages = await Message.find({
       conversationId: req.params.conversationId,
     });
-    res.status(200).json(messages);
+    res.status(200).json({
+      messages: messages.map((message) =>
+        message.toObject({
+          getters: true,
+        })
+      ),
+    });
   } catch (err) {
     res.status(500).json(err);
   }

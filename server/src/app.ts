@@ -1,5 +1,6 @@
 import express from "express";
-import { Request, Response, NextFunction } from "./types";
+import { createServer } from "http";
+import { Server, Socket } from "socket.io";
 import Helmet from "helmet";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -14,15 +15,20 @@ import { errorHandler, notFound } from "./middleware";
 import messageRoutes from "./routes/message-routes";
 import conversationRoutes from "./routes/conversation-routes";
 
-const app = express();
-
-app.use(Helmet());
-
 const corsOptions = {
   origin: "http://localhost:5173",
   credentials: true,
   optionSuccessStatus: 200,
 };
+
+const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: corsOptions,
+  transports: ["websocket", "polling"],
+});
+
+app.use(Helmet());
 
 app.use(cors(corsOptions));
 
@@ -48,6 +54,13 @@ app.use(errorHandler);
 mongoose
   .connect(`${process.env.MONGODB_CONNECTION_STRING!}`)
   .then(() => {
-    app.listen(process.env.PORT || 5000);
+    io.on("connection", (socket: Socket) => {
+      console.log("A user connected");
+      socket.on("sendMessage", (message) => {
+        console.log(message.data.sender);
+      });
+    });
+
+    httpServer.listen(process.env.PORT || 5000);
   })
   .catch((err) => console.log(err));

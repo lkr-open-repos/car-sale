@@ -2,17 +2,20 @@ import Button from "@/components/shared/Button/Button";
 import { useCreateMessageMutation } from "@/app/api/messagesApiSplice";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
+import { Socket } from "socket.io-client";
 
 interface IProps {
   activeConversation: string | null;
   children: string;
   messageText: string | null;
+  socket: Socket | null;
 }
 
 const SendButton = ({
   children,
   activeConversation,
   messageText,
+  socket,
 }: IProps): JSX.Element => {
   const user = useSelector(selectCurrentUser);
 
@@ -25,6 +28,12 @@ const SendButton = ({
         conversationId: activeConversation,
         text: messageText,
       });
+      // const message = {
+      //   sender: user.id,
+      //   conversationId: activeConversation,
+      //   text: messageText,
+      // };
+      socket?.emit("sendMessage", message);
       console.log(message);
     }
   };

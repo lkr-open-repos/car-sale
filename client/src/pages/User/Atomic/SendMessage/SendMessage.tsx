@@ -1,12 +1,14 @@
 import classes from "./SendMessage.module.css";
 import { useState } from "react";
 import SendButton from "../SendButton/SendButton";
+import { Socket } from "socket.io-client";
 
-const SendMessage = ({
-  activeConversation,
-}: {
+interface IProps {
   activeConversation: string | null;
-}): JSX.Element => {
+  socket: Socket | null;
+}
+
+const SendMessage = ({ activeConversation, socket }: IProps): JSX.Element => {
   const [messageText, setMessageText] = useState("");
 
   return (
@@ -19,6 +21,7 @@ const SendMessage = ({
       />
 
       <SendButton
+        socket={socket}
         messageText={messageText}
         activeConversation={activeConversation}
       >
