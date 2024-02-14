@@ -5,6 +5,10 @@
   flex-direction: column;
   gap: 1rem;
   justify-content: space-between;
+}
+
+.message-container {
+  flex-direction: column;
   overflow-y: auto;
 }
 
@@ -12,20 +16,21 @@
   padding: 0.5rem;
   border-radius: 1rem;
   display: inline-block;
-  margin: 1rem 0.1rem;
+  margin: 0.1rem;
   width: auto;
 }
 
 .sentMessage {
   background-color: var(--foreground-color);
   color: var(--text-color);
+  align-self: start;
 }
 
 .receivedMessage {
   background-color: var(--text-color);
   color: var(--foreground-color);
-  float: right;
   margin-right: 0;
+  align-self: end;
 }
 
 @media screen and (min-width: 767px) {

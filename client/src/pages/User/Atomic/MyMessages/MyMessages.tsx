@@ -15,10 +15,6 @@ const MyMessages = ({ conversationId }: IProps) => {
 
   const socketRef = useRef<Socket | null>(null);
 
-  const setConversationHandler = (conversationId: string | null) => {
-    setActiveConversation(conversationId);
-  };
-
   useEffect(() => {
     socketRef.current = io("ws://localhost:5000");
 
@@ -26,6 +22,11 @@ const MyMessages = ({ conversationId }: IProps) => {
       socketRef.current?.close();
     };
   }, []);
+
+  const setConversationHandler = (conversationId: string | null) => {
+    setActiveConversation(conversationId);
+    socketRef.current?.emit("joinConversation", conversationId);
+  };
 
   return (
     <div className={`${classes["messenger-container"]} flex`}>

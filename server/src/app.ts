@@ -56,8 +56,15 @@ mongoose
   .then(() => {
     io.on("connection", (socket: Socket) => {
       console.log("A user connected");
-      socket.on("sendMessage", (message) => {
-        console.log(message.data.sender);
+
+      socket.on("joinConversation", (conversationId): void => {
+        socket.join(conversationId);
+        console.log("joined", conversationId, "app.ts");
+      });
+
+      socket.on("sendMessage", ({ room, message }): any => {
+        io.to(room).emit("recieveMessage");
+        console.log("sent to", room, "app.ts");
       });
     });
 

@@ -28,13 +28,10 @@ const SendButton = ({
         conversationId: activeConversation,
         text: messageText,
       });
-      // const message = {
-      //   sender: user.id,
-      //   conversationId: activeConversation,
-      //   text: messageText,
-      // };
-      socket?.emit("sendMessage", message);
-      console.log(message);
+      socket?.emit("sendMessage", {
+        room: activeConversation,
+        message,
+      });
     }
   };
 
