@@ -1,6 +1,7 @@
 import fs from "fs";
 import { Request, Response, NextFunction } from "../types";
 import { HttpError } from "../models";
+import { httpErrorLogger } from "../utils";
 
 export const errorHandler = (
   err: Error,
@@ -16,6 +17,10 @@ export const errorHandler = (
   if (res.headersSent) {
     return next(err);
   }
+
+  httpErrorLogger.error({
+    message: err.message + " => error-middleware",
+  });
 
   if (err instanceof HttpError) {
     res.status(err.code || 500);

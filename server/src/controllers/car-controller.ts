@@ -18,8 +18,6 @@ export const createCar = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  console.log(req.body, "car controller 21");
-
   const validationError = validationHelper(validationResult(req), next);
   if (validationError) {
     return next(validationError);
@@ -143,7 +141,7 @@ export const deleteCar = async (
 
   let car: CarDocument;
   try {
-    deleteCarService(carId, req.user!.Id);
+    await deleteCarService(carId, req.user!.Id);
   } catch (err) {
     return next(throwErrorHelper(err));
   }

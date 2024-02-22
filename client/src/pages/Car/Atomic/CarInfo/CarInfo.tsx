@@ -18,8 +18,7 @@ const CarInfo: React.FC<IProps> = ({ car, setEditMode, isOwner }) => {
   const deleteHandler = () => {
     deleteCar(car.id)
       .unwrap()
-      .then(() => navigate(-1))
-      .catch((err) => console.log(err));
+      .then(() => navigate(-1));
   };
 
   return (

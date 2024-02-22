@@ -1,13 +1,24 @@
 import { Favorite, HttpError } from "../models";
 import { FavoriteDocument, IFavorite } from "../types";
+import { httpErrorLogger } from "../utils";
 
 export const createFavoriteService = async (
   carId: string,
   userId: string
 ): Promise<FavoriteDocument> => {
   let createdFavorite: FavoriteDocument;
-
-  const isFavorite = await Favorite.findOne({ carId: carId, userId: userId });
+  let isFavorite: FavoriteDocument | null;
+  try {
+    isFavorite = await Favorite.findOne({ carId: carId, userId: userId });
+  } catch (err: any) {
+    httpErrorLogger.error({
+      message: err.message + " => query failed => favorite-service",
+    });
+    throw new HttpError(
+      "Creating favorite failed, please try again later.",
+      503
+    );
+  }
   if (!isFavorite) {
     createdFavorite = await Favorite.create({ carId, userId });
     await createdFavorite.save();
@@ -24,12 +35,28 @@ export const getFavoritesService = async (
   let favorites: FavoriteDocument[] = [];
 
   if (asCars) {
-    favorites = await Favorite.find({ userId: userId }).populate("carId");
+    let favorites: FavoriteDocument[] = [];
+
+    try {
+      favorites = await Favorite.find({ userId: userId }).populate("carId");
+    } catch (err: any) {
+      httpErrorLogger.error({
+        message: err.message + " => query as cars failed => favorite-service",
+      });
+      throw new HttpError("Could not find favorites", 404);
+    }
     favorites = favorites.map((favorite: any) => favorite.carId);
     return favorites;
   }
 
-  favorites = await Favorite.find({ userId: userId });
+  try {
+    favorites = await Favorite.find({ userId: userId });
+  } catch (err: any) {
+    httpErrorLogger.error({
+      message: err.message + " => query not as cars failed => favorite-service",
+    });
+    throw new HttpError("Could not find favorites", 404);
+  }
   if (!favorites) {
     favorites = [];
   }
