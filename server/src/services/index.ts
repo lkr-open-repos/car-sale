@@ -22,3 +22,8 @@ export {
   getConversationsByUserService,
   getConversationByUsersService,
 } from "./conversation-services";
+
+export {
+  getFavoritesService,
+  createFavoriteService,
+} from "./favorite-services";

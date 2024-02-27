@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
-import { getFavoritesService } from "../services/favorite-services";
-import { createFavoriteService } from "../services/createFavoriteService";
+import { getFavoritesService } from "../services/";
+import { createFavoriteService } from "../services/";
 import { Request, Response, NextFunction, CarDocument } from "../types";
 
 import { FavoriteDocument } from "../types";

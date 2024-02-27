@@ -1,5 +1,5 @@
 import { Favorite, HttpError } from "../models";
-import { FavoriteDocument, IFavorite } from "../types";
+import { CarDocument, FavoriteDocument, IFavorite } from "../types";
 import { httpErrorLogger } from "../utils";
 
 export const createFavoriteService = async (
@@ -31,12 +31,10 @@ export const createFavoriteService = async (
 export const getFavoritesService = async (
   userId: string,
   asCars: boolean = false
-): Promise<FavoriteDocument[]> => {
-  let favorites: FavoriteDocument[] = [];
+): Promise<FavoriteDocument[] | CarDocument[]> => {
+  let favorites: FavoriteDocument[] | CarDocument[] = [];
 
   if (asCars) {
-    let favorites: FavoriteDocument[] = [];
-
     try {
       favorites = await Favorite.find({ userId: userId }).populate("carId");
     } catch (err: any) {
@@ -50,7 +48,7 @@ export const getFavoritesService = async (
   }
 
   try {
-    favorites = await Favorite.find({ userId: userId });
+    favorites = (await Favorite.find({ userId: userId })) as FavoriteDocument[];
   } catch (err: any) {
     httpErrorLogger.error({
       message: err.message + " => query not as cars failed => favorite-service",
