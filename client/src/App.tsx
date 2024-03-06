@@ -18,18 +18,22 @@ import User from "./pages/User/User";
 function App() {
   const dispatch = useDispatch();
 
+  // Check user authentication
   useEffect(() => {
+    // Check if user data on local storage
     let storageUserData = localStorage.getItem("userData");
     if (storageUserData) {
       let userData: IUserData = JSON.parse(storageUserData);
       if (
+        // Check data and token if still valid
         userData &&
         userData.tokenExpiration &&
         new Date(userData.tokenExpiration) > new Date()
       ) {
+        // Set user data in redux if valid
         dispatch(setAuth(userData));
       } else {
-        console.log("app.ts", "removing localstorage");
+        // Remove local storage if invalid
         localStorage.removeItem("userData");
       }
     }
@@ -37,13 +41,16 @@ function App() {
 
   return (
     <>
+      {/* Global Layout Component */}
       <Layout>
+        {/* Routes */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth/" element={<Auth />} />
           <Route path="/cars/:cid" element={<Car />} />
           <Route path="/search" element={<CarSearch />} />
           <Route path="/searchresults" element={<CarSearchResults />} />
+          {/* Protected Routes */}
           <Route element={<CheckAuth />}>
             <Route path="/user" element={<User />} />
             <Route path="/createcar" element={<CreateCar />} />

@@ -12,11 +12,20 @@ interface IFormInput extends ICar {
 }
 
 const QuickSearch = () => {
+  {
+    /* init navigate hook */
+  }
   const navigate = useNavigate();
 
+  {
+    /* init form hook */
+  }
   const { register, handleSubmit, reset } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: Partial<ICar>) => {
+    {
+      /* navigate to search results page with form submit */
+    }
     navigate("/searchresults", {
       replace: true,
       state: { ...data },

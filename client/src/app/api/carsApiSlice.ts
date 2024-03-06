@@ -42,7 +42,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
         formData: true,
       }),
     }),
-    deleteCar: builder.mutation<{ success: boolean; cid: string }, string>({
+    deleteCar: builder.mutation<{ message: string }, string>({
       query: (cid) => ({
         url: `/cars/${cid}`,
         method: "DELETE",

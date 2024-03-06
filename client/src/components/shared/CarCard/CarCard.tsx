@@ -3,10 +3,14 @@ import { ICar } from "@/types/carInterface";
 import classes from "./CarCard.module.css";
 import { currencyIconHelper } from "@/utils/currencyIconHelper";
 import favStarIcon from "@/assets/icons/favStarIcon.svg";
+import removeFavStarIcon from "@/assets/icons/removeFavStarIcon.svg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
-import { useCreateFavoriteMutation } from "@/app/api/favoriteApiSlice";
+import {
+  useCreateFavoriteMutation,
+  useDeleteFavoriteMutation,
+} from "@/app/api/favoriteApiSlice";
 
 interface IProps {
   car: ICar;
@@ -16,6 +20,7 @@ interface IProps {
 const CarCard: React.FC<IProps> = ({ car, isFavorite }) => {
   const user = useSelector(selectCurrentUser);
   const [addFavorite] = useCreateFavoriteMutation();
+  const [removeFavorite] = useDeleteFavoriteMutation();
 
   const currencyIcon = currencyIconHelper(car.currency);
 
@@ -24,13 +29,16 @@ const CarCard: React.FC<IProps> = ({ car, isFavorite }) => {
     isOwner = true;
   }
 
-  const addFavoriteHandler = async () => {
-    console.log(car.id);
+  const addFavoriteHandler = async (event: React.MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    addFavorite({ carId: car.id }).unwrap();
+  };
 
-    addFavorite({ carId: car.id })
-      .unwrap()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+  const removeFavoriteHandler = async (event: React.MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    removeFavorite({ userId: user!.id, carId: car.id });
   };
 
   return (
@@ -45,6 +53,12 @@ const CarCard: React.FC<IProps> = ({ car, isFavorite }) => {
             <img src={favStarIcon} alt="" />
           </div>
         )}
+        {!isOwner && isFavorite && (
+          <div onClick={removeFavoriteHandler} className={classes["fav-icon"]}>
+            <img src={removeFavStarIcon} alt="" />
+          </div>
+        )}
+
         <div className={classes["car-image"]}>
           <img
             className={classes["car-image_img"]}

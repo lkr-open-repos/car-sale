@@ -21,6 +21,7 @@ export {
   createFavorite,
   getFavoritesByUser,
   getCarsByFavorites,
+  deleteFavorite,
 } from "./favorite-controller";
 
 export { createMessage, getMessagesByConversation } from "./message-controller";

@@ -1,11 +1,13 @@
 import { Schema } from "mongoose";
-import { getFavoritesService } from "../services/";
-import { createFavoriteService } from "../services/";
-import { Request, Response, NextFunction, CarDocument } from "../types";
+import {
+  getFavoritesService,
+  createFavoriteService,
+  deleteFavoriteService,
+} from "../services/";
+import { Request, Response, NextFunction } from "../types";
 
 import { FavoriteDocument } from "../types";
 import { throwErrorHelper } from "../utils";
-import { getCarByIdService } from "../services";
 
 export const createFavorite = async (
   req: Request,
@@ -29,7 +31,7 @@ export const getFavoritesByUser = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  let favorites: FavoriteDocument[];
+  let favorites: FavoriteDocument[] = [];
 
   try {
     favorites = await getFavoritesService(req.user!.Id);
@@ -48,7 +50,6 @@ export const getCarsByFavorites = async (
   next: NextFunction
 ) => {
   let favorites: FavoriteDocument[];
-  let carsByFavorites: CarDocument[] = [];
 
   try {
     favorites = await getFavoritesService(req.user!.Id, true);
@@ -56,22 +57,25 @@ export const getCarsByFavorites = async (
     return next(throwErrorHelper(err, "Could Not Get Favorites"));
   }
 
-  // if (favorites && favorites.length > 0) {
-  //   try {
-  //     await Promise.all(
-  //       favorites.map(async (favorite) => {
-  //         let car = await getCarByIdService(favorite.carId.toString());
-  //         carsByFavorites.push(car);
-  //       })
-  //     );
-  //   } catch (err) {
-  //     throwErrorHelper(err, "Could Not Get Favorites");
-  //   }
-  // }
-
   res.json({
     favorites: favorites.map((favorite) =>
       favorite.toObject({ getters: true })
     ),
   });
+};
+
+export const deleteFavorite = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  let { carId, userId } = req.body;
+
+  try {
+    await deleteFavoriteService(carId, userId);
+  } catch (err) {
+    return next(throwErrorHelper(err, "Could Not Delete Favorite"));
+  }
+
+  res.status(200).json({ message: "Favorite Deleted" });
 };

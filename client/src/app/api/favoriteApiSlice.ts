@@ -22,6 +22,17 @@ export const favoriteApiSlice = apiSlice.injectEndpoints({
       transformResponse: (res: { favorites: ICar[] }) => res.favorites,
       invalidatesTags: ["Favorites"],
     }),
+    deleteFavorite: builder.mutation<
+      { message: string },
+      { userId: string; carId: string }
+    >({
+      query: ({ userId, carId }) => ({
+        url: `/favorites/delete/`,
+        method: "DELETE",
+        body: { userId: userId, carId: carId },
+      }),
+      invalidatesTags: ["Favorites"],
+    }),
   }),
 });
 
@@ -29,4 +40,5 @@ export const {
   useLazyGetFavoritesByUserQuery,
   useCreateFavoriteMutation,
   useGetCarsByFavoritesMutation,
+  useDeleteFavoriteMutation,
 } = favoriteApiSlice;

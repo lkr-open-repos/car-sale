@@ -1,4 +1,3 @@
-import React from "react";
 import classes from "./Button.module.css";
 
 interface IProps {
@@ -8,12 +7,7 @@ interface IProps {
   disabled?: boolean;
 }
 
-const Button: React.FC<IProps> = ({
-  children,
-  isSubmit,
-  onClick,
-  disabled,
-}) => {
+const Button = ({ children, isSubmit, onClick, disabled }: IProps) => {
   return (
     <button
       type={isSubmit ? "submit" : "button"}

@@ -11,6 +11,10 @@ interface IProps {
 const SendMessage = ({ activeConversation, socket }: IProps): JSX.Element => {
   const [messageText, setMessageText] = useState("");
 
+  const clearTextHandler = () => {
+    setMessageText("");
+  };
+
   return (
     <div className={`${classes["send-message-container"]} flex`}>
       <textarea
@@ -24,6 +28,7 @@ const SendMessage = ({ activeConversation, socket }: IProps): JSX.Element => {
         socket={socket}
         messageText={messageText}
         activeConversation={activeConversation}
+        clearTextHandler={clearTextHandler}
       >
         Send
       </SendButton>

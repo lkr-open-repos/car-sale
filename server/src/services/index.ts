@@ -26,4 +26,5 @@ export {
 export {
   getFavoritesService,
   createFavoriteService,
+  deleteFavoriteService,
 } from "./favorite-services";

@@ -9,6 +9,7 @@ interface IProps {
   children: string;
   messageText: string | null;
   socket: Socket | null;
+  clearTextHandler: () => void;
 }
 
 const SendButton = ({
@@ -16,6 +17,7 @@ const SendButton = ({
   activeConversation,
   messageText,
   socket,
+  clearTextHandler,
 }: IProps): JSX.Element => {
   const user = useSelector(selectCurrentUser);
 
@@ -33,6 +35,7 @@ const SendButton = ({
         message,
       });
     }
+    clearTextHandler();
   };
 
   return <Button onClick={onClickHandler}>{children}</Button>;

@@ -139,7 +139,6 @@ export const deleteCar = async (
 ) => {
   const carId = req.params.cid;
 
-  let car: CarDocument;
   try {
     await deleteCarService(carId, req.user!.Id);
   } catch (err) {

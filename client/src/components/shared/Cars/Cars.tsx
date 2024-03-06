@@ -15,23 +15,47 @@ interface IProps {
 }
 
 const Cars: React.FC<IProps> = ({ carsSearchData }) => {
+  // init state for cars and total pages
   const [carsData, setCarsData] = useState<{
     cars: ICar[];
     totalPages: number;
   }>({ cars: [], totalPages: 0 });
 
   const [currentPage, setCurrentPage] = useState(1);
+
+  // get user info
   const user = useSelector(selectCurrentUser);
 
-  const [carSearch, { isLoading, isSuccess }] = useGetCarSearchMutation();
-  const [fetchTrigger, { data, error }] = useLazyGetFavoritesByUserQuery();
+  // fetch cars data
+  const [
+    carSearch,
+    {
+      isLoading: carSearchLoading,
+      isSuccess: carSearchSuccess,
+      error: carSearchError,
+    },
+  ] = useGetCarSearchMutation();
+  const [fetchTrigger, { data: favoritesData, error: favoritesError }] =
+    useLazyGetFavoritesByUserQuery();
 
+  // fetch favorites according to user
   useEffect(() => {
     if (user) {
       fetchTrigger();
     }
   }, [user]);
 
+  // log errors
+  useEffect(() => {
+    if (carSearchError) {
+      console.log(carSearchError);
+    }
+    if (favoritesError) {
+      console.log(favoritesError);
+    }
+  }, [carSearchError, favoritesError]);
+
+  // get cars data and set state
   const dataHelper = async (carsSearchData: Partial<ICarFormInput>) => {
     try {
       setCarsData(
@@ -42,12 +66,15 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
     }
   };
 
+  // fetch cars data with data or page change
   useEffect(() => {
     dataHelper(carsSearchData);
   }, [carsSearchData, currentPage]);
 
-  const pageButtons = [];
+  useEffect(() => {}, [favoritesError]);
 
+  // Set page buttons
+  const pageButtons = [];
   if (carsData.totalPages > 1) {
     pageButtons.push(
       <Button
@@ -88,8 +115,10 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
 
   return (
     <>
-      {isLoading && <Spinner />}
-      {isSuccess && (
+      {/* Spinner when fetching car data */}
+      {carSearchLoading && <Spinner />}
+      {/* Display cars data with fetch success */}
+      {carSearchSuccess && (
         <>
           <div className={`${classes["cars-wrapper"]} grid`}>
             {carsData.cars && carsData.cars.length > 0 ? (
@@ -97,13 +126,14 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
                 <CarCard
                   key={car.id}
                   car={car}
-                  isFavorite={data?.includes(car.id)}
+                  isFavorite={favoritesData?.includes(car.id)}
                 />
               ))
             ) : (
               <h2>No Cars Found For Your Search.</h2>
             )}
           </div>
+          {/* Render pagination */}
           <div className={`${classes["pagination-wrapper"]} flex`}>
             {carsData.totalPages > 1 && pageButtons.map((button) => button)}
           </div>

@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { io, Socket } from "socket.io-client";
+import { Socket } from "socket.io-client";
 import classes from "./Messages.module.css";
 import SendMessage from "../SendMessage/SendMessage";
 import { useLazyGetMessagesByConversationQuery } from "@/app/api/messagesApiSplice";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
 import { IMessage } from "@/types/messageInterface";
+import Spinner from "@/components/shared/Spinner/Spinner";
 
 interface IProps {
   activeConversation: string | null;
@@ -49,6 +50,8 @@ const Messages = ({ activeConversation, socket }: IProps): JSX.Element => {
   return (
     <div className={`${classes["messages-container"]} flex`}>
       <div className={`${classes["message-container"]} flex`}>
+        {!activeConversation && <h3>Please select a conversation</h3>}
+        {isLoading && <Spinner />}
         {messages?.map((message) => (
           <React.Fragment key={message.id}>
             <div

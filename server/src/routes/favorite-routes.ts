@@ -4,9 +4,8 @@ import {
   createFavorite,
   getCarsByFavorites,
   getFavoritesByUser,
+  deleteFavorite,
 } from "../controllers/index";
-
-import { Request, Response, NextFunction } from "../types";
 
 const router = Router();
 
@@ -17,5 +16,7 @@ router.get("/", getFavoritesByUser);
 router.post("/", createFavorite);
 
 router.post("/cars", getCarsByFavorites);
+
+router.delete("/:favoriteId", deleteFavorite);
 
 export default router;
