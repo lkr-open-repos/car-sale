@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { setAuth } from "@/app/authSlice";
 import { useDispatch } from "react-redux";
@@ -40,7 +41,10 @@ function App() {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary
+      fallback={<FourOFour />}
+      onReset={() => window.location.reload()}
+    >
       {/* Global Layout Component */}
       <Layout>
         {/* Routes */}
@@ -58,7 +62,7 @@ function App() {
           <Route path="*" element={<FourOFour />} />
         </Routes>
       </Layout>
-    </>
+    </ErrorBoundary>
   );
 }
 
