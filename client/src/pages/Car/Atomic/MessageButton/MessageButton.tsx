@@ -1,6 +1,7 @@
 import { useCreateConversationMutation } from "@/app/api/conversationsApiSlice";
 import { selectCurrentUser } from "@/app/authSlice";
 import Button from "@/components/shared/Button/Button";
+import { sendErrorLog } from "@/utils/sendErrorLog";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -23,7 +24,8 @@ const MessageButton = ({ children, targetUser }: IProps): JSX.Element => {
           receiverId: targetUser,
         });
         console.log("Conversation created successfully!");
-      } catch (error) {
+      } catch (error: any) {
+        sendErrorLog(`${error.message} => Create Conversation Error`);
         console.error("Error creating conversation:", error);
       }
     };

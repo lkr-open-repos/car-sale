@@ -9,6 +9,7 @@ import { selectCurrentUser, setAuth } from "@/app/authSlice";
 import { useSignInMutation, useSignUpMutation } from "@/app/api/authApiSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import Button from "@/components/shared/Button/Button";
+import { sendErrorLog } from "@/utils/sendErrorLog";
 
 interface IFormInput {
   email: string;
@@ -64,8 +65,9 @@ const Auth = () => {
           tokenExpiration: tokenExpiration.toISOString(),
         })
       );
-    } catch (err: any) {
-      throw err.data.message;
+    } catch (error: any) {
+      sendErrorLog(`${error.message} => Auth Error`);
+      throw error.data.message;
     }
   };
 
@@ -78,8 +80,9 @@ const Auth = () => {
     try {
       await signHelper(formData);
       navigate(from, { replace: true });
-    } catch (err: any) {
-      setSignError(err);
+    } catch (error: any) {
+      sendErrorLog(`${error.message} => Auth Error`);
+      setSignError(error);
     }
   };
 

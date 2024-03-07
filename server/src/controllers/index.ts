@@ -31,3 +31,5 @@ export {
   getConversationsByUser,
   getConversationByUsers,
 } from "./conversation-controller";
+
+export { createFrontendLogs } from "./logging-controller";

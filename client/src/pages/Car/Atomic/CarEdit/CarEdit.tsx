@@ -13,6 +13,7 @@ import BodyTypeOptions from "@/components/shared/CarFormSelectOptions/BodyTypeOp
 import CurrencyOptions from "@/components/shared/CarFormSelectOptions/CurrencyOptions";
 import ColorSelectOptions from "@/components/shared/CarFormSelectOptions/ColorSelectOptions";
 import FuelTypeOptions from "@/components/shared/CarFormSelectOptions/FuelTypeOptions";
+import { sendErrorLog } from "@/utils/sendErrorLog";
 
 interface IProps {
   car: ICar;
@@ -62,6 +63,7 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
           // window.location.reload();
         })
         .catch((error) => {
+          sendErrorLog(`${error.message} => Update Error`);
           console.log(error);
         });
     }

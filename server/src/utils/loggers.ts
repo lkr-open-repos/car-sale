@@ -1,6 +1,19 @@
 import winston, { format } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 
+export const frontendLogger = winston.createLogger({
+  transports: [
+    new DailyRotateFile({
+      filename: "./logs/frontendLogs-%DATE%.log",
+      datePattern: "YYYY-MM-DD",
+      zippedArchive: true,
+      maxSize: "20m",
+      maxFiles: "60d",
+      dirname: "./logs",
+    }),
+  ],
+});
+
 export const wsLogger = winston.createLogger({
   transports: [
     new DailyRotateFile({

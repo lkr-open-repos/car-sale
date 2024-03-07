@@ -5,7 +5,7 @@ import {
   getCarsByFavorites,
   getFavoritesByUser,
   deleteFavorite,
-} from "../controllers/index";
+} from "../controllers/";
 
 const router = Router();
 

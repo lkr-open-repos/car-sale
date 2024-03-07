@@ -13,10 +13,10 @@ import { socketHandler } from "./socket/socketHandler";
 import carsRoutes from "./routes/car-routes";
 import userRoutes from "./routes/user-routes";
 import favoriteRoutes from "./routes/favorite-routes";
-
-import { errorHandler, notFound } from "./middleware";
 import messageRoutes from "./routes/message-routes";
 import conversationRoutes from "./routes/conversation-routes";
+import loggingRoutes from "./routes/logging-routes";
+import { errorHandler, notFound } from "./middleware";
 
 const corsOptions = {
   origin: "http://localhost:5173",
@@ -57,6 +57,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/favorites", favoriteRoutes);
 app.use("/api/v1/messages", messageRoutes);
 app.use("/api/v1/conversations", conversationRoutes);
+app.use("/api/v1/logging", loggingRoutes);
 
 // Error handling middlewares
 app.use(notFound);

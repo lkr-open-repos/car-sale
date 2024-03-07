@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { selectCurrentUser } from "@/app/authSlice";
 import { useCreateCarMutation } from "@/app/api/carsApiSlice";
@@ -31,6 +31,7 @@ import SellerField from "./Atomic/SellerField";
 import CurrencyField from "./Atomic/CurrencyField";
 import DetailsField from "./Atomic/DetailsField";
 import { getCurrentDateHelper } from "@/utils/getCurrentDateHelper";
+import { sendErrorLog } from "@/utils/sendErrorLog";
 
 interface IProps {
   children?: ReactNode;
@@ -71,6 +72,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           navigate(`/cars/${res.car.id}`);
         })
         .catch((error) => {
+          sendErrorLog(`${error.message} => Create Car Error`);
           setQueryError(error);
         });
     } else {

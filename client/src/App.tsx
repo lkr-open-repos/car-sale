@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
+import { ErrorInfo, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { setAuth } from "@/app/authSlice";
@@ -40,11 +40,12 @@ function App() {
     }
   }, []);
 
+  const handleError = (error: Error, info: ErrorInfo) => {
+    console.error(error, info);
+  };
+
   return (
-    <ErrorBoundary
-      fallback={<FourOFour />}
-      onReset={() => window.location.reload()}
-    >
+    <ErrorBoundary FallbackComponent={FourOFour} onError={handleError}>
       {/* Global Layout Component */}
       <Layout>
         {/* Routes */}

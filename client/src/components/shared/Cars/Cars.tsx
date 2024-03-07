@@ -9,6 +9,7 @@ import Spinner from "../Spinner/Spinner";
 import { useLazyGetFavoritesByUserQuery } from "@/app/api/favoriteApiSlice";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
+import { sendErrorLog } from "@/utils/sendErrorLog";
 
 interface IProps {
   carsSearchData: Partial<ICarFormInput>;
@@ -61,8 +62,9 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
       setCarsData(
         await carSearch({ searchData: carsSearchData, currentPage }).unwrap()
       );
-    } catch (err) {
-      console.log(err);
+    } catch (error: any) {
+      sendErrorLog(`${error.message} => Car Search Error (Cars Component)`);
+      console.log(error);
     }
   };
 

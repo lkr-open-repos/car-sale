@@ -4,6 +4,7 @@ import classes from "./CarInfo.module.css";
 import Button from "@/components/shared/Button/Button";
 import { useDeleteCarMutation } from "@/app/api/carsApiSlice";
 import { useNavigate } from "react-router-dom";
+import { sendErrorLog } from "@/utils/sendErrorLog";
 
 interface IProps {
   car: ICar;
@@ -18,7 +19,8 @@ const CarInfo: React.FC<IProps> = ({ car, setEditMode, isOwner }) => {
   const deleteHandler = () => {
     deleteCar(car.id)
       .unwrap()
-      .then(() => navigate(-1));
+      .then(() => navigate(-1))
+      .catch((error) => sendErrorLog(`${error.message} => Delete Error`));
   };
 
   return (
