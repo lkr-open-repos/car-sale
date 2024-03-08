@@ -1,6 +1,4 @@
 import { selectCurrentUser } from "@/app/authSlice";
-// import { useAuth } from "@/hooks/useAuth";
-// import { IUserData } from "@/types/user-data-interface";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 

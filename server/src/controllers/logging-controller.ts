@@ -7,6 +7,7 @@ export const createFrontendLogs = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log(req.body);
   frontendLogger.error({ message: req.body });
   next();
 };

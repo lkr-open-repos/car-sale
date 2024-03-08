@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ICar } from "@/types/carInterface";
 import classes from "./CarCard.module.css";
 import { currencyIconHelper } from "@/utils/currencyIconHelper";
@@ -11,6 +11,7 @@ import {
   useCreateFavoriteMutation,
   useDeleteFavoriteMutation,
 } from "@/app/api/favoriteApiSlice";
+import { sendErrorLog } from "@/utils/sendErrorLog";
 
 interface IProps {
   car: ICar;
@@ -19,8 +20,33 @@ interface IProps {
 
 const CarCard: React.FC<IProps> = ({ car, isFavorite }) => {
   const user = useSelector(selectCurrentUser);
-  const [addFavorite] = useCreateFavoriteMutation();
-  const [removeFavorite] = useDeleteFavoriteMutation();
+  const [
+    addFavorite,
+    { error: addFavoriteError, isError: isAddFavoriteError },
+  ] = useCreateFavoriteMutation();
+  const [
+    removeFavorite,
+    { error: removeFavoriteError, isError: isRemoveFavoriteError },
+  ] = useDeleteFavoriteMutation();
+
+  useEffect(() => {
+    if (isAddFavoriteError) {
+      try {
+        const error = addFavoriteError as { data: { message: string } };
+        sendErrorLog(`${error.data.message} => Add Favorite Error`);
+      } catch (error) {
+        // Just to avoid crash. Not much to do if error logging can't be done.
+      }
+    }
+    if (isRemoveFavoriteError) {
+      try {
+        const error = removeFavoriteError as { data: { message: string } };
+        sendErrorLog(`${error} => Remove Favorite Error`);
+      } catch (error) {
+        // Just to avoid crash. Not much to do if error logging can't be done.
+      }
+    }
+  }, [isAddFavoriteError, isRemoveFavoriteError]);
 
   const currencyIcon = currencyIconHelper(car.currency);
 

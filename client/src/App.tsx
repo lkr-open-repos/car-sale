@@ -45,7 +45,8 @@ function App() {
   };
 
   return (
-    <ErrorBoundary FallbackComponent={FourOFour} onError={handleError}>
+    <>
+      {/* <ErrorBoundary FallbackComponent={FourOFour} onError={handleError}> */}
       {/* Global Layout Component */}
       <Layout>
         {/* Routes */}
@@ -63,7 +64,8 @@ function App() {
           <Route path="*" element={<FourOFour />} />
         </Routes>
       </Layout>
-    </ErrorBoundary>
+      // {/* </ErrorBoundary> */}
+    </>
   );
 }
 

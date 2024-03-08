@@ -4,7 +4,7 @@
 }
 
 .car-image_img {
-  aspect-ratio: 5/4;
+  aspect-ratio: 4/5;
   max-height: 40rem;
   object-fit: none;
   object-position: 50% 80%;
@@ -62,5 +62,9 @@ button {
 
   .car-primary-info {
     align-items: center;
+  }
+
+  .car-image_img {
+    aspect-ratio: 5/4;
   }
 }
