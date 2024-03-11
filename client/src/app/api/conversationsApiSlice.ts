@@ -1,8 +1,10 @@
 import { IConversation } from "@/types/conversationInterface";
 import { apiSlice } from "./apiSlice";
 
+// Inject conversation endpoints into the slice
 export const conversationApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // Create conversation mutation
     createConversation: builder.mutation<
       IConversation,
       { senderId: string; receiverId: string }
@@ -16,12 +18,14 @@ export const conversationApiSlice = apiSlice.injectEndpoints({
       //   res.conversation,
       // invalidatesTags: ["Conversations"],
     }),
+    // Get conversationS(!) by user query
     getConversationsByUser: builder.query<IConversation[], string>({
       query: (userId) => ({
         url: `/conversations/${userId}`,
         method: "GET",
       }),
     }),
+    // Get conversation by userS(!) query
     getConversationByUsers: builder.query<
       IConversation,
       { firstUserId: string; secondUserId: string }

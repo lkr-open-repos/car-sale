@@ -7,7 +7,8 @@ interface IProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<IProps> = ({ children }) => {
+// Main layout component
+const Layout = ({ children }: IProps) => {
   return (
     <div className={classes.layout}>
       <MainNav />

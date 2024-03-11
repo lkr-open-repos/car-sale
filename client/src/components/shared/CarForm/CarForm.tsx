@@ -72,7 +72,11 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           navigate(`/cars/${res.car.id}`);
         })
         .catch((error) => {
-          sendErrorLog(`${error.message} => Create Car Error`);
+          try {
+            sendErrorLog(`${error.message} => Create Car Error`);
+          } catch (error) {
+            // Just to avoid crash. Not much to do if error logging can't be done.
+          }
           setQueryError(error);
         });
     } else {

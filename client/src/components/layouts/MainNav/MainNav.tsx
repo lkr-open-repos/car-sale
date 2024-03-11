@@ -7,6 +7,7 @@ import BigScreenMenu from "@/components/layouts/MainNav/atomic/BigScreenMenu";
 import LogoSection from "@/components/shared/LogoSection/LogoSection";
 import UserLink from "@/components/layouts/MainNav/atomic/UserLink";
 
+// Main navigation component
 const MainNav = () => {
   const isBigScreen: boolean = useMediaQuery("(min-width: 1060px)");
   const [isToggleOpen, setIsToggleOpen] = useState<boolean>(false);

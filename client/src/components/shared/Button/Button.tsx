@@ -7,6 +7,7 @@ interface IProps {
   disabled?: boolean;
 }
 
+// Custom button component
 const Button = ({ children, isSubmit, onClick, disabled }: IProps) => {
   return (
     <button

@@ -7,6 +7,7 @@ export interface IRootState {
   };
 }
 
+// Define the slice and initial state
 const authSlice = createSlice({
   name: "auth",
   initialState: { user: null, token: null },

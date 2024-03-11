@@ -1,8 +1,10 @@
 import { IMessage } from "@/types/messageInterface";
 import { apiSlice } from "./apiSlice";
 
+// Inject messages endpoints into the slice
 export const messagesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // Create message mutation
     createMessage: builder.mutation<IMessage, Omit<IMessage, "id">>({
       query: (message) => ({
         url: `/messages`,
@@ -11,6 +13,7 @@ export const messagesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Messages"],
     }),
+    // Get messages by conversation query
     getMessagesByConversation: builder.query<IMessage[], string>({
       query: (conversationId) => ({
         url: `/messages/${conversationId}`,

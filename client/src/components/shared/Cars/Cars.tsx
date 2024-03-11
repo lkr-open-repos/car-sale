@@ -15,7 +15,7 @@ interface IProps {
   carsSearchData: Partial<ICarFormInput>;
 }
 
-const Cars: React.FC<IProps> = ({ carsSearchData }) => {
+const Cars = ({ carsSearchData }: IProps) => {
   // init state for cars and total pages
   const [carsData, setCarsData] = useState<{
     cars: ICar[];
@@ -58,14 +58,16 @@ const Cars: React.FC<IProps> = ({ carsSearchData }) => {
 
   // get cars data and set state
   const dataHelper = async (carsSearchData: Partial<ICarFormInput>) => {
-    try {
-      setCarsData(
-        await carSearch({ searchData: carsSearchData, currentPage }).unwrap()
-      );
-    } catch (error: any) {
-      sendErrorLog(`${error.message} => Car Search Error (Cars Component)`);
-      console.log(error);
-    }
+    await carSearch({ searchData: carsSearchData, currentPage })
+      .unwrap()
+      .then((result) => setCarsData(result))
+      .catch((error) => {
+        try {
+          sendErrorLog(`${error.message} => Car Search Error (Cars Component)`);
+        } catch {
+          // Just to avoid crash. Not much to do if error logging can't be done.
+        }
+      });
   };
 
   // fetch cars data with data or page change

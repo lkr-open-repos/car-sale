@@ -18,7 +18,8 @@ interface IProps {
   isFavorite?: boolean;
 }
 
-const CarCard: React.FC<IProps> = ({ car, isFavorite }) => {
+// Car card component
+const CarCard = ({ car, isFavorite }: IProps) => {
   const user = useSelector(selectCurrentUser);
   const [
     addFavorite,
