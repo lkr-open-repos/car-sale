@@ -1,3 +1,4 @@
+// Helper function to get current date
 export const getCurrentDateHelper = () => {
   let today = new Date();
   let day = today.getDate();

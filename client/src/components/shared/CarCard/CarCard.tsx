@@ -32,20 +32,12 @@ const CarCard = ({ car, isFavorite }: IProps) => {
 
   useEffect(() => {
     if (isAddFavoriteError) {
-      try {
-        const error = addFavoriteError as { data: { message: string } };
-        sendErrorLog(`${error.data.message} => Add Favorite Error`);
-      } catch (error) {
-        // Just to avoid crash. Not much to do if error logging can't be done.
-      }
+      const error = addFavoriteError as { data: { message: string } };
+      sendErrorLog(`${error.data.message} => Add Favorite Error`);
     }
     if (isRemoveFavoriteError) {
-      try {
-        const error = removeFavoriteError as { data: { message: string } };
-        sendErrorLog(`${error} => Remove Favorite Error`);
-      } catch (error) {
-        // Just to avoid crash. Not much to do if error logging can't be done.
-      }
+      const error = removeFavoriteError as { data: { message: string } };
+      sendErrorLog(`${error} => Remove Favorite Error`);
     }
   }, [isAddFavoriteError, isRemoveFavoriteError]);
 

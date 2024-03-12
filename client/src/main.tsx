@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    {/* Redux Provider for global state management */}
     <Provider store={store}>
       <BrowserRouter>
         <App />

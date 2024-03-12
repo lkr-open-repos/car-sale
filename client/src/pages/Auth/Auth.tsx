@@ -17,6 +17,7 @@ interface IFormInput {
   password: string;
 }
 
+// Functional component for authentication (Sign Up / Sign In)
 const Auth = () => {
   const [signUp] = useSignUpMutation();
   const [signIn] = useSignInMutation();
@@ -37,6 +38,7 @@ const Auth = () => {
     user && navigate(from, { replace: true });
   }, [user]);
 
+  // Form management hook react-hook-form config.
   const {
     register,
     handleSubmit,
@@ -44,6 +46,7 @@ const Auth = () => {
     formState: { errors },
   } = useForm<IFormInput>();
 
+  // Helper function for signing in or signing up a user
   const signHelper = async (formData: IUser) => {
     try {
       let response;
@@ -52,7 +55,11 @@ const Auth = () => {
       } else {
         response = await signIn(formData).unwrap();
       }
+
+      // Dispatch Redux action to set authentication
       dispatch(setAuth(response));
+
+      // Set token and user data in local storage
       const backendTokenExpiresIn = 1000 * 60 * 60 * 24 * 7; //7 days
       const tokenExpiration = new Date(
         new Date().getTime() + backendTokenExpiresIn - 1
@@ -71,11 +78,13 @@ const Auth = () => {
     }
   };
 
+  // Click handler function to toggle between Sign Up and Sign In modes
   const switchSignUpMode = () => {
     setSignUpMode((prevMode) => !prevMode);
     reset();
   };
 
+  // Form submission handler
   const onSubmit: SubmitHandler<IFormInput> = async (formData: IUser) => {
     try {
       await signHelper(formData);
@@ -153,6 +162,7 @@ const Auth = () => {
         )}
         <Button isSubmit={true}>{isSignUpMode ? "Sign Up" : "Sign In"}</Button>
       </form>
+      {/* Toggle between Sign Up and Sign In modes */}
       {isSignUpMode ? (
         <p>
           Already member yet? <span onClick={switchSignUpMode}>Sign In</span>

@@ -15,7 +15,7 @@ import CheckAuth from "./components/layouts/ChechAuth/CheckAuth";
 import { IUserData } from "./types/userDataInterface";
 import CarSearchResults from "./pages/CarSearchResults/CarSearchResults";
 import User from "./pages/User/User";
-import Error from "./pages/Error/Error";
+import Error from "./pages/Error/ErrorFallback";
 import { sendErrorLog } from "./utils/sendErrorLog";
 
 function App() {

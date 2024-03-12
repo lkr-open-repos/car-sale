@@ -1,3 +1,4 @@
+// Helper function to get currency icon
 export const currencyIconHelper: (currency: string) => string = (currency) => {
   switch (currency) {
     case "USD":

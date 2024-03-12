@@ -38,7 +38,7 @@ interface IProps {
   isCreate?: boolean;
 }
 
-const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
+const CarForm = ({ isCreate = false, children }: IProps) => {
   const [createCar] = useCreateCarMutation();
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
@@ -46,6 +46,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
   const [imageThumbnail, setImageThumbnail] = useState("");
   const [queryError, setQueryError] = useState<string>("");
 
+  // Form management hook react-hook-form config.
   const {
     register,
     handleSubmit,
@@ -53,6 +54,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
     formState: { errors },
   } = useForm<ICarFormInput>();
 
+  // Function to handle form submission
   const onSubmit: SubmitHandler<ICarFormInput> = async (
     data: Partial<ICarFormInput>
   ) => {
@@ -65,6 +67,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
       const formData = appendFormDataHelper(data, user, imageFile);
       formData.append("adDate", getCurrentDateHelper());
 
+      // Call createCar mutation and handle response
       await createCar(formData)
         .unwrap()
         .then((res) => {
@@ -72,11 +75,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
           navigate(`/cars/${res.car.id}`);
         })
         .catch((error) => {
-          try {
-            sendErrorLog(`${error.message} => Create Car Error`);
-          } catch (error) {
-            // Just to avoid crash. Not much to do if error logging can't be done.
-          }
+          sendErrorLog(`${error.message} => Create Car Error`);
           setQueryError(error);
         });
     } else {
@@ -87,6 +86,7 @@ const CarForm: React.FC<IProps> = ({ isCreate = false, children }) => {
     }
   };
 
+  // Function to handle setting image thumbnail
   const setImageThumbnailHandler = (value: string) => {
     setImageThumbnail(value);
   };

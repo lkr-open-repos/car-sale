@@ -1,5 +1,6 @@
 import { ICarFormInput } from "@/types/CarFormInputInterface";
 
+// Helper function to append form data for car submission
 export const appendFormDataHelper = (
   data: Partial<ICarFormInput>,
   user: { id: string; email: string } | null,

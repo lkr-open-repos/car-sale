@@ -62,11 +62,7 @@ const Cars = ({ carsSearchData }: IProps) => {
       .unwrap()
       .then((result) => setCarsData(result))
       .catch((error) => {
-        try {
-          sendErrorLog(`${error.message} => Car Search Error (Cars Component)`);
-        } catch {
-          // Just to avoid crash. Not much to do if error logging can't be done.
-        }
+        sendErrorLog(`${error.message} => Car Search Error (Cars Component)`);
       });
   };
 
