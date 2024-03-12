@@ -9,6 +9,14 @@ import { Request, Response, NextFunction } from "../types";
 import { FavoriteDocument } from "../types";
 import { throwErrorHelper } from "../utils";
 
+/**
+ * Create a favorite and send the created favorite as a JSON response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} a promise of void
+ */
 export const createFavorite = async (
   req: Request,
   res: Response,
@@ -26,6 +34,14 @@ export const createFavorite = async (
   res.status(201).json({ favorite: createdFavorite });
 };
 
+/**
+ * Retrieve all favorites and send the favorite data as a JSON response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a promise that resolves when the JSON response is sent
+ * */
 export const getFavoritesByUser = async (
   req: Request,
   res: Response,
@@ -44,6 +60,14 @@ export const getFavoritesByUser = async (
   });
 };
 
+/**
+ * Retrieve all favorites and send the favorite data as a JSON response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a promise that resolves when the JSON response is sent
+ * */
 export const getCarsByFavorites = async (
   req: Request,
   res: Response,
@@ -64,6 +88,14 @@ export const getCarsByFavorites = async (
   });
 };
 
+/**
+ * Delete a favorite and send a message as response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a promise of void
+ * */
 export const deleteFavorite = async (
   req: Request,
   res: Response,

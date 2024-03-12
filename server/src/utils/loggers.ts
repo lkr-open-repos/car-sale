@@ -1,7 +1,12 @@
 import winston, { format } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 
-export const frontendLogger = winston.createLogger({
+/**
+ * Logger for the frontend messages.
+ *
+ * @type {winston.Logger}
+ * */
+export const frontendLogger: winston.Logger = winston.createLogger({
   transports: [
     new DailyRotateFile({
       filename: "./logs/frontendLogs-%DATE%.log",
@@ -14,7 +19,12 @@ export const frontendLogger = winston.createLogger({
   ],
 });
 
-export const wsLogger = winston.createLogger({
+/**
+ * Logger for the socket.
+ *
+ * @type {winston.Logger}
+ * */
+export const wsLogger: winston.Logger = winston.createLogger({
   transports: [
     new DailyRotateFile({
       filename: "./logs/wsLogs-%DATE%.log",
@@ -33,6 +43,11 @@ const httpLogFormat = printf(({ level, message, timestamp }) => {
   return `${timestamp} : ${level} => ${message}`;
 });
 
+/**
+ * Logger for the http events.
+ *
+ * @type {winston.Logger}
+ * */
 export const httpEventLogger = winston.createLogger({
   format: combine(timestamp(), httpLogFormat),
   transports: [
@@ -47,6 +62,11 @@ export const httpEventLogger = winston.createLogger({
   ],
 });
 
+/**
+ * Logger for the http errors.
+ *
+ * @type {winston.Logger}
+ * */
 export const httpErrorLogger = winston.createLogger({
   format: combine(timestamp(), httpLogFormat),
   transports: [

@@ -97,6 +97,11 @@ export const signInService = async (
   return { user, token };
 };
 
+/**
+ * Get all users from the database and return them as an array.
+ *
+ * @returns {Promise<UserDocument[]>} a promise that resolves to an array of users
+ * */
 export const getAllUsersService = async (): Promise<UserDocument[]> => {
   let users: UserDocument[] = [];
   users = (await User.find({}, "-password")) as UserDocument[];
@@ -110,6 +115,12 @@ export const getAllUsersService = async (): Promise<UserDocument[]> => {
   return users;
 };
 
+/**
+ * Get a user by user ID and return it.
+ *
+ * @param {string} userId - the ID of the user
+ * @returns {Promise<UserDocument>} a promise that resolves to the user
+ * */
 export const getUserByIdService = async (
   userId: string
 ): Promise<UserDocument> => {
@@ -125,6 +136,13 @@ export const getUserByIdService = async (
   return user;
 };
 
+/**
+ * Update a user.
+ *
+ * @param {string} userId - the ID of the user
+ * @param {IUser} userData - the data to update
+ * @returns {Promise<UserDocument>} a promise that resolves to the updated user
+ **/
 export const updateUserService = async (
   userId: string,
   userData: IUser
@@ -160,6 +178,12 @@ export const updateUserService = async (
   return user;
 };
 
+/**
+ * Delete a user.
+ *
+ * @param {string} userId - the ID of the user
+ * @returns {Promise<void>} a promise that resolves when the user is deleted
+ * */
 export const deleteUserService = async (userId: string): Promise<void> => {
   let user: UserDocument | null;
   user = (await User.findById(userId)) as UserDocument | null;

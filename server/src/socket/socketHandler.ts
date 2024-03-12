@@ -1,7 +1,14 @@
 import { Socket, Server } from "socket.io";
 import { wsLogger } from "../utils/loggers";
 
-export const socketHandler = (io: Server, socket: Socket) => {
+/**
+ * Socket handler for handling socket events.
+ *
+ * @param {Server} io - the socket.io server
+ * @param {Socket} socket - the socket object
+ * @return {void}
+ * */
+export const socketHandler = (io: Server, socket: Socket): void => {
   socket.on("error", (error: Error) => {
     wsLogger.error({
       message: error.message,

@@ -1,11 +1,8 @@
 import { validationResult } from "express-validator";
 import { Request, Response, NextFunction } from "../types";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 import { User } from "../models";
 import { UserDocument } from "../types";
-import { HttpError } from "../models";
 import { throwErrorHelper, validationHelper } from "../utils";
 import {
   signUpService,
@@ -16,6 +13,14 @@ import {
   deleteUserService,
 } from "../services";
 
+/**
+ * Create a user based on the request body, validate it, create the user in the database, generate a token and return the created user with the token in the response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} Promise that resolves when the user is created and the response is sent
+ * */
 export const signUp = async (
   req: Request,
   res: Response,
@@ -37,6 +42,14 @@ export const signUp = async (
   });
 };
 
+/**
+ * Sign in a user based on the request body, validate it, generate a token and return the user with the token in the response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} Promise that resolves when the user is created and the response is sent
+ * */
 export const signIn = async (
   req: Request,
   res: Response,
@@ -57,11 +70,20 @@ export const signIn = async (
   });
 };
 
+/**
+ * Retrieve all users and send the user data as a JSON response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ *
+ * @return {Promise<void>} Promise that resolves when the user is created and the response is sent
+ * */
 export const getAllUsers = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   let users: UserDocument[];
   try {
     users = await getAllUsersService();
@@ -71,6 +93,14 @@ export const getAllUsers = async (
   res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
 
+/**
+ * Retrieve a user byu ID and send the user data as a JSON response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} Promise that resolves when the user is created and the response is sent
+ * */
 export const getUserById = async (
   req: Request,
   res: Response,
@@ -87,6 +117,14 @@ export const getUserById = async (
   res.json({ user: user.toObject({ getters: true }) });
 };
 
+/**
+ * Update a user and send the updated users name and Updated message as a JSON response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} Promise that resolves when the user is created and the response is sent
+ * */
 export const updateUser = async (
   req: Request,
   res: Response,
@@ -103,11 +141,19 @@ export const updateUser = async (
   res.status(201).json({ message: "Updated!", user: user.name });
 };
 
+/**
+ * Delete a user and send a message as response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} Promise that resolves when the user is created and the response is sent
+ * */
 export const deleteUser = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   const userId = req.params.uid;
   let user: UserDocument;
   try {

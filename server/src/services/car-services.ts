@@ -7,6 +7,12 @@ import {
 } from "../utils";
 import { ICarFormInput } from "../types";
 
+/**
+ * Creates a new car in the database. Returns the created car.
+ *
+ * @param {ICar} carData - the car data
+ * @return {Promise<CarDocument>} a promise that resolves when the car is created
+ * */
 export const createCarService = async (carData: ICar): Promise<CarDocument> => {
   const {
     user,
@@ -78,6 +84,11 @@ export const createCarService = async (carData: ICar): Promise<CarDocument> => {
   return createdCar;
 };
 
+/**
+ * Retrieves all cars from the database and returns an array of car objects.
+ *
+ * @return {Promise<CarDocument[]>} a promise that resolves when the cars are retrieved
+ * */
 export const getAllCarsService = async (): Promise<CarDocument[]> => {
   let cars: CarDocument[] = [];
   try {
@@ -98,6 +109,12 @@ export const getAllCarsService = async (): Promise<CarDocument[]> => {
   return cars;
 };
 
+/**
+ * Retrieves a car by its ID and returns it.
+ *
+ * @param {string} carId - the ID of the car to retrieve
+ * @return {Promise<CarDocument>} a promise that resolves when the car is retrieved
+ * */
 export const getCarByIdService = async (
   carId: string
 ): Promise<CarDocument> => {
@@ -119,6 +136,12 @@ export const getCarByIdService = async (
   return car;
 };
 
+/**
+ * Retrieves cars by user ID and returns an array of car objects.
+ *
+ * @param {string} userId - the ID of the user
+ * @return {Promise<CarDocument[]>} a promise that resolves when the cars are retrieved
+ * */
 export const getCarsByUserService = async (
   userId: string
 ): Promise<CarDocument[]> => {
@@ -137,6 +160,14 @@ export const getCarsByUserService = async (
   return cars;
 };
 
+/**
+ * Retrieves cars by search data and paginates the results
+ *
+ * @param {Partial<ICarFormInput>} rawSearchData - the search data
+ * @param {number} page - the page number
+ * @param {number} limit - the number of items per page
+ * @return {Promise<{ cars: CarDocument[]; totalPages: Number }>} a promise that resolves when the cars are retrieved
+ * */
 export const getCarsBySearchService = async (
   rawSearchData: Partial<ICarFormInput>,
   page: number,
@@ -162,6 +193,14 @@ export const getCarsBySearchService = async (
   return { cars, totalPages };
 };
 
+/**
+ * Updates a car and returns the updated car.
+ *
+ * @param {string} carId - the ID of the car to update
+ * @param {string} userId - the ID of the user
+ * @param {Partial<ICar>} carData - the data to update
+ * @return {Promise<CarDocument>} a promise that resolves when the car is updated
+ * */
 export const updateCarService = async (
   carId: string,
   userId: string,
@@ -242,6 +281,13 @@ export const updateCarService = async (
   return car;
 };
 
+/**
+ * Deletes a car. Checks if the user is authorized to delete the car before deleting.
+ *
+ * @param {string} carId - the ID of the car to delete
+ * @param {string} userId - the ID of the user
+ * @return {Promise<void>} a promise that resolves when the car is deleted
+ * */
 export const deleteCarService = async (
   carId: string,
   userId: string

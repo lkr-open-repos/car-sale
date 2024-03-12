@@ -10,6 +10,10 @@ const MIME_TYPE_MAP: { [key: string]: string } = {
   "image/webp": "webp",
 };
 
+/**
+ * Middleware for file uploads using multer.
+ * Limits file size, specifies storage options, and filters file types.
+ */
 export const fileUpload = multer({
   limits: {
     fileSize: 10000000,

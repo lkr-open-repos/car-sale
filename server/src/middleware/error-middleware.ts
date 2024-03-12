@@ -3,6 +3,15 @@ import { Request, Response, NextFunction } from "../types";
 import { HttpError } from "../models";
 import { httpErrorLogger } from "../utils";
 
+/**
+ * Error handling middleware for handling errors in the application.
+ *
+ * @param {Error} err - the error object
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {void} no return value
+ */
 export const errorHandler = (
   err: Error,
   req: Request,
@@ -38,6 +47,14 @@ export const errorHandler = (
   }
 };
 
+/**
+ * Error handling middleware for handling not found route errors.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {void} no return value
+ * */
 export const notFound = (
   req: Request,
   res: Response,

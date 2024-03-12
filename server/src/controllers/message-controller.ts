@@ -3,6 +3,14 @@ import { Request, Response, NextFunction } from "../types";
 import { MessageDocument, ConversationDocument } from "../types";
 import { throwErrorHelper } from "../utils";
 
+/**
+ * Creates a new message in the database
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a promise that resolves when the message is created
+ * */
 export const createMessage = async (
   req: Request,
   res: Response,
@@ -20,6 +28,14 @@ export const createMessage = async (
   }
 };
 
+/**
+ *  Retrieves all messages in the database according to the conversation ID
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a promise that resolves when the messages are retrieved
+ *  */
 export const getMessagesByConversation = async (
   req: Request,
   res: Response,

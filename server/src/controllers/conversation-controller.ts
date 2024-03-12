@@ -8,6 +8,14 @@ import { Request, Response, NextFunction } from "../types";
 import { ConversationDocument } from "../types";
 import { throwErrorHelper } from "../utils";
 
+/**
+ * Creates a conversation between two users, or retrieves an existing conversation if it exists.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} a promise that resolves with the conversation object in JSON format
+ */
 export const createConversation = async (
   req: Request,
   res: Response,
@@ -34,6 +42,14 @@ export const createConversation = async (
   res.status(200).json(conversation.toObject({ getters: true }));
 };
 
+/**
+ * Retrieves conversations for a specific user and sends the response as JSON.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a Promise that resolves to void
+ */
 export const getConversationsByUser = async (
   req: Request,
   res: Response,
@@ -54,6 +70,14 @@ export const getConversationsByUser = async (
     );
 };
 
+/**
+ * Retrieves a conversation between two users using the IDs in the request body. Responds with the conversation object in JSON format.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} a promise that resolves with no value
+ */
 export const getConversationByUsers = async (
   req: Request,
   res: Response,

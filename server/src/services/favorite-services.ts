@@ -2,6 +2,13 @@ import { Favorite, HttpError } from "../models";
 import { CarDocument, FavoriteDocument, IFavorite } from "../types";
 import { httpErrorLogger } from "../utils";
 
+/**
+ *  Creates a new favorite in the database. Returns the created favorite.
+ *
+ * @param {string} carId - the car ID
+ * @param {string} userId - the user ID
+ * @return {Promise<FavoriteDocument>} a promise that resolves when the favorite is created
+ * */
 export const createFavoriteService = async (
   carId: string,
   userId: string
@@ -28,6 +35,13 @@ export const createFavoriteService = async (
   return isFavorite;
 };
 
+/**
+ * Retrieves all favorites from the database and returns an array of favorite objects.
+ *
+ * @param {string} userId - the user ID
+ * @param {boolean} asCars - whether to return the favorites as cars
+ * @return {Promise<FavoriteDocument[]>} a promise that resolves when the favorites are retrieved
+ * */
 export const getFavoritesService = async (
   userId: string,
   asCars: boolean = false
@@ -62,6 +76,13 @@ export const getFavoritesService = async (
   return favorites;
 };
 
+/**
+ * Deletes a favorite from the database. Checks if the user is allowed to delete the favorite before.
+ *
+ * @param {string} carId - the car ID
+ * @param {string} userId - the user ID
+ * @return {Promise<void>} a promise that resolves when the favorite is deleted
+ * */
 export const deleteFavoriteService = async (
   carId: string,
   userId: string

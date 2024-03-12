@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { ICar, ICarFormInput } from "../types";
 
 interface ICarSearchFields
@@ -19,6 +18,12 @@ interface ICarSearchFields
   details: {};
 }
 
+/**
+ * Helper function that fills the search data.
+ *
+ * @param {Partial<ICarFormInput>} rawSearchData - the raw search data
+ * @return {Partial<ICarSearchFields>} the search data
+ * */
 export const fillSearchDataHelper = (rawSearchData: Partial<ICarFormInput>) => {
   let searchData: Partial<ICarSearchFields> = {};
 

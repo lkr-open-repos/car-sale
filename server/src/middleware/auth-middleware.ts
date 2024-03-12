@@ -3,11 +3,19 @@ import { HttpError } from "../models";
 import jwt from "jsonwebtoken";
 import { IToken } from "../types";
 
+/**
+ * Middleware that checks if the user is logged in via JWT.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a promise that resolves when the user is logged in
+ * */
 export const checkAuthToken = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   if (req.method === "OPTIONS") {
     return next();
   }

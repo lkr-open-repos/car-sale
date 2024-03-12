@@ -18,12 +18,14 @@ import conversationRoutes from "./routes/conversation-routes";
 import loggingRoutes from "./routes/logging-routes";
 import { errorHandler, notFound } from "./middleware";
 
+// Configure cors options
 const corsOptions = {
   origin: "http://localhost:5173",
   credentials: true,
   optionSuccessStatus: 200,
 };
 
+// Initialize express
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -31,14 +33,19 @@ const io = new Server(httpServer, {
   transports: ["websocket", "polling"],
 });
 
+// Security headers with helmet
 app.use(Helmet());
 
+// Enable cors
 app.use(cors(corsOptions));
 
+// Enable json
 app.use(express.json());
 
+// Enable static files
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
+// Enable morgan for HTTP requests logging
 app.use(
   morgan("combined", {
     stream: {
@@ -49,6 +56,7 @@ app.use(
   })
 );
 
+// Enable dotenv for environment variables
 dotenv.config();
 
 // Routes
@@ -66,6 +74,7 @@ app.use(errorHandler);
 mongoose
   .connect(`${process.env.MONGODB_CONNECTION_STRING!}`)
   .then(() => {
+    // Set up socket.io
     io.on("connection", (socket: Socket) => {
       socketHandler(io, socket);
     });
@@ -73,6 +82,7 @@ mongoose
     httpServer.listen(process.env.PORT || 5000);
   })
   .catch((err) => {
+    // Log errors
     httpErrorLogger.error({
       message: err.message,
     });

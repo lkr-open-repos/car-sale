@@ -13,6 +13,15 @@ import {
   updateCarService,
 } from "../services";
 
+/**
+ * Create a car based on the request data, validate it, and return the created car in the response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} Promise that resolves when the car is created and the response is sent
+ */
+
 export const createCar = async (
   req: Request,
   res: Response,
@@ -37,6 +46,14 @@ export const createCar = async (
   res.status(201).json({ car: createdCar.toObject({ getters: true }) });
 };
 
+/**
+ * Retrieve all cars and send the car data as a JSON response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a promise that resolves when the JSON response is sent
+ */
 export const getAllCars = async (
   req: Request,
   res: Response,
@@ -51,6 +68,14 @@ export const getAllCars = async (
   res.json({ cars: cars.map((car) => car.toObject({ getters: true })) });
 };
 
+/**
+ * Retrieves a car by its ID and sends it as a JSON response.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a promise that resolves when the car is successfully retrieved and sent as a JSON response
+ */
 export const getCarById = async (
   req: Request,
   res: Response,
@@ -68,6 +93,14 @@ export const getCarById = async (
   res.json({ car: car.toObject({ getters: true }) });
 };
 
+/**
+ * Retrieves cars associated with a specific user and sends the result as JSON.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a promise that resolves when the cars are sent as JSON
+ */
 export const getCarsByUser = async (
   req: Request,
   res: Response,
@@ -84,6 +117,14 @@ export const getCarsByUser = async (
   res.json({ cars: cars.map((car) => car.toObject({ getters: true })) });
 };
 
+/**
+ * Retrieves cars based on search criteria and paginates the results.
+ *
+ * @param {Request} req - the incoming request object
+ * @param {Response} res - the outgoing response object
+ * @param {NextFunction} next - the next middleware function
+ * @return {Promise<void>} a Promise that resolves with the JSON response containing the retrieved cars and total pages
+ */
 export const getCarsBySearch = async (
   req: Request,
   res: Response,
@@ -109,6 +150,14 @@ export const getCarsBySearch = async (
   });
 };
 
+/**
+ * Update a car based on the request and response objects, and call the next function.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function to call
+ * @return {Promise<void>} a Promise that resolves to nothing
+ */
 export const updateCar = async (
   req: Request,
   res: Response,
@@ -132,6 +181,14 @@ export const updateCar = async (
   res.status(200).json({ car: car.toObject({ getters: true }) });
 };
 
+/**
+ * Deletes a car based on the car ID provided in the request parameters.
+ *
+ * @param {Request} req - the request object
+ * @param {Response} res - the response object
+ * @param {NextFunction} next - the next function
+ * @return {Promise<void>} a Promise that resolves when the car is deleted
+ */
 export const deleteCar = async (
   req: Request,
   res: Response,
