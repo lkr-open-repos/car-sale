@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { ErrorInfo, useEffect } from "react";
+import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { setAuth } from "@/app/authSlice";
@@ -15,6 +15,8 @@ import CheckAuth from "./components/layouts/ChechAuth/CheckAuth";
 import { IUserData } from "./types/userDataInterface";
 import CarSearchResults from "./pages/CarSearchResults/CarSearchResults";
 import User from "./pages/User/User";
+import Error from "./pages/Error/Error";
+import { sendErrorLog } from "./utils/sendErrorLog";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,31 +42,32 @@ function App() {
     }
   }, []);
 
-  const handleError = (error: Error, info: ErrorInfo) => {
-    console.error(error, info);
+  const handleError = (error: Error) => {
+    sendErrorLog(`${error.message} => Boundry cought error (App Component)`);
   };
 
   return (
     <>
-      {/* <ErrorBoundary FallbackComponent={FourOFour} onError={handleError}> */}
-      {/* Global Layout Component */}
-      <Layout>
-        {/* Routes */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth/" element={<Auth />} />
-          <Route path="/cars/:cid" element={<Car />} />
-          <Route path="/search" element={<CarSearch />} />
-          <Route path="/searchresults" element={<CarSearchResults />} />
-          {/* Protected Routes */}
-          <Route element={<CheckAuth />}>
-            <Route path="/user" element={<User />} />
-            <Route path="/createcar" element={<CreateCar />} />
-          </Route>
-          <Route path="*" element={<FourOFour />} />
-        </Routes>
-      </Layout>
-      // {/* </ErrorBoundary> */}
+      <ErrorBoundary FallbackComponent={Error} onError={handleError}>
+        {/* Global Layout Component */}
+        <Layout>
+          {/* Routes */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/auth/" element={<Auth />} />
+            <Route path="/cars/:cid" element={<Car />} />
+            <Route path="/search" element={<CarSearch />} />
+            <Route path="/searchresults" element={<CarSearchResults />} />
+            {/* Protected Routes */}
+            <Route element={<CheckAuth />}>
+              <Route path="/user" element={<User />} />
+              <Route path="/createcar" element={<CreateCar />} />
+            </Route>
+            <Route path="*" element={<FourOFour />} />
+          </Routes>
+        </Layout>
+        //{" "}
+      </ErrorBoundary>
     </>
   );
 }
