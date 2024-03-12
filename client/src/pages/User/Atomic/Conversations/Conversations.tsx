@@ -1,7 +1,7 @@
 import Spinner from "@/components/shared/Spinner/Spinner";
 import classes from "./Conversations.module.css";
 import { useGetConversationsByUserQuery } from "@/app/api/conversationsApiSlice";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
 
@@ -36,12 +36,18 @@ const Conversations = ({
         conversations.map(
           (conversation) =>
             conversation.members[0]?.name && (
-              <p
-                key={conversation.id}
+              <div
+                className={
+                  classes.conversation +
+                  " " +
+                  (activeConversation === conversation.id
+                    ? classes["conversation-active"]
+                    : "")
+                }
                 onClick={() => setActiveConversation(conversation.id)}
               >
-                {conversation.members[0].name}
-              </p>
+                <h3 key={conversation.id}>{conversation.members[0].name}</h3>
+              </div>
             )
         )}
     </div>
