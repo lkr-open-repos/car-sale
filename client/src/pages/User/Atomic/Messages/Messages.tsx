@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/app/authSlice";
 import { IMessage } from "@/types/messageInterface";
 import Spinner from "@/components/shared/Spinner/Spinner";
+import { sendErrorLog } from "@/utils/sendErrorLog";
 
 interface IProps {
   activeConversation: string | null;
@@ -14,7 +15,7 @@ interface IProps {
 }
 
 const Messages = ({ activeConversation, socket }: IProps): JSX.Element => {
-  const [trigger, { data: messages, isLoading, isError }] =
+  const [trigger, { data: messages, isLoading }] =
     useLazyGetMessagesByConversationQuery();
 
   const user = useSelector(selectCurrentUser);
@@ -27,6 +28,11 @@ const Messages = ({ activeConversation, socket }: IProps): JSX.Element => {
         .unwrap()
         .then((data) => {
           setCombinedMessages(data);
+        })
+        .catch((error) => {
+          sendErrorLog(
+            `${error.message} => updateMessages in Messages Component`
+          );
         })
         .finally(() => {
           document
