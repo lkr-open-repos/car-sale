@@ -50,7 +50,11 @@ const Messages = ({ activeConversation, socket }: IProps): JSX.Element => {
   return (
     <div className={`${classes["messages-container"]} flex`}>
       <div className={`${classes["message-container"]} flex`}>
-        {!activeConversation && <h3>Please select a conversation</h3>}
+        {!activeConversation && (
+          <h2 className={classes["select-conversation-text"]}>
+            Please select a conversation
+          </h2>
+        )}
         {isLoading && <Spinner />}
         {messages?.map((message) => (
           <React.Fragment key={message.id}>

@@ -12,6 +12,10 @@
   overflow-y: auto;
 }
 
+.select-conversation-text {
+  margin-top: 2rem;
+}
+
 .message {
   padding: 0.5rem;
   border-radius: 1rem;
