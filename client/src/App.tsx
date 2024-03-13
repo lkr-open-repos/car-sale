@@ -2,8 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { selectCurrentUser, setAuth } from "@/app/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { setAuth } from "@/app/authSlice";
+import { useDispatch } from "react-redux";
 import Layout from "@/components/layouts/Layout/Layout";
 import Home from "@/pages/Home/Home";
 import CarSearch from "@/pages/CarSearch/CarSearch";
