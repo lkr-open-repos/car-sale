@@ -15,6 +15,7 @@ const Logout = ({ modal, closeToggle }: IProps) => {
     dispatch(signOut);
     localStorage.removeItem("userData");
     closeToggle && closeToggle();
+    window.location.reload();
   };
 
   return (
