@@ -1,11 +1,23 @@
+import { useNavigate } from "react-router-dom";
+import classes from "./TopBrands.module.css";
+
 const TopBrands = () => {
+  const navigate = useNavigate();
+
+  const clickHandler = (brand: string) => {
+    navigate("/searchresults", {
+      replace: true,
+      state: { brand },
+    });
+  };
+
   return (
-    <ul>
-      <li>Bmw</li>
-      <li>Mercedes</li>
-      <li>Audi</li>
-      <li>Opel</li>
-      <li>Citroen</li>
+    <ul className={classes["top-brands"]}>
+      <li onClick={() => clickHandler("BMW")}>Bmw</li>
+      <li onClick={() => clickHandler("Mercedes")}>Mercedes</li>
+      <li onClick={() => clickHandler("Audi")}>Audi</li>
+      <li onClick={() => clickHandler("Opel")}>Opel</li>
+      <li onClick={() => clickHandler("Citroen")}>Citroen</li>
     </ul>
   );
 };
