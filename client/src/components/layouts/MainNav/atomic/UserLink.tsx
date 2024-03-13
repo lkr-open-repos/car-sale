@@ -1,4 +1,3 @@
-import React from "react";
 import userIcon from "@/assets/icons/userIcon.svg";
 import classes from "@/components/layouts/MainNav/atomic/UserLink.module.css";
 import { NavLink } from "react-router-dom";
@@ -8,7 +7,7 @@ interface IProps {
   closeToggle?: () => void;
 }
 
-const UserLink: React.FC<IProps> = ({ modal, closeToggle }) => {
+const UserLink = ({ modal, closeToggle }: IProps) => {
   return (
     <div
       className={`${modal && classes["modal"]} ${classes["user-link-icon"]}`}

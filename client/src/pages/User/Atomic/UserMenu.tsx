@@ -3,7 +3,7 @@ import classes from "@/pages/User/Atomic/UserMenu.module.css";
 interface IProps {
   setTabHandler: (value: string) => void;
 }
-const UserMenu: React.FC<IProps> = ({ setTabHandler }) => {
+const UserMenu = ({ setTabHandler }: IProps) => {
   return (
     <div className={`${classes["user-menu"]} flex`}>
       <h3 onClick={() => setTabHandler("myMessages")}>My Messages</h3>

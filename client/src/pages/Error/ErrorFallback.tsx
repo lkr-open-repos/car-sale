@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import classes from "./error.module.css";
+import classes from "./ErrorFallback.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
 // Functional component for error boundary fallback page

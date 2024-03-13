@@ -1,12 +1,11 @@
 import Cars from "@/components/shared/Cars/Cars";
 import classes from "./MyCars.module.css";
-import React from "react";
 
 interface IProps {
   userId?: string;
 }
 
-const MyCars: React.FC<IProps> = ({ userId }) => {
+const MyCars = ({ userId }: IProps) => {
   return (
     <div className={`${classes["cars-container"]} flex`}>
       <Cars carsSearchData={{ user: userId }} />

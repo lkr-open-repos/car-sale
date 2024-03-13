@@ -6,11 +6,16 @@ import SmallScreenMenu from "@/components/layouts/MainNav/atomic/SmallScreenMenu
 import BigScreenMenu from "@/components/layouts/MainNav/atomic/BigScreenMenu";
 import LogoSection from "@/components/shared/LogoSection/LogoSection";
 import UserLink from "@/components/layouts/MainNav/atomic/UserLink";
+import Logout from "./atomic/Logout";
+import { selectCurrentUser } from "@/app/authSlice";
+import { useSelector } from "react-redux";
 
 // Main navigation component
 const MainNav = () => {
   const isBigScreen: boolean = useMediaQuery("(min-width: 1060px)");
   const [isToggleOpen, setIsToggleOpen] = useState<boolean>(false);
+
+  const user = useSelector(selectCurrentUser);
 
   return (
     <header className={`${classes.header} flex wrapper`}>
@@ -22,7 +27,10 @@ const MainNav = () => {
       {isBigScreen && (
         <>
           <BigScreenMenu />
-          <UserLink />
+          <div className="flex">
+            <UserLink />
+            {user && <Logout />}
+          </div>
         </>
       )}
     </header>

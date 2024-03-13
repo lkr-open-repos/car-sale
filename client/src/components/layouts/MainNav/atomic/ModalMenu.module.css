@@ -10,7 +10,7 @@
 
 .modal-menu_nav {
   position: fixed;
-  width: 80%;
+  width: 40%;
   height: 100%;
   top: 0;
   right: 0;
@@ -35,7 +35,6 @@
   flex-direction: column;
   row-gap: 1.5rem;
   align-items: center;
-  /* background-color: aqua; */
   margin-top: 4rem;
   margin-left: auto;
   margin-right: auto;
@@ -46,4 +45,10 @@
   color: var(--text-color);
   font-family: cursive;
   font-size: var(--h2-font-size);
+}
+
+@media screen and (max-width: 767px) {
+  .modal-menu_nav {
+    width: 60%;
+  }
 }

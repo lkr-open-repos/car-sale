@@ -1,4 +1,3 @@
-import React from "react";
 import openMenuIcon from "@/assets/icons/openMenuIcon.svg";
 import classes from "@/components/layouts/MainNav/atomic/SmallScreenMenu.module.css";
 
@@ -6,7 +5,7 @@ interface IProps {
   openToggle: (isOpen: boolean) => void;
 }
 
-const SmallScreenMenu: React.FC<IProps> = ({ openToggle }) => {
+const SmallScreenMenu = ({ openToggle }: IProps) => {
   const toggleClickHandler = () => {
     openToggle(true);
   };

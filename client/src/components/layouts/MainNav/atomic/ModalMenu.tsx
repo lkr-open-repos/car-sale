@@ -1,14 +1,18 @@
-import React from "react";
 import classes from "@/components/layouts/MainNav/atomic/ModalMenu.module.css";
 import closeIcon from "@/assets/icons/closeMenuIcon.svg";
 import NavLinks from "@/components/shared/NavLinks/NavLinks";
 import UserLink from "@/components/layouts/MainNav/atomic/UserLink";
+import Logout from "./Logout";
+import { selectCurrentUser } from "@/app/authSlice";
+import { useSelector } from "react-redux";
 
 interface IProps {
   closeToggle: (isOpen: boolean) => void;
 }
 
-const ModalMenu: React.FC<IProps> = ({ closeToggle }) => {
+const ModalMenu = ({ closeToggle }: IProps) => {
+  const user = useSelector(selectCurrentUser);
+
   const closeToggleHandler = () => {
     closeToggle(false);
   };
@@ -28,7 +32,10 @@ const ModalMenu: React.FC<IProps> = ({ closeToggle }) => {
           <nav className={classes["modal-menu_navigation_links"]}>
             <NavLinks closeToggle={closeToggleHandler} />
           </nav>
-          <UserLink closeToggle={closeToggleHandler} modal={true} />
+          <div>
+            <UserLink closeToggle={closeToggleHandler} modal={true} />
+            {user && <Logout closeToggle={closeToggleHandler} modal={true} />}
+          </div>
         </div>
       </>
     </div>
