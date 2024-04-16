@@ -17,6 +17,7 @@ import messageRoutes from "./routes/message-routes";
 import conversationRoutes from "./routes/conversation-routes";
 import loggingRoutes from "./routes/logging-routes";
 import { errorHandler, notFound } from "./middleware";
+import { keys } from "./utils/keys";
 
 // Configure cors options
 const corsOptions = {
@@ -72,7 +73,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 mongoose
-  .connect(`${process.env.MONGODB_CONNECTION_STRING!}`)
+  .connect(`${keys.MONGODB_CONNECTION_STRING!}`)
   .then(() => {
     // Set up socket.io
     io.on("connection", (socket: Socket) => {
@@ -86,4 +87,5 @@ mongoose
     httpErrorLogger.error({
       message: err.message,
     });
+    console.log(err, keys);
   });

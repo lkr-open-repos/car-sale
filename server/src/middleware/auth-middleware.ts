@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "../types";
 import { HttpError } from "../models";
 import jwt from "jsonwebtoken";
 import { IToken } from "../types";
+import { keys } from "../utils/keys";
 
 /**
  * Middleware that checks if the user is logged in via JWT.
@@ -27,7 +28,7 @@ export const checkAuthToken = (
       throw new Error("You are not logged in.");
     }
 
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as IToken;
+    const decodedToken = jwt.verify(token, keys.JWT_SECRET!) as IToken;
 
     req.user = { Id: decodedToken.userId };
     next();

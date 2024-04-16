@@ -5,6 +5,7 @@ import Button from "@/components/shared/Button/Button";
 import { useDeleteCarMutation } from "@/app/api/carsApiSlice";
 import { useNavigate } from "react-router-dom";
 import { sendErrorLog } from "@/utils/sendErrorLog";
+import { keys } from "@/keys";
 
 interface IProps {
   car: ICar;
@@ -33,7 +34,7 @@ const CarInfo: React.FC<IProps> = ({ car, setEditMode, isOwner }) => {
               crossOrigin="anonymous"
               src={
                 car?.image && typeof car?.image === "string"
-                  ? import.meta.env.VITE_BACKEND_URL + car.image
+                  ? keys.BACKEND_URL + car.image
                   : "https://images.pexels.com/photos/2876872/pexels-photo-2876872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               }
               alt="car image"

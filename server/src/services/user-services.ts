@@ -6,6 +6,7 @@ import { User } from "../models";
 import { IUser, UserDocument } from "../types";
 import { HttpError } from "../models";
 import { throwErrorHelper } from "../utils";
+import { keys } from "../utils/keys";
 
 export const signUpService = async (
   userData: IUser
@@ -40,7 +41,7 @@ export const signUpService = async (
   try {
     token = jwt.sign(
       { userId: createdUser!.id, email: createdUser!.email },
-      process.env.JWT_SECRET!,
+      keys.JWT_SECRET!,
       { expiresIn: "7 days" }
     );
   } catch (err: any) {
@@ -84,7 +85,7 @@ export const signInService = async (
 
     token = jwt.sign(
       { userId: user!.id, email: user!.email },
-      process.env.JWT_SECRET!,
+      keys.JWT_SECRET!,
       { expiresIn: "7 days" }
     );
   } catch (err: any) {

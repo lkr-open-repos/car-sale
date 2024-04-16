@@ -1,0 +1,7 @@
+Dockerfile
+.git
+.env
+src
+node_modules
+ngrok.exe
+logs
