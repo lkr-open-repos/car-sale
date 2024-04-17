@@ -18,7 +18,7 @@ const MileageField: React.FC<ICarFormFields> = ({
     );
   } else {
     mileageField = (
-      <div className={`${classes["min-max-wrapper"]} flex`}>
+      <div className={`${classes!["min-max-wrapper"]} flex`}>
         <input
           type="text"
           placeholder="Minimum mileage"

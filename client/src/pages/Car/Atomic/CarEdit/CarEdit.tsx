@@ -1,5 +1,5 @@
-import { ICar, MetallicColor } from "@/types/carInterface";
-import React, { ReactNode, useEffect, useState } from "react";
+import { ICar} from "@/types/carInterface";
+import React, { ReactNode, useEffect } from "react";
 import { ICarFormInput } from "@/types/CarFormInputInterface";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { appendFormDataHelper } from "@/utils/appendFormDataHelper";
@@ -34,7 +34,6 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
     register,
     setValue,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<ICarFormInput>();
 
@@ -70,7 +69,7 @@ const CarEdit: React.FC<IProps> = ({ car, setEditMode, user }) => {
     }
   };
 
-  let errorsField: ReactNode[] = [];
+  const errorsField: ReactNode[] = [];
   Object.keys(errors).forEach((key, index) =>
     errorsField.push(
       <p key={index} className="error-text">

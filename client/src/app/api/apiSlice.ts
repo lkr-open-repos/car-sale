@@ -29,5 +29,6 @@ const baseQueryWithSignOut = async (args: any, api: any, extraOptions: any) => {
 export const apiSlice = createApi({
   baseQuery: baseQueryWithSignOut,
   tagTypes: ["Cars", "Favorites", "Conversations", "Messages"],
+  //@ts-ignore
   endpoints: (builder) => ({}),
 });

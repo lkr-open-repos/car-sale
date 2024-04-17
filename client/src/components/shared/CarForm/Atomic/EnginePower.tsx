@@ -19,7 +19,7 @@ const EnginePowerField: React.FC<ICarFormFields> = ({
     );
   } else {
     enginePowerField = (
-      <div className={`${classes["min-max-wrapper"]} flex`}>
+      <div className={`${classes!["min-max-wrapper"]} flex`}>
         <input
           {...register("minEnginePower")}
           type="text"
