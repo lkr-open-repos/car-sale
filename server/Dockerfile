@@ -1,38 +1,38 @@
-# Use a minimal base image like Alpine Linux
-FROM node AS builder
+# Builder image of multi-stage image
+FROM node:alpine AS builder
 
-# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies as a non-root user
-RUN addgroup -g 1001 -S nodejs \
-    && adduser -u 1001 -S nodejs -G nodejs \
-    && chown -R nodejs:nodejs /usr/src/app
-USER nodejs
-RUN npm ci --only=production
+# Install dependencies and typescript
+RUN npm install && \
+    npm install -g typescript
 
-# Copy application code
-COPY --chown=nodejs:nodejs . .
+# Copy the project
+COPY . .
 
-# Build the application (if needed)
-# RUN npm run build
+# Build and remove unnecessery deps
+RUN npm run build && \
+    npm prune --production
 
-# Start a new stage for the runtime image
-FROM node
+# Runtime image
+FROM node:alpine
 
-# Set working directory
 WORKDIR /usr/src/app
 
-# Copy only necessary files from the builder stage
+# Copy built project files from the builder stage
 COPY --from=builder /usr/src/app/node_modules ./node_modules
-COPY --from=builder --chown=nodejs:nodejs /usr/src/app ./
+COPY --from=builder /usr/src/app/dist ./dist
 
-# Expose the port your app runs on
+# Permit non-root user to project dir
+RUN chown -R node:node /usr/src/app
+
+# Expose the port
 EXPOSE 5000
 
 # Run the app with a non-root user
-USER nodejs
-CMD ["npm", "start"]
+USER node
+
+# Start the application
+CMD ["node", "dist/app.js"]
