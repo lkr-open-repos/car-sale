@@ -21,7 +21,7 @@ import { keys } from "./utils/keys";
 
 // Configure cors options
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "http://client:4000", "http://localhost:4000"],
   credentials: true,
   optionSuccessStatus: 200,
 };
