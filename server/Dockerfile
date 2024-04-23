@@ -24,6 +24,8 @@ WORKDIR /usr/src/app
 # Copy built project files from the builder stage
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/uploads ./uploads
+
 
 # Permit non-root user to project dir
 RUN chown -R node:node /usr/src/app

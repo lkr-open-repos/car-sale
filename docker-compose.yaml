@@ -17,7 +17,7 @@ services:
     env_file:
       - ./server/.env
     volumes:
-      - "${PWD}/car-sale/uploads:/upload"
+      - "/home/lkrbalci/projects/car-sale/uploads:../uploads"
     networks:
       - app-network
 

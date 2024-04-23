@@ -13,7 +13,7 @@ RUN npm install
 # Copy the rest of the application files
 COPY . .
 
-ENV VITE_BACKEND_URL=http://localhost:5000/
+ENV VITE_BACKEND_URL=http://ilker.tinkerbytes.com:5000/
 
 # Build the client app and remove unnecessery
 RUN npm run build && npm prune --production
