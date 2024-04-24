@@ -17,7 +17,7 @@ services:
     env_file:
       - ./server/.env
     volumes:
-      - "/home/lkrbalci/projects/car-sale/uploads:/usr/src/app/uploads"
+      - "/usr/src/projects/car-sale/uploads:/usr/src/app/uploads"
       - "/etc/letsencrypt/live/ilker.tinkerbytes.com:/etc/letsencrypt/live/ilker.tinkerbytes.com"
     networks:
       - app-network
