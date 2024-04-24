@@ -29,8 +29,8 @@ const corsOptions = {
 };
 
 // Configure SSL
-const sslCertPath = '/etc/letsencrypt/live/yourdomain.com/fullchain.pem';
-const sslKeyPath = '/etc/letsencrypt/live/yourdomain.com/privkey.pem'; 
+const sslCertPath = '/etc/letsencrypt/live/ilker.tinkerbytes.com/fullchain.pem';
+const sslKeyPath = '/etc/letsencrypt/live/ilker.tinkerbyte.com/privkey.pem'; 
 
 const options = {
   key: fs.readFileSync(sslKeyPath),
