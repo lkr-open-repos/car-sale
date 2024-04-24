@@ -7,6 +7,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import morgan from "morgan";
+import fs from "fs"
+import https from "https"
 
 import { httpErrorLogger, httpEventLogger } from "./utils/index";
 import { socketHandler } from "./socket/socketHandler";
@@ -26,9 +28,18 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
+// Configure SSL
+const sslCertPath = '/etc/letsencrypt/live/yourdomain.com/fullchain.pem';
+const sslKeyPath = '/etc/letsencrypt/live/yourdomain.com/privkey.pem'; 
+
+const options = {
+  key: fs.readFileSync(sslKeyPath),
+  cert: fs.readFileSync(sslCertPath),
+};
+
 // Initialize express
 const app = express();
-const httpServer = createServer(app);
+const httpServer = https.createServer(options, app);
 const io = new Server(httpServer, {
   cors: corsOptions,
   transports: ["websocket", "polling"],
