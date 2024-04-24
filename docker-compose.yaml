@@ -24,11 +24,11 @@ services:
     depends_on:
       - certbot
 
-    certbot:
-      build:
-        context: ./certbot
-        dockerfile: Dockerfile
-      volumes:
+  certbot:
+    build:
+      context: ./certbot
+      dockerfile: Dockerfile
+    volumes:
         - "/etc/letsencrypt:/etc/letsencrypt"
 
 networks:
