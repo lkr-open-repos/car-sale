@@ -21,15 +21,6 @@ services:
       - "/etc/letsencrypt/live/ilker.tinkerbytes.com:/etc/letsencrypt/live/ilker.tinkerbytes.com"
     networks:
       - app-network
-    depends_on:
-      - certbot
-
-  certbot:
-    build:
-      context: ./certbot
-      dockerfile: Dockerfile
-    volumes:
-        - "/etc/letsencrypt:/etc/letsencrypt"
 
 networks:
   app-network:
