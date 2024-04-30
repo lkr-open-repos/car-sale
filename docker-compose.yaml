@@ -10,7 +10,7 @@ services:
     networks:
       - app-network
 
-  server:
+  api:
     image: lkrbalci/car-sale_server
     ports:
       - "5000:5000"
