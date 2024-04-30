@@ -56,6 +56,7 @@ app.use(express.json());
 
 // Enable static files
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
+app.use('/.well-known', express.static('.well-known'));
 
 // Enable morgan for HTTP requests logging
 app.use(
