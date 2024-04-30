@@ -29,19 +29,15 @@ const corsOptions = {
 };
 
 // Configure SSL
-try {
 
-  const sslCertPath = '/etc/letsencrypt/live/ilker.tinkerbytes.com/fullchain.pem';
-  const sslKeyPath = '/etc/letsencrypt/live/ilker.tinkerbytes.com/privkey.pem'; 
+
+  const sslCertPath = '/etc/letsencrypt/live/ilker.tinkerbytes.com/fullchain.pem' || null;
+  const sslKeyPath = '/etc/letsencrypt/live/ilker.tinkerbytes.com/privkey.pem' || null; 
   
   const options = {
     key: fs.readFileSync(sslKeyPath),
     cert: fs.readFileSync(sslCertPath),
   };
-} catch {
-  console.log("later");
-  
-}
 
 
 // Initialize express
