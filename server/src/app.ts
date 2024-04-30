@@ -7,8 +7,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import morgan from "morgan";
-import fs from "fs"
-import https from "https"
 
 import { httpErrorLogger, httpEventLogger } from "./utils/index";
 import { socketHandler } from "./socket/socketHandler";
@@ -49,7 +47,6 @@ app.use(express.json());
 
 // Enable static files
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
-app.use('/.well-known', express.static('.well-known'));
 
 // Enable morgan for HTTP requests logging
 app.use(
