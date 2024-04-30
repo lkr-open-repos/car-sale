@@ -28,28 +28,18 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-// Configure SSL
-
-
-  const sslCertPath = '/etc/letsencrypt/live/ilker.tinkerbytes.com/fullchain.pem' || null;
-  const sslKeyPath = '/etc/letsencrypt/live/ilker.tinkerbytes.com/privkey.pem' || null; 
-  
-  const options = {
-    key: fs.readFileSync(sslKeyPath),
-    cert: fs.readFileSync(sslCertPath),
-  };
 
 
 // Initialize express
 const app = express();
-const httpServer = https.createServer(options, app);
+const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: corsOptions,
   transports: ["websocket", "polling"],
 });
 
 // Security headers with helmet
-app.use(Helmet());
+app.use(Helmet({   contentSecurityPolicy: false }))
 
 // Enable cors
 app.use(cors(corsOptions));
