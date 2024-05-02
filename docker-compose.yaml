@@ -6,7 +6,7 @@ services:
     ports:
       - "4000:4000"
     depends_on:
-      - server
+      - api
     networks:
       - app-network
 
@@ -17,8 +17,7 @@ services:
     env_file:
       - ./server/.env
     volumes:
-      - "/usr/src/projects/car-sale/uploads:/usr/src/app/uploads"
-      - "/etc/letsencrypt/live/ilker.tinkerbytes.com:/etc/letsencrypt/live/ilker.tinkerbytes.com"
+      - "/home/lkrbalci/projects/car-sale/uploads:/usr/src/app/uploads"
     networks:
       - app-network
 
