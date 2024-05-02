@@ -13,7 +13,7 @@ import {
 } from "@/app/api/favoriteApiSlice";
 import { sendErrorLog } from "@/utils/sendErrorLog";
 import { keys } from "@/keys";
-import fallbackCar from "@/../assets/images/fallback-car.jpeg"
+import fallbackCar from "../../../assets/images/fallbackCar.jpeg"
 
 interface IProps {
   car: ICar;
