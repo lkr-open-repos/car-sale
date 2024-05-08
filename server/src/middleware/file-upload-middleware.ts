@@ -47,7 +47,7 @@ export const resizeImage = (req: Request, res: Response, next: NextFunction) => 
   }
 
   // Define the output path for the resized image (temporary filename)
-  const outputPath = path.join("uploads", "images", "resized-" + req.file.filename);
+  const outputPath = path.join("uploads", "images", "resized-" + req.file.filename.split(".")[0]+".webp");
 
   // Resize the image to width 480 while keeping the aspect ratio
   sharp(req.file.path)
