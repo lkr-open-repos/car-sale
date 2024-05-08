@@ -47,7 +47,7 @@ export const resizeImage = (req: Request, res: Response, next: NextFunction) => 
   }
 
   // Define the output path for the resized image (temporary filename)
-  const outputPath = path.join("uploads", "images", "resized-" + req.file.filename.split(".")[0]+".webp");
+  const outputPath = path.join("uploads", "images", "resized-" + req.file.filename);
 
   // Resize the image to width 480 while keeping the aspect ratio
   sharp(req.file.path)
@@ -60,7 +60,7 @@ export const resizeImage = (req: Request, res: Response, next: NextFunction) => 
       }
 
       // Once the image is resized, move it to its final destination
-      fs.rename(outputPath, req.file!.path.split(".")[0]+".webp", (renameErr) => {
+      fs.rename(outputPath, req.file!.path, (renameErr) => {
         if (renameErr) {
           console.error("Error moving resized image:", renameErr);
           return next(renameErr);
