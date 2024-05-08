@@ -2,6 +2,7 @@ import multer from "multer";
 import path from "path";
 import sharp from "sharp";
 import { v1 as uuidv1 } from "uuid";
+import fs from "fs";
 
 import { Request, Response, NextFunction } from "../types";
 
@@ -45,18 +46,27 @@ export const resizeImage = (req: Request, res: Response, next: NextFunction) => 
     return next();
   }
 
-  console.dir(req.file);
-  
-  
+  // Define the output path for the resized image (temporary filename)
+  const outputPath = path.join("uploads", "images", "resized-" + req.file.filename);
+
   // Resize the image to width 480 while keeping the aspect ratio
   sharp(req.file.path)
     .resize({ width: 480 })
     .toFormat('webp') // Convert to webp format
-    .toFile(path.join("uploads", "images", req.file.filename), (err) => {
+    .toFile(outputPath, (err) => {
       if (err) {
-        console.log(err, "file-uppload-middleware 54");
-        
+        console.error("Error resizing image:", err);
+        return next(err);
       }
-      next();
+
+      // Once the image is resized, move it to its final destination
+      fs.rename(outputPath, req.file!.path, (renameErr) => {
+        if (renameErr) {
+          console.error("Error moving resized image:", renameErr);
+          return next(renameErr);
+        }
+        
+        next();
+      });
     });
 };
