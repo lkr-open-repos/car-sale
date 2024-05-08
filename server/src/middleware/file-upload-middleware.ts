@@ -60,7 +60,7 @@ export const resizeImage = (req: Request, res: Response, next: NextFunction) => 
       }
 
       // Once the image is resized, move it to its final destination
-      fs.rename(outputPath, req.file!.path, (renameErr) => {
+      fs.rename(outputPath, req.file!.path.split(".")[0]+".webp", (renameErr) => {
         if (renameErr) {
           console.error("Error moving resized image:", renameErr);
           return next(renameErr);
