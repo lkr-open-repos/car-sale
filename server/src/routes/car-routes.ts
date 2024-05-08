@@ -11,7 +11,7 @@ import {
   getCarsBySearch,
 } from "../controllers";
 import { createCarValidation } from "../validators";
-import { fileUpload } from "../middleware";
+import { fileUpload, resizeImage } from "../middleware";
 import { updateCarValidation } from "../validators/car-validator";
 
 const router = Router();
@@ -26,7 +26,7 @@ router.get("/user/:uid", getCarsByUser);
 
 router.use(checkAuthToken);
 
-router.post("/", fileUpload.single("image"), createCarValidation, createCar);
+router.post("/", fileUpload.single("image"), resizeImage,createCarValidation, createCar);
 
 router.patch(
   "/:cid",
