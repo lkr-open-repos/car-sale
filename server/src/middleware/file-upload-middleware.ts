@@ -51,7 +51,8 @@ export const resizeImage = (req: Request, res: Response, next: NextFunction) => 
     .toFormat('webp') // Convert to webp format
     .toFile(path.join("uploads", "images", req.file.filename), (err) => {
       if (err) {
-        return next(err);
+        console.log(err, "file-uppload-middleware 54");
+        
       }
       next();
     });

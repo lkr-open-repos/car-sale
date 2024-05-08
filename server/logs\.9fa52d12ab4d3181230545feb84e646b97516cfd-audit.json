@@ -1,0 +1,40 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 60
+    },
+    "auditLog": "logs\\.9fa52d12ab4d3181230545feb84e646b97516cfd-audit.json",
+    "files": [
+        {
+            "date": 1710164688274,
+            "name": "logs\\frontendLogs-2024-03-11.log",
+            "hash": "1ab54ac2e16d383cd358b26ed4605a3f752a4ee7b2c3a0fe0a6bd40ed3ed58f2"
+        },
+        {
+            "date": 1710248206633,
+            "name": "logs\\frontendLogs-2024-03-12.log",
+            "hash": "36ef00f3e49acf4856121c6b46f65328542b9a46b1ae46df06c61278f027d2f5"
+        },
+        {
+            "date": 1710328596515,
+            "name": "logs\\frontendLogs-2024-03-13.log",
+            "hash": "a2f3f0c6a586212d2313889f12827b5972729871001689f608dcb1515bb378da"
+        },
+        {
+            "date": 1710367427371,
+            "name": "logs\\frontendLogs-2024-03-14.log",
+            "hash": "5e6fdd7a067ef8867ccb3983e805eb3c9d277d56a1801c53ef0f583d003378bd"
+        },
+        {
+            "date": 1713177865765,
+            "name": "logs\\frontendLogs-2024-04-15.log",
+            "hash": "b8c7ac25b5e07db5170f45525d4c9206863143b937d52e669de9d5622774678e"
+        },
+        {
+            "date": 1715168046535,
+            "name": "logs/frontendLogs-2024-05-08.log",
+            "hash": "e499c612cf8c77de7935b43d9f4dd8b4aa6f696dd2d5e99a5b0472b93568ea37"
+        }
+    ],
+    "hashType": "sha256"
+}
