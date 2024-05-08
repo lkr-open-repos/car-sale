@@ -52,7 +52,7 @@ export const resizeImage = (req: Request, res: Response, next: NextFunction) => 
   // Resize the image to width 480 while keeping the aspect ratio
   sharp(req.file.path)
     .resize({ width: 480 })
-    .toFormat('webp') // Convert to webp format
+    .toFormat('webp',  { lossless: true } ) // Convert to webp format
     .toFile(outputPath, (err) => {
       if (err) {
         console.error("Error resizing image:", err);
