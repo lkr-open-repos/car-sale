@@ -44,6 +44,9 @@ export const resizeImage = (req: Request, res: Response, next: NextFunction) => 
   if (!req.file) {
     return next();
   }
+
+  console.dir(req.file);
+  
   
   // Resize the image to width 480 while keeping the aspect ratio
   sharp(req.file.path)
